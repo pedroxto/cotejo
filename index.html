@@ -136,6 +136,31 @@ td.mid{background:rgba(94,234,212,.18);font-weight:700}
 @media(max-width:1060px){.calc{grid-template-columns:1fr 1fr}.side{grid-column:1/-1}}
 @media(max-width:700px){.calc{grid-template-columns:1fr}}
 
+/* exemplos */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:36px}
+.tabs button{font:inherit;font-size:.9rem;font-weight:600;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;transition:.2s}
+.tabs button:hover{color:var(--head);border-color:var(--head)}
+.tabs button[aria-selected="true"]{background:var(--btn);border-color:var(--btn);color:#fff}
+.report{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;display:grid;grid-template-columns:1.1fr 1fr;gap:32px}
+.report .rhead{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.report h3{font-size:1.3rem}
+.report .sub{color:var(--muted);font-size:.85rem}
+.report h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 10px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.kpis div{background:var(--soft);border-radius:12px;padding:12px 14px}
+.kpis b{display:block;font-size:1.2rem;color:var(--head)}
+.kpis span{font-size:.74rem;color:var(--muted)}
+.bridge{width:100%;border-collapse:collapse;font-size:.88rem;margin:0}
+.bridge td{border:0;border-bottom:1px solid var(--line);padding:8px 2px;text-align:left;color:var(--text)}
+.bridge td+td{text-align:right}
+.bridge tr:last-child td{border:0;font-weight:700;color:var(--head)}
+.report ul{list-style:none;padding:0;display:grid;gap:8px;font-size:.9rem;color:var(--text)}
+.report ul li{padding-left:22px;position:relative}
+.report ul li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
+.report .premissas{margin-bottom:22px}
+.report .btn{background:transparent;padding:10px 20px;font-size:.9rem}
+@media(max-width:760px){.report{grid-template-columns:1fr;padding:22px}.kpis{grid-template-columns:1fr 1fr}}
+
 /* footer */
 .cta-final{background:var(--panel);color:#fff;text-align:center;border-radius:28px;padding:64px 24px}
 .cta-final h2{color:#fff}
@@ -153,6 +178,7 @@ footer p+p{margin-top:10px}
     <ul>
       <li><a href="#para-quem">Para quem</a></li>
       <li><a href="#como">Como funciona</a></li>
+      <li><a href="#exemplos">Exemplos</a></li>
       <li><a href="#simulador">Simulador</a></li>
     </ul>
     <button class="theme" id="theme" type="button" aria-label="Alternar modo claro/escuro" title="Alternar modo claro/escuro">🌙</button>
@@ -247,6 +273,18 @@ footer p+p{margin-top:10px}
   </div>
 </section>
 
+<section id="exemplos">
+  <div class="wrap">
+    <p class="eyebrow">Exemplos de entrega</p>
+    <h2>Você faz a pergunta. A Valuora entrega o valuation pronto.</h2>
+    <p class="lead">Você escolhe a empresa e diz o que quer saber. A gente reúne os números, monta o modelo e devolve um relatório com cada premissa explicada. Você não gasta horas com planilha, paga bem menos que um analista dedicado e recebe uma análise que consegue entender e questionar.</p>
+
+    <div class="tabs" role="tablist" aria-label="Exemplos de valuation" id="ex-tabs"></div>
+    <div class="report" id="ex-report" role="tabpanel"></div>
+    <p class="note">Exemplos ilustrativos no formato de relatórios de equity research. Empresas e números são fictícios e não constituem recomendação de investimento.</p>
+  </div>
+</section>
+
 <section id="simulador">
   <div class="wrap">
     <p class="eyebrow">Simulador</p>
@@ -260,7 +298,7 @@ footer p+p{margin-top:10px}
           <label>Crescimento anual (anos 1–5, %)<input id="g" type="number" value="8" step="any"></label>
           <label>Taxa de desconto (%)<small>custo de capital da empresa (WACC)</small><input id="r" type="number" value="12" step="any"></label>
           <label>Crescimento perpétuo (%)<small>deve ser menor que a taxa</small><input id="gp" type="number" value="3" step="any"></label>
-          <label>Dívida líquida (R$ mi)<input id="debt" type="number" value="300" step="any"></label>
+          <label>Dívida líquida (R$ mi)<small>dívida bruta − caixa; negativo = caixa líquido</small><input id="debt" type="number" value="300" step="any"></label>
           <label>Nº de ações (mi)<input id="sh" type="number" value="39" step="any"></label>
           <label>Preço atual da ação (R$, opcional)<input id="px" type="number" value="22.10" step="any"></label>
           <label>Margem de segurança (%)<small>desconto sobre o valor justo</small><input id="ms" type="number" value="20" min="0" max="99" step="any"></label>
@@ -383,6 +421,63 @@ footer p+p{margin-top:10px}
   }
   document.querySelectorAll('.fields input').forEach(i=>i.addEventListener('input',run));
   run();
+
+  // exemplos de entrega: empresas e números fictícios, calculados com o mesmo DCF do simulador
+  const exemplos=[
+    { aba:'Agronegócio', nome:'Empresa A', setor:'Agronegócio · açúcar e energia',
+      p:{fcf:260,g:4,r:13,gp:3,debt:900,sh:520,px:3.1},
+      extras:['Visão do setor: preços, safra e mercado externo','Projeção de produção, mix de produtos e custos','Custo de capital passo a passo (CAPM e dívida)','Sensibilidade a câmbio, preço e taxa de desconto','Principais riscos da tese'] },
+    { aba:'Indústria', nome:'Empresa B', setor:'Indústria · bens de capital',
+      p:{fcf:1200,g:9,r:11.5,gp:4,debt:-800,sh:900,px:22},
+      extras:['Histórico de receita, margens e retorno sobre capital','Novo projeto avaliado à parte e somado à empresa','Comparação com empresas parecidas (múltiplos)','Faixa de valor por método, lado a lado','Estrutura de capital e efeito no custo de capital'] },
+    { aba:'Consumo', nome:'Empresa C', setor:'Consumo · marcas premium',
+      p:{fcf:2400,g:6,r:10,gp:3.5,debt:-1500,sh:1600,px:28},
+      extras:['Base de clientes e motores de crescimento por região','Cenários pessimista, base e otimista','Múltiplo de saída comparado ao histórico','Uso do caixa: dividendos, recompras e aquisições','Principais riscos da tese'] }
+  ];
+  const tabs=$('ex-tabs'), rep=$('ex-report');
+  const fmt = x => x.toFixed(1).replace('.',',');
+  function showEx(i){
+    const e=exemplos[i], p=e.p;
+    const ev=dcf(p.fcf,p.g/100,p.r/100,p.gp/100), eq=ev-p.debt, ps=eq/p.sh, up=(ps/p.px-1)*100;
+    [...tabs.children].forEach((b,j)=>b.setAttribute('aria-selected',j===i));
+    rep.innerHTML=`<div class="rhead"><div><h3>${e.nome}</h3><div class="sub">${e.setor} · relatório ilustrativo</div></div>
+        <button class="btn btn-ghost" type="button" id="ex-load">Abrir no simulador</button></div>
+      <div>
+        <h4>Resumo</h4>
+        <div class="kpis">
+          <div><b>${brl.format(ps)}</b><span>valor estimado por ação</span></div>
+          <div><b>${brl.format(p.px)}</b><span>preço de referência</span></div>
+          <div><b>${up>=0?'+':''}${fmt(up)}%</b><span>diferença para o preço</span></div>
+        </div>
+        <h4>Do valor da firma ao valor por ação</h4>
+        <table class="bridge">
+          <tr><td>Valor da firma (EV)</td><td>${mi(ev)}</td></tr>
+          <tr><td>${p.debt>=0?'(−) Dívida líquida':'(+) Caixa líquido'}</td><td>${mi(Math.abs(p.debt))}</td></tr>
+          <tr><td>Valor do acionista</td><td>${mi(eq)}</td></tr>
+          <tr><td>÷ ${new Intl.NumberFormat('pt-BR').format(p.sh)} mi de ações</td><td>${brl.format(ps)}</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="premissas"><h4>Premissas principais</h4>
+        <table class="bridge">
+          <tr><td>Fluxo de caixa livre atual</td><td>${mi(p.fcf)}</td></tr>
+          <tr><td>Crescimento do fluxo (anos 1–5)</td><td>${fmt(p.g)}% a.a.</td></tr>
+          <tr><td>Custo de capital (WACC)</td><td>${fmt(p.r)}%</td></tr>
+          <tr><td>Crescimento na perpetuidade</td><td>${fmt(p.gp)}%</td></tr>
+        </table></div>
+        <h4>O relatório completo também traz</h4>
+        <ul>${e.extras.map(x=>`<li>${x}</li>`).join('')}</ul>
+      </div>`;
+    $('ex-load').addEventListener('click',()=>{
+      for(const k in p) $(k).value=p[k];
+      run(); $('simulador').scrollIntoView({behavior:'smooth'});
+    });
+  }
+  exemplos.forEach((e,i)=>{
+    const b=document.createElement('button'); b.type='button'; b.setAttribute('role','tab');
+    b.textContent=e.aba; b.addEventListener('click',()=>showEx(i)); tabs.appendChild(b);
+  });
+  showEx(0);
 
   // modo claro/escuro
   const btn=$('theme'), root=document.documentElement;
