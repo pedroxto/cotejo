@@ -202,7 +202,8 @@ footer p+p{margin-top:10px}
       <small>valor estimado por ação · cenário-base</small>
       <div style="height:18px"></div>
       <div class="row"><span>Preço de mercado (exemplo)</span><span>R$ 22,10</span></div>
-      <div class="row"><span>Margem de segurança</span><span class="up">21,9%</span></div>
+      <div class="row"><span>Potencial vs. preço</span><span class="up">+28,0%</span></div>
+      <div class="row"><span>Margem de segurança implícita</span><span class="up">21,9%</span></div>
       <div class="row"><span>Premissa-chave</span><span>Crescimento 8% a.a.</span></div>
     </div>
   </div>
@@ -396,7 +397,8 @@ footer p+p{margin-top:10px}
     gs.forEach((gg,i)=>{
       html+=`<tr><th>Cresc. ${lbl(gg)}</th>`;
       rs.forEach((rr,j)=>{
-        const cell = rr>gp && rr>0 && gg>-1 ? brl.format((dcf(fcf,gg,rr,gp)-debt)/sh) : '—';
+        const vps = rr>gp && rr>0 && gg>-1 ? (dcf(fcf,gg,rr,gp)-debt)/sh : NaN;
+        const cell = vps>0 ? brl.format(vps) : '—';
         html+=`<td class="${i==1&&j==1?'mid':''}">${cell}</td>`;
       });
       html+='</tr>';
@@ -410,7 +412,7 @@ footer p+p{margin-top:10px}
       <div class="tiles">
         <div class="tile"><b>${pc(tvPct)}</b><span>do valor vem da perpetuidade</span></div>
         <div class="tile"><b>${(ev/fcf).toFixed(1).replace('.',',')}x</b><span>EV / fluxo de caixa atual</span></div>
-        <div class="tile"><b>${pc(debt/ev*100)}</b><span>dívida líquida / EV</span></div>
+        <div class="tile"><b>${pc(Math.abs(debt)/ev*100)}</b><span>${debt<0?'caixa líquido':'dívida líquida'} / EV</span></div>
         <div class="tile"><b>${pc(((Math.pow(rows[4][1]/fcf,1/5)-1)*100))}</b><span>crescimento anual do fluxo</span></div>
       </div>
       <h3>Fluxo de caixa projetado</h3>
