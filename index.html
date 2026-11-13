@@ -176,7 +176,7 @@ footer p+p{margin-top:10px}
       <small>valor estimado por ação · cenário-base</small>
       <div style="height:18px"></div>
       <div class="row"><span>Preço de mercado (exemplo)</span><span>R$ 22,10</span></div>
-      <div class="row"><span>Margem de segurança</span><span class="up">+28%</span></div>
+      <div class="row"><span>Margem de segurança</span><span class="up">21,9%</span></div>
       <div class="row"><span>Premissa-chave</span><span>Crescimento 8% a.a.</span></div>
     </div>
   </div>
@@ -256,13 +256,14 @@ footer p+p{margin-top:10px}
     <div class="calc">
       <div class="panel">
         <div class="fields">
-          <label>Fluxo de caixa livre atual (R$ mi)<input id="fcf" type="number" value="100" step="any"></label>
+          <label>Fluxo de caixa livre atual (R$ mi)<small>da empresa, antes da dívida</small><input id="fcf" type="number" value="100" step="any"></label>
           <label>Crescimento anual (anos 1–5, %)<input id="g" type="number" value="8" step="any"></label>
-          <label>Taxa de desconto (%)<small>retorno exigido</small><input id="r" type="number" value="12" step="any"></label>
+          <label>Taxa de desconto (%)<small>custo de capital da empresa (WACC)</small><input id="r" type="number" value="12" step="any"></label>
           <label>Crescimento perpétuo (%)<small>deve ser menor que a taxa</small><input id="gp" type="number" value="3" step="any"></label>
           <label>Dívida líquida (R$ mi)<input id="debt" type="number" value="300" step="any"></label>
           <label>Nº de ações (mi)<input id="sh" type="number" value="39" step="any"></label>
-          <label style="grid-column:1/-1">Preço atual da ação (R$, opcional)<input id="px" type="number" value="22.10" step="any"></label>
+          <label>Preço atual da ação (R$, opcional)<input id="px" type="number" value="22.10" step="any"></label>
+          <label>Margem de segurança (%)<small>desconto sobre o valor justo</small><input id="ms" type="number" value="20" min="0" max="99" step="any"></label>
         </div>
       </div>
       <div class="out" aria-live="polite">
@@ -270,7 +271,7 @@ footer p+p{margin-top:10px}
       </div>
       <div class="panel side" id="stats"></div>
     </div>
-    <p class="note">Exercício educacional com números de exemplo. Pequenas mudanças nas premissas alteram muito o resultado — essa é a lição principal de qualquer valuation.</p>
+    <p class="note">Exercício educacional com números de exemplo. Pequenas mudanças nas premissas alteram muito o resultado — essa é a lição principal de qualquer valuation. Um DCF simples como este funciona melhor para empresas maduras; para quem cresce acima da média por muitos anos, a comparação com empresas parecidas costuma explicar melhor o preço.</p>
   </div>
 </section>
 
@@ -309,28 +310,55 @@ footer p+p{margin-top:10px}
   function run(){
     const v = id => parseFloat($(id).value);
     const fcf=v('fcf'), g=v('g')/100, r=v('r')/100, gp=v('gp')/100,
-          debt=v('debt')||0, sh=v('sh'), px=v('px');
+          debt=v('debt')||0, sh=v('sh'), px=v('px'), ms=v('ms')/100;
     const out=$('result'); $('stats').innerHTML='';
     if([fcf,g,r,gp,sh].some(isNaN) || sh<=0){ out.innerHTML='<p class="err">Preencha os campos com números válidos.</p>'; return; }
     if(r<=gp){ out.innerHTML='<p class="err">A taxa de desconto precisa ser maior que o crescimento perpétuo.</p>'; return; }
+    if(r<=0){ out.innerHTML='<p class="err">A taxa de desconto precisa ser maior que zero.</p>'; return; }
+    if(g<=-1){ out.innerHTML='<p class="err">O crescimento anual precisa ser maior que −100%.</p>'; return; }
     if(fcf<=0){ out.innerHTML='<p class="err">Este modelo simples exige fluxo de caixa positivo.</p>'; return; }
 
+    const pc = x => x.toFixed(1).replace('.',',')+'%';
+    const lbl = x => (x*100).toFixed(1).replace(/\.0$/,'').replace('.',',')+'%';
     const ev=dcf(fcf,g,r,gp), eq=ev-debt, ps=eq/sh;
+    // projeção explícita, usada no aviso e no painel lateral
+    let f=fcf, pv=0; const rows=[];
+    for(let t=1;t<=5;t++){ f*=1+g; const p=f/Math.pow(1+r,t); pv+=p; rows.push([t,f,p]); }
+    const tvPv=ev-pv, tvPct=tvPv/ev*100;
     let html=`<div class="lbl">Valor estimado por ação</div>
-      <div class="val">${brl.format(ps)}</div>
+      <div class="val">${ps>0?brl.format(ps):'—'}</div>
       <div class="row"><span>Valor da firma (EV)</span><b>${mi(ev)}</b></div>
       <div class="row"><span>Valor do acionista</span><b>${mi(eq)}</b></div>`;
-    if(!isNaN(px) && px>0){
+    if(ps<=0) html+='<p class="err">A dívida líquida supera o valor da firma: neste cenário, não sobra valor para o acionista.</p>';
+    if(tvPct>85) html+=`<p class="err">Atenção: ${pc(tvPct)} do valor vem da perpetuidade. Com a taxa tão perto do crescimento perpétuo, o resultado fica muito sensível.</p>`;
+    if(ps>0 && !isNaN(px) && px>0){
       const m=(ps/px-1)*100;
       html+=`<div class="row"><span>vs. preço informado</span><b>${m>=0?'+':''}${m.toFixed(1).replace('.',',')}%</b></div>`;
     }
+    // margem de segurança: preço-alvo de compra = valor justo × (1 − margem)
+    if(!isNaN(ms)){
+      if(ms<0 || ms>=1){
+        html+='<p class="err">A margem de segurança deve ficar entre 0% e 99%.</p>';
+      }else if(ps<=0){
+        html+='<div class="row"><span>Preço-alvo de compra</span><b>—</b></div>';
+      }else{
+        const alvo=ps*(1-ms);
+        html+=`<div class="row"><span>Preço-alvo de compra (margem ${pc(ms*100)})</span><b>${brl.format(alvo)}</b></div>`;
+        if(!isNaN(px) && px>0){
+          const d=(1-px/ps)*100;
+          html+= d>=0
+            ? `<div class="row"><span>Margem implícita no preço informado</span><b>${pc(d)}</b></div>`
+            : `<div class="row"><span>Margem implícita no preço informado</span><b>nenhuma (preço acima do valor justo)</b></div>`;
+        }
+      }
+    }
     // sensibilidade: taxa de desconto x crescimento
     const rs=[r-0.01,r,r+0.01], gs=[g-0.02,g,g+0.02];
-    html+=`<table><tr><th>Valor/ação</th>${rs.map(x=>`<th>Taxa ${(x*100).toFixed(0)}%</th>`).join('')}</tr>`;
+    html+=`<table><tr><th>Valor/ação</th>${rs.map(x=>`<th>Taxa ${lbl(x)}</th>`).join('')}</tr>`;
     gs.forEach((gg,i)=>{
-      html+=`<tr><th>Cresc. ${(gg*100).toFixed(0)}%</th>`;
+      html+=`<tr><th>Cresc. ${lbl(gg)}</th>`;
       rs.forEach((rr,j)=>{
-        const cell = rr>gp ? brl.format((dcf(fcf,gg,rr,gp)-debt)/sh) : '—';
+        const cell = rr>gp && rr>0 && gg>-1 ? brl.format((dcf(fcf,gg,rr,gp)-debt)/sh) : '—';
         html+=`<td class="${i==1&&j==1?'mid':''}">${cell}</td>`;
       });
       html+='</tr>';
@@ -339,10 +367,7 @@ footer p+p{margin-top:10px}
     out.innerHTML=html;
 
     // painel lateral: estatísticas, gráfico e tabela de projeção
-    let f=fcf, pv=0; const rows=[];
-    for(let t=1;t<=5;t++){ f*=1+g; const p=f/Math.pow(1+r,t); pv+=p; rows.push([t,f,p]); }
-    const tvPv=ev-pv, tvPct=tvPv/ev*100, mx=Math.max(...rows.map(x=>x[1]));
-    const pc = x => x.toFixed(1).replace('.',',')+'%';
+    const mx=Math.max(...rows.map(x=>x[1]));
     $('stats').innerHTML=`<h3>Estatísticas do cenário</h3>
       <div class="tiles">
         <div class="tile"><b>${pc(tvPct)}</b><span>do valor vem da perpetuidade</span></div>
