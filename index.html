@@ -16,7 +16,7 @@ document.documentElement.dataset.theme=t;})();
   --bg:#ffffff; --soft:#f4f7fc; --line:#e2e8f3; --text:#1b2a45; --muted:#5d6b86;
   --radius:16px;
   --head:#0a1f44; --card:#ffffff; --panel:#0a1f44; --btn:#0a1f44; --input:#f4f7fc;
-  --hdr:rgba(255,255,255,.9); --badge:#e8f0ff;
+  --hdr:rgba(255,255,255,.9); --badge:#e8f0ff; --panel-line:rgba(255,255,255,.12); --panel-btn:#2f6df6;
   color-scheme:light;
 }
 [data-theme="dark"]{
@@ -63,8 +63,10 @@ header{position:sticky;top:0;z-index:10;background:var(--hdr);backdrop-filter:bl
 .mock{background:var(--panel);color:#fff;border-radius:20px;padding:28px;box-shadow:0 30px 60px -20px rgba(10,31,68,.45)}
 .mock small{opacity:.6;font-size:.78rem}
 .mock .big{font-size:2.4rem;font-weight:800;margin:6px 0 2px}
-.mock .row{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid rgba(255,255,255,.12);font-size:.9rem}
+.mock .row{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--panel-line);font-size:.9rem}
 .mock .up{color:#5eead4}
+.mock .cond{font-size:.78rem;opacity:.7;line-height:1.5;margin:12px 0 14px;padding-top:12px;border-top:1px solid var(--panel-line)}
+.mock .btn{padding:10px 20px;font-size:.88rem;background:var(--panel-btn)}
 @media(max-width:860px){.hero .grid{grid-template-columns:1fr}}
 
 /* pitch */
@@ -198,13 +200,15 @@ footer p+p{margin-top:10px}
     </div>
     <div class="mock" aria-label="Exemplo ilustrativo">
       <small>EMPRESA EXEMPLO S.A. · dados fictícios</small>
-      <div class="big">R$ 28,28</div>
+      <div class="big" id="hero-ps">—</div>
       <small>valor estimado por ação · cenário-base</small>
       <div style="height:18px"></div>
-      <div class="row"><span>Preço de mercado (exemplo)</span><span>R$ 22,10</span></div>
-      <div class="row"><span>Potencial vs. preço</span><span class="up">+28,0%</span></div>
-      <div class="row"><span>Margem de segurança implícita</span><span class="up">21,9%</span></div>
-      <div class="row"><span>Premissa-chave</span><span>Crescimento 8% a.a.</span></div>
+      <div class="row"><span>Preço informado (exemplo)</span><span id="hero-px">—</span></div>
+      <div class="row"><span>vs. preço informado</span><span class="up" id="hero-up">—</span></div>
+      <div class="row"><span>Margem implícita no preço informado</span><span class="up" id="hero-mi">—</span></div>
+      <div class="row"><span>Premissa-chave</span><span id="hero-g">—</span></div>
+      <p class="cond" id="hero-cond">Os números deste exemplo são calculados no seu navegador.</p>
+      <button type="button" class="btn btn-primary" id="hero-load">Refazer esta conta no simulador</button>
     </div>
   </div>
 </section>
@@ -345,6 +349,14 @@ footer p+p{margin-top:10px}
     const tv = f*(1+gp)/(r-gp);
     return pv + tv/Math.pow(1+r,5);
   }
+  const num = new Intl.NumberFormat('pt-BR');
+  // cenário do exemplo do topo: fonte única para o topo e para os valores iniciais do simulador
+  const heroP={fcf:100,g:8,r:12,gp:3,debt:300,sh:39,px:22.10,ms:20};
+  // ponte EV → valor por ação usada pelo topo e pelos exemplos (mesmo dcf() do simulador)
+  function valuate(p){
+    const ev=dcf(p.fcf,p.g/100,p.r/100,p.gp/100), eq=ev-p.debt, ps=eq/p.sh;
+    return {ev, eq, ps, up:(ps/p.px-1)*100, margin:(1-p.px/ps)*100};
+  }
 
   function run(){
     const v = id => parseFloat($(id).value);
@@ -422,6 +434,7 @@ footer p+p{margin-top:10px}
       <tr><td>Perpetuidade</td><td>—</td><td>${mi(tvPv).replace('R$ ','')}</td></tr></table>`;
   }
   document.querySelectorAll('.fields input').forEach(i=>i.addEventListener('input',run));
+  for(const k in heroP) $(k).value=$(k).defaultValue=heroP[k];
   run();
 
   // exemplos de entrega: empresas e números fictícios, calculados com o mesmo DCF do simulador
@@ -438,9 +451,15 @@ footer p+p{margin-top:10px}
   ];
   const tabs=$('ex-tabs'), rep=$('ex-report');
   const fmt = x => x.toFixed(1).replace('.',',');
+  // carrega um cenário no simulador; usa a margem de segurança padrão quando o cenário não define outra
+  function loadInSim(p){
+    const q={ms:$('ms').defaultValue,...p};
+    for(const k in q) $(k).value=q[k];
+    run(); $('simulador').scrollIntoView({behavior:'smooth'});
+  }
   function showEx(i){
     const e=exemplos[i], p=e.p;
-    const ev=dcf(p.fcf,p.g/100,p.r/100,p.gp/100), eq=ev-p.debt, ps=eq/p.sh, up=(ps/p.px-1)*100;
+    const {ev,eq,ps,up}=valuate(p);
     [...tabs.children].forEach((b,j)=>b.setAttribute('aria-selected',j===i));
     rep.innerHTML=`<div class="rhead"><div><h3>${e.nome}</h3><div class="sub">${e.setor} · relatório ilustrativo</div></div>
         <button class="btn btn-ghost" type="button" id="ex-load">Abrir no simulador</button></div>
@@ -456,7 +475,7 @@ footer p+p{margin-top:10px}
           <tr><td>Valor da firma (EV)</td><td>${mi(ev)}</td></tr>
           <tr><td>${p.debt>=0?'(−) Dívida líquida':'(+) Caixa líquido'}</td><td>${mi(Math.abs(p.debt))}</td></tr>
           <tr><td>Valor do acionista</td><td>${mi(eq)}</td></tr>
-          <tr><td>÷ ${new Intl.NumberFormat('pt-BR').format(p.sh)} mi de ações</td><td>${brl.format(ps)}</td></tr>
+          <tr><td>÷ ${num.format(p.sh)} mi de ações</td><td>${brl.format(ps)}</td></tr>
         </table>
       </div>
       <div>
@@ -470,16 +489,25 @@ footer p+p{margin-top:10px}
         <h4>O relatório completo também traz</h4>
         <ul>${e.extras.map(x=>`<li>${x}</li>`).join('')}</ul>
       </div>`;
-    $('ex-load').addEventListener('click',()=>{
-      for(const k in p) $(k).value=p[k];
-      run(); $('simulador').scrollIntoView({behavior:'smooth'});
-    });
+    $('ex-load').addEventListener('click',()=>loadInSim(p));
   }
   exemplos.forEach((e,i)=>{
     const b=document.createElement('button'); b.type='button'; b.setAttribute('role','tab');
     b.textContent=e.aba; b.addEventListener('click',()=>showEx(i)); tabs.appendChild(b);
   });
   showEx(0);
+
+  // exemplo do topo: números calculados a partir de heroP, com as mesmas regras de exibição do simulador
+  (()=>{
+    const p=heroP, {ps,up,margin}=valuate(p), n=x=>num.format(x);
+    $('hero-ps').textContent=ps>0?brl.format(ps):'—';
+    $('hero-px').textContent=brl.format(p.px);
+    $('hero-up').textContent=ps>0?(up>=0?'+':'')+fmt(up)+'%':'—';
+    $('hero-mi').textContent=ps<=0?'—':margin>=0?fmt(margin)+'%':'nenhuma (preço acima do valor justo)';
+    $('hero-g').textContent=`Crescimento ${n(p.g)}% a.a.`;
+    $('hero-cond').textContent=`Condição: fluxo de caixa livre R$ ${n(p.fcf)} mi · crescimento ${n(p.g)}% · taxa ${n(p.r)}% · perpetuidade ${n(p.gp)}% · dívida líquida R$ ${n(p.debt)} mi · ${n(p.sh)} mi de ações · preço ${brl.format(p.px)} · margem de segurança ${n(p.ms)}%`;
+  })();
+  $('hero-load').addEventListener('click',()=>loadInSim(heroP));
 
   // modo claro/escuro
   const btn=$('theme'), root=document.documentElement;
