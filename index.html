@@ -350,6 +350,7 @@ footer p+p{margin-top:10px}
     return pv + tv/Math.pow(1+r,5);
   }
   const num = new Intl.NumberFormat('pt-BR');
+  const pct1 = new Intl.NumberFormat('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
   // cenário do exemplo do topo: fonte única para o topo e para os valores iniciais do simulador
   const heroP={fcf:100,g:8,r:12,gp:3,debt:300,sh:39,px:22.10,ms:20};
   // ponte EV → valor por ação usada pelo topo e pelos exemplos (mesmo dcf() do simulador)
@@ -369,7 +370,7 @@ footer p+p{margin-top:10px}
     if(g<=-1){ out.innerHTML='<p class="err">O crescimento anual precisa ser maior que −100%.</p>'; return; }
     if(fcf<=0){ out.innerHTML='<p class="err">Este modelo simples exige fluxo de caixa positivo.</p>'; return; }
 
-    const pc = x => x.toFixed(1).replace('.',',')+'%';
+    const pc = x => pct1.format(x)+'%';
     const lbl = x => (x*100).toFixed(1).replace(/\.0$/,'').replace('.',',')+'%';
     const ev=dcf(fcf,g,r,gp), eq=ev-debt, ps=eq/sh;
     // projeção explícita, usada no aviso e no painel lateral
@@ -384,7 +385,7 @@ footer p+p{margin-top:10px}
     if(tvPct>85) html+=`<p class="err">Atenção: ${pc(tvPct)} do valor vem da perpetuidade. Com a taxa tão perto do crescimento perpétuo, o resultado fica muito sensível.</p>`;
     if(ps>0 && !isNaN(px) && px>0){
       const m=(ps/px-1)*100;
-      html+=`<div class="row"><span>vs. preço informado</span><b>${m>=0?'+':''}${m.toFixed(1).replace('.',',')}%</b></div>`;
+      html+=`<div class="row"><span>vs. preço informado</span><b>${m>=0?'+':''}${pc(m)}</b></div>`;
     }
     // margem de segurança: preço-alvo de compra = valor justo × (1 − margem)
     if(!isNaN(ms)){
@@ -398,7 +399,7 @@ footer p+p{margin-top:10px}
         if(!isNaN(px) && px>0){
           const d=(1-px/ps)*100;
           html+= d>=0
-            ? `<div class="row"><span>Margem implícita no preço informado</span><b>${pc(d)}</b></div>`
+            ? `<div class="row"><span>Margem implícita no preço informado</span><b>${d<100 && d>=99.95 ? '> 99,9%' : pc(d)}</b></div>`
             : `<div class="row"><span>Margem implícita no preço informado</span><b>nenhuma (preço acima do valor justo)</b></div>`;
         }
       }
@@ -409,7 +410,8 @@ footer p+p{margin-top:10px}
     gs.forEach((gg,i)=>{
       html+=`<tr><th>Cresc. ${lbl(gg)}</th>`;
       rs.forEach((rr,j)=>{
-        const vps = rr>gp && rr>0 && gg>-1 ? (dcf(fcf,gg,rr,gp)-debt)/sh : NaN;
+        // folga de 1e-9 evita que erro de arredondamento (0,1−0,01 = 0,09000000000000001) passe como taxa > crescimento
+        const vps = rr-gp>1e-9 && rr>1e-9 && gg>-1 ? (dcf(fcf,gg,rr,gp)-debt)/sh : NaN;
         const cell = vps>0 ? brl.format(vps) : '—';
         html+=`<td class="${i==1&&j==1?'mid':''}">${cell}</td>`;
       });
