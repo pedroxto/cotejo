@@ -383,11 +383,12 @@ footer p+p{margin-top:10px}
       <details>
         <summary>O que é margem de segurança?</summary>
         <div class="a">
-          <p>É um desconto que você exige sobre o valor justo antes de comprar, para se proteger de erros nas premissas. No exemplo do topo da página, com valor justo de <span data-hero="ps">—</span> e margem de <span data-hero="ms">—</span>, o preço-alvo de compra é <code><span data-hero="ps">—</span> × (1 − <span data-hero="ms">—</span>) = <span data-hero="alvo">—</span></code>.</p>
+          <p>É um desconto que você exige sobre o valor justo antes de comprar, para se proteger de erros nas premissas: <code>preço-alvo de compra = valor justo × (1 − margem)</code>.</p>
+          <p class="hero-ex" hidden>No exemplo do topo da página, com valor justo de <span data-hero="ps">—</span> e margem de <span data-hero="ms">—</span>, o preço-alvo de compra é <code><span data-hero="ps">—</span> × (1 − <span data-hero="ms">—</span>) = <span data-hero="alvo">—</span></code>.</p>
           <p>A calculadora mostra dois números parecidos, mas diferentes:</p>
           <ul>
-            <li><b>vs. preço informado</b> compara com o preço: <code>valor justo ÷ preço − 1</code>. No exemplo, <span data-hero="ps">—</span> ÷ <span data-hero="px">—</span> − 1 = <span data-hero="up">—</span>.</li>
-            <li><b>Margem implícita no preço informado</b> compara com o valor justo: <code>1 − preço ÷ valor justo</code>. No exemplo, 1 − <span data-hero="px">—</span> ÷ <span data-hero="ps">—</span> = <span data-hero="mi">—</span>.</li>
+            <li><b>vs. preço informado</b> compara com o preço: <code>valor justo ÷ preço − 1</code>.<span class="hero-ex hero-ex-px" hidden> No exemplo, <span data-hero="ps">—</span> ÷ <span data-hero="px">—</span> − 1 = <span data-hero="up">—</span>.</span></li>
+            <li><b>Margem implícita no preço informado</b> compara com o valor justo: <code>1 − preço ÷ valor justo</code>.<span class="hero-ex hero-ex-px" hidden> No exemplo, 1 − <span data-hero="px">—</span> ÷ <span data-hero="ps">—</span> = <span data-hero="mi">—</span>.</span></li>
           </ul>
         </div>
       </details>
@@ -471,6 +472,11 @@ footer p+p{margin-top:10px}
   }
   const num = new Intl.NumberFormat('pt-BR');
   const pct1 = new Intl.NumberFormat('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+  // formatação compartilhada pelo simulador, pelo exemplo do topo e pela pergunta frequente
+  const pc = x => pct1.format(x)+'%';
+  const fmtUp = m => (m>=0?'+':'')+pc(m);
+  const isMax = d => d<100 && d>=99.95;
+  const fmtMargin = d => d<0 ? 'nenhuma (preço acima do valor justo)' : isMax(d) ? '> 99,9%' : pc(d);
   // cenário do exemplo do topo: fonte única para o topo e para os valores iniciais do simulador
   const heroP={fcf:100,g:8,r:12,gp:3,debt:300,sh:39,px:22.10,ms:20};
   // ponte EV → valor por ação usada pelo topo e pelos exemplos (mesmo dcf() do simulador)
@@ -490,7 +496,6 @@ footer p+p{margin-top:10px}
     if(g<=-1){ out.innerHTML='<p class="err">O crescimento anual precisa ser maior que −100%.</p>'; return; }
     if(fcf<=0){ out.innerHTML='<p class="err">Este modelo simples exige fluxo de caixa positivo.</p>'; return; }
 
-    const pc = x => pct1.format(x)+'%';
     const lbl = x => (x*100).toFixed(1).replace(/\.0$/,'').replace('.',',')+'%';
     const ev=dcf(fcf,g,r,gp), eq=ev-debt, ps=eq/sh;
     // projeção explícita, usada no aviso e no painel lateral
@@ -505,7 +510,7 @@ footer p+p{margin-top:10px}
     if(tvPct>85) html+=`<p class="err">Atenção: ${pc(tvPct)} do valor vem da perpetuidade. Com a taxa tão perto do crescimento perpétuo, o resultado fica muito sensível.</p>`;
     if(ps>0 && !isNaN(px) && px>0){
       const m=(ps/px-1)*100;
-      html+=`<div class="row"><span>vs. preço informado</span><b>${m>=0?'+':''}${pc(m)}</b></div>`;
+      html+=`<div class="row"><span>vs. preço informado</span><b>${fmtUp(m)}</b></div>`;
     }
     // margem de segurança: preço-alvo de compra = valor justo × (1 − margem)
     if(!isNaN(ms)){
@@ -518,9 +523,7 @@ footer p+p{margin-top:10px}
         html+=`<div class="row"><span>Preço-alvo de compra (margem ${pc(ms*100)})</span><b>${brl.format(alvo)}</b></div>`;
         if(!isNaN(px) && px>0){
           const d=(1-px/ps)*100;
-          html+= d>=0
-            ? `<div class="row"><span>Margem implícita no preço informado</span><b>${d<100 && d>=99.95 ? '> 99,9%' : pc(d)}</b></div>`
-            : `<div class="row"><span>Margem implícita no preço informado</span><b>nenhuma (preço acima do valor justo)</b></div>`;
+          html+=`<div class="row"><span>Margem implícita no preço informado</span><b>${fmtMargin(d)}</b></div>`;
         }
       }
     }
@@ -622,16 +625,37 @@ footer p+p{margin-top:10px}
   // exemplo do topo: números calculados a partir de heroP, com as mesmas regras de exibição do simulador
   (()=>{
     const p=heroP, {ps,up,margin}=valuate(p), n=x=>num.format(x);
+    // mesmos formatadores do run(); sem preço positivo, potencial e margem implícita não se aplicam
+    const hasPx=p.px>0, upTxt=fmtUp(up), miTxt=fmtMargin(margin);
+    const alvo=brl.format(ps*(1-p.ms/100));
     $('hero-ps').textContent=ps>0?brl.format(ps):'—';
-    $('hero-px').textContent=brl.format(p.px);
-    $('hero-up').textContent=ps>0?(up>=0?'+':'')+fmt(up)+'%':'—';
-    $('hero-mi').textContent=ps<=0?'—':margin>=0?fmt(margin)+'%':'nenhuma (preço acima do valor justo)';
+    $('hero-px').textContent=hasPx?brl.format(p.px):'—';
+    $('hero-up').textContent=ps>0&&hasPx?upTxt:'—';
+    $('hero-mi').textContent=ps>0&&hasPx?miTxt:'—';
     $('hero-g').textContent=`Crescimento ${n(p.g)}% a.a.`;
-    $('hero-cond').textContent=`Condição: fluxo de caixa livre R$ ${n(p.fcf)} mi · crescimento ${n(p.g)}% · taxa ${n(p.r)}% · perpetuidade ${n(p.gp)}% · dívida líquida R$ ${n(p.debt)} mi · ${n(p.sh)} mi de ações · preço ${brl.format(p.px)} · margem de segurança ${n(p.ms)}%`;
-    // a pergunta sobre margem de segurança usa os mesmos números do exemplo do topo
-    const faq={ps:$('hero-ps').textContent, px:$('hero-px').textContent, up:$('hero-up').textContent,
-      mi:$('hero-mi').textContent, ms:n(p.ms)+'%', alvo:ps>0?brl.format(ps*(1-p.ms/100)):'—'};
+    $('hero-cond').textContent=`Condição: fluxo de caixa livre R$ ${n(p.fcf)} mi · crescimento ${n(p.g)}% · taxa ${n(p.r)}% · perpetuidade ${n(p.gp)}% · ${p.debt<0?'caixa líquido':'dívida líquida'} R$ ${n(Math.abs(p.debt))} mi · ${n(p.sh)} mi de ações · preço ${brl.format(p.px)} · margem de segurança ${n(p.ms)}%`;
+    // a pergunta sobre margem de segurança usa os mesmos números; sem valor por ação positivo, o exemplo fica oculto
+    const faq={ps:brl.format(ps), px:brl.format(p.px), up:upTxt, ms:n(p.ms)+'%', alvo,
+      mi:margin<0?`${pc(margin)}, ou seja, nenhuma margem`:isMax(margin)?'mais de 99,9%':miTxt};
     document.querySelectorAll('[data-hero]').forEach(el=>el.textContent=faq[el.dataset.hero]);
+    // exemplo oculto sem valor por ação positivo; as contas com o preço também exigem preço positivo
+    document.querySelectorAll('.hero-ex').forEach(el=>el.hidden=!(ps>0 && (hasPx || !el.classList.contains('hero-ex-px'))));
+
+    // verificação: topo, pergunta e simulador (carregado com heroP ao abrir a página) precisam bater.
+    // Cada número é procurado na própria linha do resultado, não em qualquer lugar (a tabela repete valores).
+    const norm=s=>s.replace(/\s+/g,' ').trim(), falhas=[];
+    const rowVal=label=>{ const r=[...$('result').querySelectorAll('.row')].find(x=>norm(x.querySelector('span').textContent).startsWith(label)); return r?norm(r.querySelector('b').textContent):null; };
+    for(const k in heroP) if(parseFloat($(k).value)!==heroP[k]) falhas.push(`campo ${k} do simulador ≠ heroP`);
+    if(norm($('result').querySelector('.val')?.textContent||'')!==norm($('hero-ps').textContent)) falhas.push('valor por ação do topo ≠ simulador');
+    if(ps>0){
+      if(hasPx && rowVal('vs. preço informado')!==norm(upTxt)) falhas.push('potencial do topo ≠ simulador');
+      if(hasPx && rowVal('Margem implícita no preço informado')!==norm(miTxt)) falhas.push('margem implícita do topo ≠ simulador');
+      if(rowVal(`Preço-alvo de compra (margem ${pc(p.ms)})`)!==norm(alvo)) falhas.push('preço-alvo da pergunta ≠ simulador');
+    }
+    if(falhas.length){
+      document.documentElement.dataset.heroCheck='falha: '+falhas.join('; ');
+      console.error('Valuora: exemplo do topo inconsistente →', falhas);
+    }
   })();
   $('hero-load').addEventListener('click',()=>loadInSim(heroP));
 
