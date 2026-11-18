@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20110%22%3E%3Cpath%20d%3D%22M8%204H92V52C92%2080%2072%2096%2050%20106C28%2096%208%2080%208%2052Z%22%20fill%3D%22%239b1020%22%2F%3E%3Cg%20transform%3D%22translate(14%2014)%20scale(.72)%22%3E%3Cpath%20d%3D%22M46%2036L10%2012L14%2022L44%2042Z%20M45%2041L6%2026L11%2035L44%2047Z%20M45%2046L8%2042L14%2049L45%2052Z%20M46%2051L14%2056L21%2061L46%2057Z%20M54%2036L90%2012L86%2022L56%2042Z%20M55%2041L94%2026L89%2035L56%2047Z%20M55%2046L92%2042L86%2049L55%2052Z%20M54%2051L86%2056L79%2061L54%2057Z%20M50%2030C56%2034%2057%2050%2054%2064L50%2074L46%2064C43%2050%2044%2034%2050%2030Z%20M46%2026C46%2018%2054%2015%2059%2019L67%2021L60%2024L62%2028C58%2029%2054%2031%2050%2032Z%20M46%2070L39%2089L50%2082L61%2089L54%2070Z%20M44%2065L35%2072L41%2073Z%20M56%2065L65%2072L59%2073Z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 <title>Cotejo — Valuation com premissas à mostra</title>
 <meta name="description" content="Cotejo ajuda investidores a calcular o valuation de uma empresa e a montar uma tese de investimento clara, com premissas à vista. Em desenvolvimento.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,10 +18,13 @@
   /* site só no tema escuro */
   --bg:#0b0c0e; --soft:#111316; --card:#15171a; --line:#24272c; --line-strong:#353a41;
   --text:#e4e6e9; --muted:#9a9fa7; --head:#f5f6f7;
-  --accent:#6aa0ec; --cta:#00c796; --cta-hover:#00b386; --cta-ink:#0b0c0e;
+  --accent:#6aa0ec; --cta:#9b1020; --cta-hover:#7e0c1a; --cta-ink:#ffffff; --cta-text:#e0434f;
   --panel:#141619; --panel-2:#1b1e22; --on-panel:#ffffff; --on-panel-muted:#a3a8b0; --panel-line:rgba(255,255,255,.12);
   --pos:#00c796; --neg:#ff9b8a; --mid:rgba(0,199,150,.2);
   --input:#111316; --hdr:rgba(11,12,14,.95);
+  /* folhas de exemplo (aparência de PDF/slide impresso) */
+  --brand:#9b1020; --on-brand:#ffffff;
+  --paper:#f4f4f1; --paper-2:#e9e9e4; --ink:#15171a; --ink-muted:#62666e; --ink-line:#d6d6cf; --ink-accent:#0f7a5c;
   color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0}
@@ -48,8 +52,7 @@ section[id] .eyebrow::before{counter-increment:sec;content:counter(sec,decimal-l
 header{position:sticky;top:0;z-index:10;background:var(--hdr);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:40px;height:72px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.2rem;color:var(--head);letter-spacing:-.02em}
-.logo .mark{width:22px;height:22px;border:2px solid var(--head);position:relative;flex:none}
-.logo .mark::after{content:"";position:absolute;right:3px;bottom:3px;width:8px;height:8px;background:var(--cta)}
+.logo .mark{width:28px;height:31px;flex:none}
 .nav ul{display:flex;gap:32px;list-style:none;padding:0;font-size:.92rem;color:var(--muted);margin-right:auto}
 .nav ul a{padding:24px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
 .nav ul a:hover{color:var(--head);border-bottom-color:var(--cta)}
@@ -60,9 +63,10 @@ header{position:sticky;top:0;z-index:10;background:var(--hdr);backdrop-filter:bl
 /* hero */
 .hero{background:var(--panel);color:var(--on-panel-muted);padding:104px 0 96px;position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--panel-line) 1px,transparent 1px),linear-gradient(90deg,var(--panel-line) 1px,transparent 1px);background-size:64px 64px;opacity:.35;pointer-events:none}
+.hero::before{content:"";position:absolute;inset:0;background:url(assets/predios.jpg) center 35%/cover no-repeat;opacity:.14;filter:grayscale(.4) brightness(.55) contrast(1.15);pointer-events:none}
 .hero .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center;position:relative;z-index:1}
 .hero h1{color:var(--on-panel);font-weight:400;font-size:clamp(2.3rem,5vw,3.9rem);line-height:1.05;letter-spacing:-.035em;margin-bottom:24px}
-.hero h1 em{font-style:normal;color:var(--cta)}
+.hero h1 em{font-style:normal;color:var(--cta-text)}
 .hero .lead{color:var(--on-panel-muted);font-size:1.1rem}
 .hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
 .hero .btn-ghost{color:var(--on-panel);border-color:var(--panel-line)}
@@ -100,7 +104,7 @@ header{position:sticky;top:0;z-index:10;background:var(--hdr);backdrop-filter:bl
 .card.focus{background:var(--panel);padding-left:28px;border-right:0}
 .card.focus h3{color:var(--on-panel)}.card.focus p{color:var(--on-panel-muted)}
 .tag{display:inline-block;font-family:var(--mono);font-size:.7rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin-bottom:18px;color:var(--accent)}
-.card.focus .tag{color:var(--cta)}
+.card.focus .tag{color:var(--cta-text)}
 @media(max-width:900px){.card,.card+.card{padding:28px 0;border-right:0;border-bottom:1px solid var(--line)}.card.focus{padding:28px 24px}}
 .pain{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px;margin-top:56px}
 .pain div{padding-top:16px;border-top:2px solid var(--head)}
@@ -191,6 +195,87 @@ td.mid{background:var(--mid);font-weight:600;color:var(--on-panel)}
 .report .btn{padding:10px 18px;font-size:.88rem}
 @media(max-width:760px){.report{grid-template-columns:1fr;padding:20px;gap:28px}.kpis{grid-template-columns:1fr 1fr}.tabs button{padding:12px 16px 10px}}
 
+/* em breve: valuation em PDF/PowerPoint */
+.soon{display:inline-block;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cta-ink);background:var(--cta);padding:3px 8px;border-radius:var(--radius);margin-left:4px}
+.aud{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0;padding:0;list-style:none}
+.aud li{font-size:.86rem;color:var(--head);border:1px solid var(--line-strong);padding:7px 12px;border-radius:var(--radius)}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);margin:36px 0 0;border-top:1px solid var(--line-strong);counter-reset:f;padding:0;list-style:none}
+.flow li{padding:20px 20px 0 0;border-right:1px solid var(--line)}
+.flow li+li{padding-left:20px}
+.flow li:last-child{border-right:0}
+.flow li::before{counter-increment:f;content:counter(f,decimal-leading-zero);display:block;font-family:var(--mono);font-size:.74rem;color:var(--cta-text);margin-bottom:10px}
+.flow b{display:block;color:var(--head);font-weight:500;margin-bottom:4px}
+.flow span{font-size:.88rem;color:var(--muted)}
+@media(max-width:760px){.flow{grid-template-columns:1fr 1fr;row-gap:20px}.flow li,.flow li+li{padding:16px 12px 0 0;border-right:0}}
+.deck{position:relative;margin-top:48px;padding:0 64px}
+.deck-viewport{overflow:hidden;border:1px solid var(--line)}
+.deck-track{display:flex;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.deck-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:var(--radius);border:1px solid var(--line-strong);background:var(--card);color:var(--head);font-size:1.4rem;line-height:1;cursor:pointer;display:grid;place-items:center;transition:border-color .2s,background .2s;z-index:2}
+.deck-nav:hover{border-color:var(--cta);background:var(--soft)}
+.deck-nav.prev{left:0}.deck-nav.next{right:0}
+.deck-meta{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:16px 64px 0;font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.deck-dots{display:flex;gap:6px}
+.deck-dots button{width:24px;height:4px;border:0;padding:0;background:var(--line-strong);cursor:pointer;border-radius:2px}
+.deck-dots button[aria-current="true"]{background:var(--cta)}
+@media(max-width:760px){.deck{padding:0}.deck-nav{width:38px;height:38px;font-size:1.1rem;top:auto;bottom:-56px;transform:none}.deck-meta{margin:16px 48px 0;justify-content:center}.deck-meta span{display:none}}
+/* página de exemplo (folha clara, como um PDF) */
+.slide{flex:0 0 100%;aspect-ratio:16/9;background:var(--paper);color:var(--ink);display:flex;flex-direction:column;padding:22px 28px 14px;font-size:.78rem;line-height:1.35;user-select:none;-webkit-user-select:none}
+.s-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:2px solid var(--ink);padding-bottom:10px}
+.s-tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-accent)}
+.slide h3{color:var(--ink);font-size:1.15rem;font-weight:600;letter-spacing:-.01em;margin:3px 0 2px}
+.s-head p{color:var(--ink-muted);font-size:.74rem}
+.s-brand{font-weight:600;font-size:.8rem;color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:6px}
+.s-brand svg{width:14px;height:15px}
+.s-body{flex:1;display:grid;grid-template-columns:1.15fr 1fr;gap:24px;padding-top:14px;min-height:0}
+.s-body.one{grid-template-columns:1fr}
+.s-h{font-weight:600;font-size:.74rem;color:var(--ink);border-bottom:1px solid var(--ink-line);padding-bottom:4px;margin-bottom:8px;display:flex;justify-content:space-between;gap:8px}
+.s-h small{font-weight:400;color:var(--ink-muted)}
+.s-foot{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--ink-line);padding-top:6px;margin-top:10px;font-size:.62rem;color:var(--ink-muted)}
+.s-t{width:100%;border-collapse:collapse;font-size:.72rem;margin:0}
+.s-t th,.s-t td{border:0;border-bottom:1px solid var(--ink-line);padding:4px 5px;text-align:right;color:var(--ink);font-family:inherit}
+.s-t th{font-weight:600;color:var(--ink-muted);font-size:.66rem}
+.s-t th:first-child,.s-t td:first-child{text-align:left}
+.s-t tr.tot td{font-weight:700;border-top:1.5px solid var(--ink);background:var(--paper-2)}
+.s-t td.hi{background:var(--ink);color:var(--paper);font-weight:700}
+.s-t td.mid{background:var(--paper-2);font-weight:600}
+.s-bars{display:flex;align-items:flex-end;gap:8px;height:96px;border-bottom:1px solid var(--ink);margin:14px 0 18px}
+.s-bars div{flex:1;background:var(--ink-muted);position:relative}
+.s-bars div.k{background:var(--ink)}
+.s-bars div b{position:absolute;top:-15px;left:0;right:0;text-align:center;font-size:.64rem;color:var(--ink);font-weight:600}
+.s-bars div i{position:absolute;bottom:-16px;left:-6px;right:-6px;text-align:center;font-style:normal;font-size:.6rem;color:var(--ink-muted);white-space:nowrap}
+.s-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ink-line);border:1px solid var(--ink-line);margin-top:10px}
+.s-kpis div{background:var(--paper);padding:8px}
+.s-kpis b{display:block;font-size:1rem;color:var(--ink);font-weight:600}
+.s-kpis span{font-size:.62rem;color:var(--ink-muted)}
+.s-kpis .go b{color:var(--ink-accent)}
+.s-wf{display:flex;align-items:flex-end;gap:10px;height:210px;border-bottom:1px solid var(--ink);margin:16px 0 20px}
+.s-wf div{flex:1;position:relative;height:100%}
+.s-wf span{position:absolute;left:0;right:0;background:var(--ink-muted)}
+.s-wf .t span{background:var(--ink)}
+.s-wf .g span{background:var(--ink-accent)}
+.s-wf b{position:absolute;left:-4px;right:-4px;text-align:center;font-size:.64rem;color:var(--ink);font-weight:600}
+.s-wf i{position:absolute;bottom:-18px;left:-8px;right:-8px;text-align:center;font-style:normal;font-size:.58rem;color:var(--ink-muted);line-height:1.1}
+.s-ff{display:grid;gap:22px;margin-top:14px}
+.s-ff .r{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:10px;font-size:.68rem}
+.s-ff .r small{display:block;color:var(--ink-muted);font-size:.6rem}
+.s-ff .tr{position:relative;height:24px}
+.s-ff .bar{position:absolute;top:0;bottom:0;background:var(--ink)}
+.s-ff .bar.alt{background:var(--ink-muted)}
+.s-ff .bar em{position:absolute;top:5px;font-style:normal;font-size:.6rem;color:var(--ink);white-space:nowrap}
+.s-ff .bar em.a{right:calc(100% + 4px)}.s-ff .bar em.b{left:calc(100% + 4px)}
+.s-ff .ref{position:absolute;top:-4px;bottom:-4px;border-left:1.5px dashed var(--ink-accent)}
+.s-ff .axis{display:grid;grid-template-columns:150px 1fr;gap:10px;font-size:.58rem;color:var(--ink-muted)}
+.s-ff .axis div{display:flex;justify-content:space-between}
+.s-note{margin-top:8px;font-size:.66rem;color:var(--ink-muted)}
+.s-box{border:1.5px solid var(--ink);padding:10px;margin-top:10px}
+.s-box b{font-size:1.1rem;color:var(--ink)}
+@media(max-width:760px){.slide{aspect-ratio:auto;padding:16px}.s-body{grid-template-columns:1fr;gap:16px}.s-ff .r,.s-ff .axis{grid-template-columns:96px 1fr}}
+.pitch-soon{margin-top:72px;display:grid;grid-template-columns:1fr auto;gap:16px 40px;align-items:center;padding:32px;border:1px solid var(--line);border-left:3px solid var(--cta);background:var(--card)}
+.pitch-soon h3{font-size:1.35rem;margin:0}
+.pitch-soon p{color:var(--muted);margin:0;grid-column:1}
+.pitch-soon .btn{grid-column:2;grid-row:1/3}
+@media(max-width:760px){.pitch-soon{grid-template-columns:1fr;padding:24px}.pitch-soon .btn{grid-column:1;grid-row:auto;justify-self:start}}
+
 /* perguntas frequentes: linhas */
 .faq{margin-top:40px;max-width:880px;border-top:1px solid var(--line-strong)}
 .faq details{border-bottom:1px solid var(--line)}
@@ -220,15 +305,17 @@ footer p:last-child{max-width:820px}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="cotejo-escudo" viewBox="0 0 100 110"><path d="M8 4H92V52C92 80 72 96 50 106C28 96 8 80 8 52Z" style="fill:var(--brand)"/><g transform="translate(14 14) scale(.72)"><path d="M46 36L10 12L14 22L44 42Z M45 41L6 26L11 35L44 47Z M45 46L8 42L14 49L45 52Z M46 51L14 56L21 61L46 57Z M54 36L90 12L86 22L56 42Z M55 41L94 26L89 35L56 47Z M55 46L92 42L86 49L55 52Z M54 51L86 56L79 61L54 57Z M50 30C56 34 57 50 54 64L50 74L46 64C43 50 44 34 50 30Z M46 26C46 18 54 15 59 19L67 21L60 24L62 28C58 29 54 31 50 32Z M46 70L39 89L50 82L61 89L54 70Z M44 65L35 72L41 73Z M56 65L65 72L59 73Z" style="fill:var(--on-brand)"/></g><circle cx="53.6" cy="29.8" r="1.2" style="fill:var(--brand)"/></symbol></svg>
 
 <header>
   <div class="wrap nav">
-    <a href="#" class="logo"><span class="mark" aria-hidden="true"></span>Cotejo</a>
+    <a href="#" class="logo"><svg class="mark" aria-hidden="true"><use href="#cotejo-escudo"/></svg>Cotejo</a>
     <ul>
       <li><a href="#para-quem">Para quem</a></li>
       <li><a href="#como">Como funciona</a></li>
       <li><a href="#exemplos">Exemplos</a></li>
       <li><a href="#simulador">Simulador</a></li>
+      <li><a href="#em-breve">Em breve</a></li>
       <li><a href="#duvidas">Dúvidas</a></li>
     </ul>
     <a href="#simulador" class="btn btn-primary nav-cta">Testar o simulador</a>  </div>
@@ -362,6 +449,36 @@ footer p:last-child{max-width:820px}
       <div class="panel side" id="stats"></div>
     </div>
     <p class="note">Exercício educacional com números de exemplo. Pequenas mudanças nas premissas alteram muito o resultado — essa é a lição principal de qualquer valuation. Um DCF simples como este funciona melhor para empresas maduras; para quem cresce acima da média por muitos anos, a comparação com empresas parecidas costuma explicar melhor o preço.</p>
+  </div>
+</section>
+
+<section id="em-breve">
+  <div class="wrap">
+    <p class="eyebrow">Em breve <span class="soon">Lista de espera</span></p>
+    <h2>Seu valuation entregue pronto, em PDF e PowerPoint.</h2>
+    <p class="lead">Para quem vive de modelo e de apresentação: equity research, investment banking, private equity, M&amp;A, ligas de finanças e times de corporate finance. Você define o caso. A gente entrega o material no padrão de mercado, com cada conta conferida e rastreável.</p>
+    <ul class="aud" aria-label="Para quem é">
+      <li>Equity Research</li><li>Investment Banking</li><li>Private Equity</li><li>M&amp;A</li><li>Ligas e clubes de finanças</li><li>Corporate finance e RI</li>
+    </ul>
+    <ol class="flow">
+      <li><b>Pedido</b><span>A empresa, o objetivo e o prazo.</span></li>
+      <li><b>Escolha</b><span>Método e formato: DCF, múltiplos, SOTP, LBO, sinergias; PDF ou PowerPoint.</span></li>
+      <li><b>Descrição</b><span>O contexto e a tese que você quer defender.</span></li>
+      <li><b>Premissas</b><span>As suas. Cada número do material sai delas, e o impacto de cada uma fica visível.</span></li>
+    </ol>
+
+    <div class="deck" role="region" aria-roledescription="carrossel" aria-label="Exemplos de páginas">
+      <button type="button" class="deck-nav prev" id="deck-prev" aria-label="Página anterior">&#8249;</button>
+      <div class="deck-viewport"><div class="deck-track" id="deck-track" aria-live="polite"></div></div>
+      <button type="button" class="deck-nav next" id="deck-next" aria-label="Próxima página">&#8250;</button>
+    </div>
+    <div class="deck-meta"><span id="deck-count">1 / 6</span><div class="deck-dots" id="deck-dots"></div><span>Empresas e números fictícios</span></div>
+
+    <div class="pitch-soon">
+      <h3>Quer ser dos primeiros a receber?</h3>
+      <p>Mande um e-mail com o caso que você tem em mãos. Quem entra na lista recebe o acesso antes e as novidades primeiro.</p>
+      <a class="btn btn-primary" href="mailto:pxisto34@gmail.com?subject=Lista%20de%20espera%20-%20valuation%20em%20PDF%2FPowerPoint">Entrar na lista</a>
+    </div>
   </div>
 </section>
 
@@ -688,6 +805,186 @@ footer p:last-child{max-width:820px}
     }
   })();
   $('hero-load').addEventListener('click',()=>loadInSim(heroP));
+})();
+</script>
+<script>
+// Em breve: páginas de exemplo de valuation em PDF/PowerPoint.
+// Empresas e números fictícios. Todo número exibido é calculado aqui a partir das premissas de cada página.
+(function(){
+  const el=id=>document.getElementById(id);
+  const n0=v=>new Intl.NumberFormat('pt-BR',{maximumFractionDigits:0}).format(v);
+  const n1=v=>new Intl.NumberFormat('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1}).format(v);
+  const rs=v=>'R$ '+new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v);
+  const pct=v=>n1(v*100)+'%', mult=v=>n1(v)+'x';
+  const neg=v=>v<0?'('+n0(-v)+')':n0(v);
+  const sum=a=>a.reduce((s,x)=>s+x,0);
+
+  // 1) Equity Research: DCF do acionista (FCFE) com valor terminal por múltiplo de saída
+  const er={anos:['2026E','2027E','2028E','2029E','2030E'],ni:[118,142,168,196,224],da:[12,15,18,21,24],nwc:[-10,-12,-13,-14,-15],capex:[-20,-24,-28,-31,-34],
+    ebitda:[190,226,265,305,346],ke:[['Rf (EUA)',4.2],['Prêmio × β',5.0],['Risco-país',3.0],['Inflação',1.8]],
+    saida:13,caixa:150,acoes:80,preco:30};
+  function fcfeDCF(p,ke,saida){
+    const f=p.ni.map((x,i)=>x+p.da[i]+p.nwc[i]+p.capex[i]);
+    const pv=f.map((x,i)=>x/Math.pow(1+ke,i+1));
+    const tv=saida*p.ebitda[4], pvtv=tv/Math.pow(1+ke,5);
+    const eq=sum(pv)+pvtv+p.caixa;
+    return {f,pv,tv,pvtv,eq,ps:eq/p.acoes};
+  }
+  const keBase=sum(er.ke.map(x=>x[1]))/100, r1=fcfeDCF(er,keBase,er.saida);
+  const up1=r1.ps/er.preco-1, rec=up1>=.15?'Compra':up1<=-.1?'Venda':'Neutro';
+
+  // 2) Sensibilidade da mesma tese: Ke × múltiplo de saída
+  const kes=[-.01,-.005,0,.005,.01].map(d=>keBase+d), saidas=[11,12,13,14,15];
+
+  // 3) Investment Banking (sell-side): football field em EV/EBITDA convertido em valor por ação
+  const ib={ebitda:1200,divida:3000,acoes:500,oferta:8.5,metodos:[
+    ['DCF','WACC 9–11% · g 3–4%',7.6,9.4],['Comparáveis de mercado','EV/EBITDA 2026E',6.8,8.4],
+    ['Transações precedentes','controle, últimos 5 anos',8.2,10.0],['LBO','TIR de 20–25% ao comprador',6.2,7.2]]};
+  const pIB=m=>(m*ib.ebitda-ib.divida)/ib.acoes;
+
+  // 4) M&A (buy-side): ponte de valor com sinergias
+  const ma={preco:40,justo:43.5,sinPre:180,ir:.34,wacc:.105,g:.03,integracao:240,acoes:300};
+  const sinVal=ma.sinPre*(1-ma.ir)/(ma.wacc-ma.g)-ma.integracao, sinPS=sinVal/ma.acoes;
+  const alvoMA=ma.justo+sinPS, partSin=sinPS/(alvoMA-ma.preco), premioMax=alvoMA/ma.preco-1;
+
+  // 5) Investment Banking: soma das partes (SOTP)
+  const so={seg:[['Geração térmica',1550,8.0],['Renováveis',870,10.0],['Transmissão',530,10.0],['Comercialização',320,5.0]],holding:[-90,7.0],divida:11500,acoes:1500};
+  const segEV=so.seg.map(s=>s[1]*s[2]), bruto=sum(segEV), holdEV=so.holding[0]*so.holding[1], evSO=bruto+holdEV, eqSO=evSO-so.divida;
+
+  // 6) Private Equity: LBO com retorno e decomposição do ganho
+  const lbo={ebitda:250,entrada:8.0,alav:4.0,cagr:.09,anos:5,saida:8.0,dividaSaida:450};
+  const evE=lbo.ebitda*lbo.entrada, dE=lbo.ebitda*lbo.alav, eqE=evE-dE, ebS=lbo.ebitda*Math.pow(1+lbo.cagr,lbo.anos);
+  const evS=ebS*lbo.saida, eqS=evS-lbo.dividaSaida, moic=eqS/eqE, tir=Math.pow(moic,1/lbo.anos)-1;
+  const gEbitda=(ebS-lbo.ebitda)*lbo.entrada, gMult=(lbo.saida-lbo.entrada)*ebS, gDesal=dE-lbo.dividaSaida;
+
+  // verificação interna: as decomposições precisam fechar
+  const ok=[Math.abs(gEbitda+gMult+gDesal-(eqS-eqE))<1e-6, Math.abs(sum(segEV.map(v=>v/bruto))-1)<1e-9, Math.abs(r1.eq-(sum(r1.pv)+r1.pvtv+er.caixa))<1e-9];
+  if(ok.includes(false)) console.error('Cotejo: exemplo de página com conta que não fecha', ok);
+
+  // componentes visuais
+  const bars=(itens,max,fmt=n0)=>`<div class="s-bars">${itens.map(([l,v,k])=>`<div class="${k||''}" style="height:${Math.max(3,v/max*100)}%"><b>${fmt(v)}</b><i>${l}</i></div>`).join('')}</div>`;
+  function wf(passos,fmt){ // passos: [rótulo, valor, tipo] tipo: t (total), d (variação), g (variação em destaque)
+    let acc=0; const pts=passos.map(([l,v,t])=>{const base=t==='t'?0:acc; const top=t==='t'?v:acc+v; acc=t==='t'?v:acc+v; return {l,v,t,lo:Math.min(base,top),hi:Math.max(base,top)};});
+    const max=Math.max(...pts.map(p=>p.hi));
+    return `<div class="s-wf">${pts.map(p=>`<div class="${p.t}"><span style="bottom:${p.lo/max*100}%;height:${Math.max(.8,(p.hi-p.lo)/max*100)}%"></span><b style="bottom:calc(${p.hi/max*100}% + 2px)">${p.t==='t'?'':'+'}${fmt(p.v)}</b><i>${p.l}</i></div>`).join('')}</div>`;
+  }
+  const page=(tag,titulo,sub,corpo,i,uma)=>`<article class="slide" aria-roledescription="slide" aria-label="Página ${i} de 6">
+    <div class="s-head"><div><span class="s-tag">${tag}</span><h3>${titulo}</h3><p>${sub}</p></div><span class="s-brand"><svg aria-hidden="true"><use href="#cotejo-escudo"/></svg>Cotejo</span></div>
+    <div class="s-body${uma?' one':''}">${corpo}</div>
+    <div class="s-foot"><span>Exemplo ilustrativo · empresa e números fictícios · premissas definidas pelo cliente</span><span>${i}</span></div></article>`;
+
+  const pgs=[];
+  pgs.push(page('Equity Research · PDF','Marca de cosméticos: DCF do acionista aponta upside de '+pct(up1),
+    'Fluxo de caixa ao acionista (FCFE) descontado pelo custo de capital próprio, com saída a '+mult(er.saida)+' EBITDA 2030E',
+    `<div><div class="s-h">Fluxo de caixa ao acionista <small>R$ mi</small></div>
+      <table class="s-t"><tr><th></th>${er.anos.map(a=>`<th>${a}</th>`).join('')}</tr>
+      <tr><td>Lucro líquido</td>${er.ni.map(v=>`<td>${neg(v)}</td>`).join('')}</tr>
+      <tr><td>(+) D&amp;A</td>${er.da.map(v=>`<td>${neg(v)}</td>`).join('')}</tr>
+      <tr><td>(−) Var. capital de giro</td>${er.nwc.map(v=>`<td>${neg(v)}</td>`).join('')}</tr>
+      <tr><td>(−) Capex</td>${er.capex.map(v=>`<td>${neg(v)}</td>`).join('')}</tr>
+      <tr class="tot"><td>FCFE</td>${r1.f.map(v=>`<td>${neg(v)}</td>`).join('')}</tr></table>
+      <div class="s-h" style="margin-top:12px">Custo de capital próprio (Ke) <small>%</small></div>
+      ${bars(er.ke.map(([l,v])=>[l,v]).concat([['Ke',keBase*100,'k']]),keBase*100,n1)}</div>
+    <div><div class="s-h">Do fluxo ao preço-alvo <small>R$ mi</small></div>
+      <table class="s-t"><tr><td>Valor presente dos fluxos 2026–30</td><td>${n0(sum(r1.pv))}</td></tr>
+      <tr><td>Valor presente do terminal (${mult(er.saida)} × ${n0(er.ebitda[4])})</td><td>${n0(r1.pvtv)}</td></tr>
+      <tr><td>(+) Caixa líquido</td><td>${n0(er.caixa)}</td></tr>
+      <tr class="tot"><td>Valor do acionista</td><td>${n0(r1.eq)}</td></tr>
+      <tr><td>÷ ${n0(er.acoes)} mi de ações</td><td>${rs(r1.ps)}</td></tr></table>
+      <div class="s-kpis"><div><b>${rs(r1.ps)}</b><span>preço-alvo</span></div><div class="go"><b>${(up1>=0?'+':'')+pct(up1)}</b><span>vs. ${rs(er.preco)}</span></div><div><b>${rec}</b><span>recomendação</span></div></div>
+      <p class="s-note">Ke = taxa livre de risco nos EUA + prêmio de mercado × beta + risco-país + diferencial de inflação = ${er.ke.map(x=>n1(x[1])).join(' + ')} = ${pct(keBase)}. Terminal = ${pct(r1.pvtv/(r1.eq-er.caixa))} do valor; EV/EBITDA 2026E implícito de ${mult((r1.eq-er.caixa)/er.ebitda[0])}.</p></div>`,1));
+
+  pgs.push(page('Equity Research · PDF','Sensibilidade: o preço-alvo resiste a ±1 p.p. de Ke e ±2x de saída',
+    'Preço-alvo por ação (R$) em cada combinação de custo de capital próprio e múltiplo de saída; caso-base destacado',
+    `<div><div class="s-h">Preço-alvo por ação <small>Ke (linhas) × EV/EBITDA de saída (colunas)</small></div>
+      <table class="s-t"><tr><th>Ke \\ Saída</th>${saidas.map(s=>`<th>${mult(s)}</th>`).join('')}</tr>
+      ${kes.map((k,i)=>`<tr><td>${pct(k)}</td>${saidas.map((s,j)=>{const v=fcfeDCF(er,k,s).ps;return `<td class="${i===2&&j===2?'hi':(i===2||j===2)?'mid':''}">${rs(v).replace('R$ ','')}</td>`}).join('')}</tr>`).join('')}</table>
+      <p class="s-note">Upside vs. ${rs(er.preco)}: de ${pct(fcfeDCF(er,kes[4],saidas[0]).ps/er.preco-1)} no pior canto a ${pct(fcfeDCF(er,kes[0],saidas[4]).ps/er.preco-1)} no melhor.</p></div>
+    <div><div class="s-h">Leitura para o comitê</div>
+      <table class="s-t"><tr><td>Caso-base</td><td>${rs(r1.ps)}</td></tr>
+      <tr><td>Ke +1 p.p.</td><td>${rs(fcfeDCF(er,kes[4],er.saida).ps)}</td></tr>
+      <tr><td>Saída −2x</td><td>${rs(fcfeDCF(er,keBase,saidas[0]).ps)}</td></tr>
+      <tr class="tot"><td>Os dois juntos</td><td>${rs(fcfeDCF(er,kes[4],saidas[0]).ps)}</td></tr></table>
+      <div class="s-box">Mesmo no canto mais duro da tabela, o preço-alvo fica em <b>${rs(fcfeDCF(er,kes[4],saidas[0]).ps)}</b>, ${pct(fcfeDCF(er,kes[4],saidas[0]).ps/er.preco-1)} vs. o preço atual.</div></div>`,2));
+
+  const lo=Math.min(...ib.metodos.map(m=>pIB(m[2]))), hi=Math.max(...ib.metodos.map(m=>pIB(m[3])));
+  const a=Math.floor(lo)-1, b=Math.ceil(hi)+1, pos=v=>(v-a)/(b-a)*100;
+  pgs.push(page('Investment Banking · Sell-side · PowerPoint','Saneamento: faixa de valor sustenta a oferta de '+mult(ib.oferta)+' EBITDA',
+    'Football field por método, de EV/EBITDA 2026E para valor por ação (EBITDA R$ '+n0(ib.ebitda)+' mi; dívida líquida R$ '+n0(ib.divida)+' mi; '+n0(ib.acoes)+' mi de ações)',
+    `<div><div class="s-h">Valor por ação por método <small>R$ · linha tracejada = oferta</small></div>
+      <div class="s-ff">${ib.metodos.map((m,i)=>`<div class="r"><div>${m[0]}<small>${m[1]} · ${mult(m[2])}–${mult(m[3])}</small></div>
+        <div class="tr"><div class="bar ${i%2?'alt':''}" style="left:${pos(pIB(m[2]))}%;width:${pos(pIB(m[3]))-pos(pIB(m[2]))}%"><em class="a">${n1(pIB(m[2]))}</em><em class="b">${n1(pIB(m[3]))}</em></div><div class="ref" style="left:${pos(pIB(ib.oferta))}%"></div></div></div>`).join('')}
+        <div class="axis"><span></span><div><span>R$ ${a}</span><span>R$ ${b}</span></div></div></div></div>
+    <div><div class="s-h">Oferta de ${mult(ib.oferta)} EBITDA</div>
+      <table class="s-t"><tr><td>Valor da firma (${mult(ib.oferta)} × ${n0(ib.ebitda)})</td><td>${n0(ib.oferta*ib.ebitda)}</td></tr>
+      <tr><td>(−) Dívida líquida</td><td>(${n0(ib.divida)})</td></tr>
+      <tr class="tot"><td>Valor do acionista</td><td>${n0(ib.oferta*ib.ebitda-ib.divida)}</td></tr>
+      <tr><td>Por ação</td><td>${rs(pIB(ib.oferta))}</td></tr></table>
+      <p class="s-note">A oferta fica dentro da faixa de: ${ib.metodos.filter(m=>ib.oferta>=m[2]&&ib.oferta<=m[3]).map(m=>m[0]).join(', ')||'nenhum método'}; acima de: ${ib.metodos.filter(m=>ib.oferta>m[3]).map(m=>m[0]+' (até '+mult(m[3])+')').join(', ')||'nenhum'}.</p></div>`,3));
+
+  pgs.push(page('M&A · Buy-side · PowerPoint','Sinergias respondem por '+pct(partSin)+' do prêmio que o comprador pode pagar',
+    'Do preço atual ao valor com sinergias, por ação (R$); sinergias de custo capitalizadas pelo WACC, líquidas de IR e do custo de integração',
+    `<div><div class="s-h">Ponte de valor por ação <small>R$</small></div>
+      ${wf([['Preço atual',ma.preco,'t'],['Upside isolado',ma.justo-ma.preco,'d'],['Valor justo',ma.justo,'t'],['Sinergias',sinPS,'g'],['Com sinergias',alvoMA,'t']],v=>new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v))}</div>
+    <div><div class="s-h">Como as sinergias foram valoradas <small>R$ mi</small></div>
+      <table class="s-t"><tr><td>Sinergia anual antes de IR</td><td>${n0(ma.sinPre)}</td></tr>
+      <tr><td>(−) IR de ${pct(ma.ir)}</td><td>(${n0(ma.sinPre*ma.ir)})</td></tr>
+      <tr><td>÷ (WACC ${pct(ma.wacc)} − g ${pct(ma.g)})</td><td>${n0(ma.sinPre*(1-ma.ir)/(ma.wacc-ma.g))}</td></tr>
+      <tr><td>(−) Custo de integração</td><td>(${n0(ma.integracao)})</td></tr>
+      <tr class="tot"><td>Valor das sinergias</td><td>${n0(sinVal)}</td></tr>
+      <tr><td>÷ ${n0(ma.acoes)} mi de ações</td><td>${rs(sinPS)}</td></tr></table>
+      <div class="s-kpis"><div><b>${rs(alvoMA)}</b><span>valor com sinergias</span></div><div class="go"><b>${pct(premioMax)}</b><span>prêmio máximo</span></div><div><b>${pct(partSin)}</b><span>do ganho vem das sinergias</span></div></div></div>`,4));
+
+  pgs.push(page('Investment Banking · Soma das partes · PDF','Energia: soma das partes vale '+rs(eqSO/so.acoes)+' por ação',
+    'Cada negócio avaliado pelo múltiplo do seu setor; custos da holding descontados; dívida líquida de R$ '+n0(so.divida)+' mi',
+    `<div><div class="s-h">Valor da firma por negócio <small>R$ mi</small></div>
+      <table class="s-t"><tr><th>Negócio</th><th>EBITDA</th><th>EV/EBITDA</th><th>EV</th><th>% do bruto</th></tr>
+      ${so.seg.map((s,i)=>`<tr><td>${s[0]}</td><td>${n0(s[1])}</td><td>${mult(s[2])}</td><td>${n0(segEV[i])}</td><td>${pct(segEV[i]/bruto)}</td></tr>`).join('')}
+      <tr class="tot"><td>Soma bruta</td><td>${n0(sum(so.seg.map(s=>s[1])))}</td><td>${mult(bruto/sum(so.seg.map(s=>s[1])))}</td><td>${n0(bruto)}</td><td>100,0%</td></tr></table>
+      ${bars(so.seg.map((s,i)=>[s[0].split(' ')[0],segEV[i],i===0?'k':'']),Math.max(...segEV))}</div>
+    <div><div class="s-h">Do valor bruto ao valor por ação <small>R$ mi</small></div>
+      <table class="s-t"><tr><td>Soma bruta dos negócios</td><td>${n0(bruto)}</td></tr>
+      <tr><td>(−) Custos da holding (${n0(-so.holding[0])} × ${mult(so.holding[1])})</td><td>(${n0(-holdEV)})</td></tr>
+      <tr><td>Valor da firma</td><td>${n0(evSO)}</td></tr>
+      <tr><td>(−) Dívida líquida</td><td>(${n0(so.divida)})</td></tr>
+      <tr class="tot"><td>Valor do acionista</td><td>${n0(eqSO)}</td></tr>
+      <tr><td>÷ ${n0(so.acoes)} mi de ações</td><td>${rs(eqSO/so.acoes)}</td></tr></table>
+      <p class="s-note">Térmica e renováveis somam ${pct((segEV[0]+segEV[1])/bruto)} do valor bruto: são elas que decidem a tese.</p></div>`,5));
+
+  pgs.push(page('Private Equity · LBO · PowerPoint','Saída em 5 anos entrega '+mult(moic)+' e TIR de '+pct(tir),
+    'Compra a '+mult(lbo.entrada)+' EBITDA com '+mult(lbo.alav)+' de alavancagem; EBITDA cresce '+pct(lbo.cagr)+' a.a.; saída ao mesmo múltiplo',
+    `<div><div class="s-h">Entrada e saída <small>R$ mi</small></div>
+      <table class="s-t"><tr><th></th><th>Entrada</th><th>Saída (ano ${lbo.anos})</th></tr>
+      <tr><td>EBITDA</td><td>${n0(lbo.ebitda)}</td><td>${n0(ebS)}</td></tr>
+      <tr><td>EV/EBITDA</td><td>${mult(lbo.entrada)}</td><td>${mult(lbo.saida)}</td></tr>
+      <tr><td>Valor da firma</td><td>${n0(evE)}</td><td>${n0(evS)}</td></tr>
+      <tr><td>(−) Dívida líquida</td><td>(${n0(dE)})</td><td>(${n0(lbo.dividaSaida)})</td></tr>
+      <tr class="tot"><td>Equity</td><td>${n0(eqE)}</td><td>${n0(eqS)}</td></tr></table>
+      <div class="s-kpis"><div class="go"><b>${mult(moic)}</b><span>MOIC</span></div><div class="go"><b>${pct(tir)}</b><span>TIR</span></div><div><b>${n0(eqS-eqE)}</b><span>ganho (R$ mi)</span></div></div></div>
+    <div><div class="s-h">De onde vem o ganho <small>R$ mi</small></div>
+      ${wf([['Equity de entrada',eqE,'t'],['Crescimento do EBITDA',gEbitda,'g'],['Desalavancagem',gDesal,'d'],['Equity de saída',eqS,'t']],v=>n0(v))}
+      <p class="s-note">Sem expansão de múltiplo: ${pct(gEbitda/(eqS-eqE))} do ganho vem de operação e ${pct(gDesal/(eqS-eqE))} do pagamento de dívida.</p></div>`,6));
+
+  // carrossel
+  const track=el('deck-track'), dots=el('deck-dots'), count=el('deck-count');
+  track.innerHTML=pgs.join('');
+  let at=0; const total=pgs.length;
+  dots.innerHTML=pgs.map((_,i)=>`<button type="button" aria-label="Ir para a página ${i+1}"></button>`).join('');
+  function go(i){
+    at=(i+total)%total; track.style.transform=`translateX(${-at*100}%)`;
+    [...dots.children].forEach((d,j)=>d.setAttribute('aria-current',j===at));
+    [...track.children].forEach((s,j)=>s.setAttribute('aria-hidden',j!==at));
+    count.textContent=`${at+1} / ${total}`;
+  }
+  el('deck-prev').addEventListener('click',()=>go(at-1));
+  el('deck-next').addEventListener('click',()=>go(at+1));
+  [...dots.children].forEach((d,j)=>d.addEventListener('click',()=>go(j)));
+  const deck=track.closest('.deck'); deck.tabIndex=0;
+  deck.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')go(at-1);if(e.key==='ArrowRight')go(at+1);});
+  let x0=null; track.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});
+  track.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(at+(dx<0?1:-1));x0=null;});
+  track.addEventListener('contextmenu',e=>e.preventDefault());
+  go(0);
 })();
 </script>
 </body>
