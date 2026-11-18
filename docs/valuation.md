@@ -1,6 +1,6 @@
 # Contexto de valuation (DCF + múltiplos)
 
-Base de conhecimento da Valuora. O simulador do `index.html` é uma versão simplificada (FCF direto, 5 anos, Gordon puro); este documento descreve o método completo que o produto deve seguir.
+Base de conhecimento do Cotejo. O simulador do `index.html` é uma versão simplificada (FCF direto, 5 anos, Gordon puro); este documento descreve o método completo que o produto deve seguir.
 
 ## Estrutura
 
