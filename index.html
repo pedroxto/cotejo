@@ -17,7 +17,7 @@
   --radius:4px;
   /* site só no tema escuro */
   --bg:#0b0c0e; --soft:#111316; --card:#15171a; --line:#24272c; --line-strong:#353a41;
-  --text:#e4e6e9; --muted:#9a9fa7; --head:#f5f6f7;
+  --text:#e4e6e9; --muted:#9a9fa7; --head:#f5f6f7; --faint:#7d838c;
   --accent:#6aa0ec; --cta:#1f4594; --cta-hover:#183776; --cta-ink:#ffffff; --cta-text:#7ea6f2;
   --panel:#141619; --panel-2:#1b1e22; --on-panel:#ffffff; --on-panel-muted:#a3a8b0; --panel-line:rgba(255,255,255,.12);
   --pos:#00c796; --neg:#ff9b8a; --mid:rgba(31,69,148,.45);
@@ -177,6 +177,17 @@ td.mid{background:var(--mid);font-weight:600;color:var(--on-panel)}
 @media(max-width:700px){.calc{grid-template-columns:1fr}.calc>.panel:first-child{border-right:0}.panel,.out{padding:20px}}
 
 /* simulador: grupos de campos e leitura do resultado */
+.fields fieldset{row-gap:0}
+.fields fieldset label{display:grid;grid-template-rows:subgrid;grid-row:span 4;row-gap:0;align-content:start;margin-bottom:18px}
+.fields fieldset label small{margin-bottom:8px}
+.fields fieldset .inp{margin-top:0;align-self:end}
+.help{display:block;margin-top:8px;font-size:.72rem;font-weight:400;line-height:1.45;color:var(--faint)}
+.help summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start;gap:8px;transition:color .2s}
+.help summary::-webkit-details-marker{display:none}
+.help summary:hover{color:var(--muted)}
+.help summary::after{content:"";flex:none;width:6px;height:6px;margin:3px 2px 0 0;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);transition:transform .2s}
+.help[open] summary::after{transform:rotate(-135deg);margin-top:7px}
+.help:not([open]) .help-t{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 .fields{display:block}
 .fields fieldset{border:0;margin:0 0 22px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .fields fieldset:last-child{margin-bottom:0}
@@ -471,20 +482,20 @@ footer p:last-child{max-width:820px}
       <div class="panel">
         <div class="fields">
           <fieldset><legend>Geração de caixa</legend>
-          <label>Fluxo de caixa livre atual<small>da empresa, antes da dívida</small><span class="inp"><input id="fcf" type="number" step="any" value="100"><em>R$ mi</em></span></label>
-          <label>Crescimento anual<small>anos 1 a 5</small><span class="inp"><input id="g" type="number" step="any" value="8"><em>% a.a.</em></span></label>
+          <label>Fluxo de caixa livre atual<small>da empresa, antes da dívida</small><span class="inp"><input id="fcf" type="number" step="any" value="100"><em>R$ mi</em></span><details class="help"><summary><span class="help-t">Caixa que a operação gerou em 12 meses, já descontados impostos e investimentos, antes de pagar juros e dívidas. Ex.: lucro operacional R$ 120 mi − impostos R$ 30 mi + depreciação R$ 25 mi − investimentos R$ 15 mi = R$ 100 mi.</span></summary></details></label>
+          <label>Crescimento anual<small>anos 1 a 5</small><span class="inp"><input id="g" type="number" step="any" value="8"><em>% a.a.</em></span><details class="help"><summary><span class="help-t">Quanto esse caixa cresce por ano nos próximos 5 anos. Use algo perto do crescimento esperado das vendas: com 8% ao ano, R$ 100 mi viram R$ 147 mi no ano 5.</span></summary></details></label>
           </fieldset>
           <fieldset><legend>Custo de capital e perpetuidade</legend>
-          <label>Taxa de desconto<small>custo de capital da empresa (WACC)</small><span class="inp"><input id="r" type="number" step="any" value="12"><em>%</em></span></label>
-          <label>Crescimento perpétuo<small>depois do ano 5; menor que a taxa</small><span class="inp"><input id="gp" type="number" step="any" value="3"><em>%</em></span></label>
+          <label>Taxa de desconto<small>custo de capital da empresa (WACC)</small><span class="inp"><input id="r" type="number" step="any" value="12"><em>%</em></span><details class="help"><summary><span class="help-t">Retorno mínimo que sócios e credores exigem para financiar a empresa, ponderado pelo peso de cada um. Quanto mais arriscado o negócio, maior a taxa: no exemplo, passar de 12% para 13% reduz o valor em 13%.</span></summary></details></label>
+          <label>Crescimento perpétuo<small>depois do ano 5; menor que a taxa</small><span class="inp"><input id="gp" type="number" step="any" value="3"><em>%</em></span><details class="help"><summary><span class="help-t">Crescimento anual do caixa depois do ano 5, para sempre. Costuma ficar perto da inflação de longo prazo, ou seja, sem ganho real. Precisa ser menor que a taxa de desconto, senão a conta não fecha.</span></summary></details></label>
           </fieldset>
           <fieldset><legend>Do valor da firma aos sócios</legend>
-          <label>Dívida líquida<small>dívida bruta − caixa; negativo = caixa líquido</small><span class="inp"><input id="debt" type="number" step="any" value="300"><em>R$ mi</em></span></label>
-          <label>Ações ou cotas<small>total em circulação</small><span class="inp"><input id="sh" type="number" step="any" value="39"><em>mi</em></span></label>
+          <label>Dívida líquida<small>dívida bruta − caixa; negativo = caixa líquido</small><span class="inp"><input id="debt" type="number" step="any" value="300"><em>R$ mi</em></span><details class="help"><summary><span class="help-t">Empréstimos e financiamentos menos o dinheiro em caixa. Ex.: R$ 500 mi de dívida e R$ 200 mi em caixa = R$ 300 mi. Se a empresa tem mais caixa que dívida, digite o número negativo.</span></summary></details></label>
+          <label>Ações ou cotas<small>total em circulação</small><span class="inp"><input id="sh" type="number" step="any" value="39"><em>mi</em></span><details class="help"><summary><span class="help-t">Quantidade total de ações ou cotas, em milhões, usada para dividir o valor entre os sócios. Uma empresa com 1.000.000 de cotas: digite 1.</span></summary></details></label>
           </fieldset>
           <fieldset><legend>Preço e margem de segurança</legend>
-          <label>Preço de referência<small>por ação ou cota: oferta recebida ou preço de mercado (opcional)</small><span class="inp"><input id="px" type="number" step="any" value="22.10"><em>R$</em></span></label>
-          <label>Margem de segurança<small>desconto exigido sobre o valor justo</small><span class="inp"><input id="ms" type="number" step="any" value="20" min="0" max="99"><em>%</em></span></label>
+          <label>Preço de referência<small>por ação ou cota: oferta recebida ou preço de mercado (opcional)</small><span class="inp"><input id="px" type="number" step="any" value="22.10"><em>R$</em></span><details class="help"><summary><span class="help-t">Valor por ação ou cota que você quer comparar: uma oferta recebida, o preço de uma rodada de investimento ou a cotação na bolsa. Pode deixar em branco.</span></summary></details></label>
+          <label>Margem de segurança<small>desconto exigido sobre o valor justo</small><span class="inp"><input id="ms" type="number" step="any" value="20" min="0" max="99"><em>%</em></span><details class="help"><summary><span class="help-t">Desconto que você exige sobre o valor calculado para se proteger de erros nas premissas. Com 20%, um valor de R$ 28,28 por ação vira um preço-alvo de R$ 22,63.</span></summary></details></label>
           </fieldset>
         </div>
       </div>
