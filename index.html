@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20110%22%3E%3Cpath%20d%3D%22M8%204H92V52C92%2080%2072%2096%2050%20106C28%2096%208%2080%208%2052Z%22%20fill%3D%22%231d3d82%22%2F%3E%3Cg%20transform%3D%22translate(14%2014)%20scale(.72)%22%3E%3Cpath%20d%3D%22M46%2036L10%2012L14%2022L44%2042Z%20M45%2041L6%2026L11%2035L44%2047Z%20M45%2046L8%2042L14%2049L45%2052Z%20M46%2051L14%2056L21%2061L46%2057Z%20M54%2036L90%2012L86%2022L56%2042Z%20M55%2041L94%2026L89%2035L56%2047Z%20M55%2046L92%2042L86%2049L55%2052Z%20M54%2051L86%2056L79%2061L54%2057Z%20M50%2030C56%2034%2057%2050%2054%2064L50%2074L46%2064C43%2050%2044%2034%2050%2030Z%20M46%2026C46%2018%2054%2015%2059%2019L67%2021L60%2024L62%2028C58%2029%2054%2031%2050%2032Z%20M46%2070L39%2089L50%2082L61%2089L54%2070Z%20M44%2065L35%2072L41%2073Z%20M56%2065L65%2072L59%2073Z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 <title>Cotejo — Valuation com premissas à mostra</title>
-<meta name="description" content="Cotejo entrega valuation pronto para profissionais de mercado e estudantes de finanças: modelo, premissas e páginas em PDF ou PowerPoint, no padrão de equity research, investment banking e private equity. Em desenvolvimento.">
+<meta name="description" content="Cotejo entrega o valuation da sua empresa pronto e explicado, em PDF ou PowerPoint, no padrão de banco de investimento: para vender, comprar, captar ou planejar. Em desenvolvimento.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -125,10 +125,10 @@ header{position:sticky;top:0;z-index:10;background:var(--hdr);backdrop-filter:bl
 /* touro ao fundo: tamanho natural (678×452), sem esticar, com bordas que somem no fundo */
 #simulador{position:relative;overflow:hidden}
 #simulador::before{content:"";position:absolute;top:0;right:0;width:min(678px,58%);aspect-ratio:678/452;background:url(assets/touro.jpg) center/contain no-repeat;opacity:.18;filter:grayscale(.5) brightness(.6) contrast(1.1);pointer-events:none;
-  -webkit-mask-image:linear-gradient(to right,transparent,var(--bg) 35%),linear-gradient(to bottom,var(--bg) 55%,transparent);-webkit-mask-composite:source-in;
-  mask-image:linear-gradient(to right,transparent,var(--bg) 35%),linear-gradient(to bottom,var(--bg) 55%,transparent);mask-composite:intersect}
+  -webkit-mask-image:linear-gradient(to right,transparent,var(--bg) 35%),linear-gradient(to bottom,transparent,var(--bg) 30%,var(--bg) 55%,transparent);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent,var(--bg) 35%),linear-gradient(to bottom,transparent,var(--bg) 30%,var(--bg) 55%,transparent);mask-composite:intersect}
 #simulador>.wrap{position:relative;z-index:1}
-@media(max-width:760px){#simulador::before{width:100%;opacity:.16;-webkit-mask-image:linear-gradient(to bottom,var(--bg) 50%,transparent);mask-image:linear-gradient(to bottom,var(--bg) 50%,transparent)}}
+@media(max-width:760px){#simulador::before{width:100%;opacity:.16;-webkit-mask-image:linear-gradient(to bottom,transparent,var(--bg) 42%,var(--bg) 55%,transparent);mask-image:linear-gradient(to bottom,transparent,var(--bg) 42%,var(--bg) 55%,transparent)}}
 .calc{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0;margin-top:48px;align-items:stretch;border:1px solid var(--line)}
 .side{grid-column:1/-1;border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);column-gap:48px;align-content:start}
 .side h3:nth-of-type(1),.side .tiles{grid-column:1}
@@ -361,8 +361,8 @@ footer p:last-child{max-width:820px}
 <section class="hero">
   <div class="wrap grid">
     <div>
-      <h1>Valuation pronto para apresentar, com <em>cada premissa à mostra</em>.</h1>
-      <p class="lead">Para quem faz equity research, investment banking, private equity e M&amp;A. Você define o caso e as premissas; o Cotejo devolve modelo e páginas prontas, com cada conta rastreável. Menos tempo montando e formatando, mais tempo na tese.</p>
+      <h1>Saiba quanto vale a sua empresa, com <em>cada premissa à mostra</em>.</h1>
+      <p class="lead">Para empresários, sócios e executivos que precisam de um valuation para vender, comprar, captar ou planejar. Você conta o caso; o Cotejo entrega o valuation pronto, no padrão de banco de investimento, com cada número explicado em linguagem de negócio.</p>
       <div class="cta">
         <a href="#simulador" class="btn btn-primary">Testar o simulador</a>
         <a href="#em-breve" class="btn btn-ghost">Ver páginas de exemplo</a>
@@ -388,14 +388,14 @@ footer p:last-child{max-width:820px}
     <div class="pitch-box">
       <div>
         <p class="eyebrow">Por que o Cotejo</p>
-        <h2>Material no padrão de mercado, sem perder a noite formatando.</h2>
-        <p>Do pedido à página pronta: modelo, tabelas e gráficos que batem entre si, prontos para comitê, pitch ou relatório.</p>
+        <h2>Valuation no padrão de banco de investimento, sem o custo de um banco.</h2>
+        <p>Para chegar preparado à negociação, à captação ou à conversa com o seu assessor: um material claro, que você entende e consegue defender.</p>
       </div>
       <ul class="pillars">
-        <li><b>Rastreável</b><span>Cada número sai de uma premissa sua.</span></li>
-        <li><b>Conferido</b><span>Toda conta é refeita antes da entrega.</span></li>
-        <li><b>Consistente</b><span>Tabelas, gráficos e texto batem entre si.</span></li>
-        <li><b>No seu formato</b><span>PDF ou PowerPoint, no padrão da casa.</span></li>
+        <li><b>Claro</b><span>Cada número explicado em linguagem de negócio.</span></li>
+        <li><b>Rastreável</b><span>Toda conta sai de uma premissa que você aprova.</span></li>
+        <li><b>Conferido</b><span>As contas são refeitas antes da entrega.</span></li>
+        <li><b>Pronto para apresentar</b><span>PDF ou PowerPoint, para sócios, investidores ou compradores.</span></li>
       </ul>
     </div>
   </div>
@@ -404,31 +404,31 @@ footer p:last-child{max-width:820px}
 <section id="para-quem">
   <div class="wrap">
     <p class="eyebrow">Para quem é</p>
-    <h2>Feito para quem vive de modelo e apresentação.</h2>
-    <p class="lead">Analistas e associates que precisam entregar valuation bem feito, no prazo e no padrão da casa. A dor é recorrente: montar, conferir e formatar o mesmo tipo de material toda semana.</p>
+    <h2>Feito para quem decide e contrata o valuation.</h2>
+    <p class="lead">Empresários, sócios, conselheiros e executivos financeiros. Quem precisa saber quanto a empresa vale para vender, comprar, captar ou planejar, e hoje depende de pagar caro e esperar semanas por um assessor ou analista.</p>
 
     <div class="cards">
       <div class="card focus">
         <span class="tag">Público principal</span>
+        <h3>Empresários e executivos</h3>
+        <p>Donos, sócios, CEOs e CFOs que vão vender, comprar, captar ou trazer um sócio. Precisam de um número defensável e de premissas que entendam.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Também atende</span>
         <h3>Profissionais de mercado</h3>
-        <p>Equity research, investment banking, private equity, M&amp;A e corporate finance. Precisam de modelo e páginas prontos, consistentes e defensáveis em comitê.</p>
+        <p>Analistas e associates de research, investment banking, private equity e M&amp;A que querem modelo e páginas prontos, no padrão da casa.</p>
       </div>
       <div class="card">
         <span class="tag">Também atende</span>
         <h3>Estudantes e ligas de finanças</h3>
         <p>Graduação em economia, administração, contábeis e engenharia: cases, competições, TCC e processos seletivos, com material no padrão que o mercado cobra.</p>
       </div>
-      <div class="card">
-        <span class="tag">Também atende</span>
-        <h3>RI e estratégia</h3>
-        <p>Uma leitura externa, no formato de research, de como o mercado pode enxergar a empresa.</p>
-      </div>
     </div>
 
     <div class="pain">
-      <div><strong>Prazo apertado</strong><span>Modelo, gráficos e páginas para ontem.</span></div>
-      <div><strong>Retrabalho</strong><span>Uma premissa muda e tudo precisa ser refeito e reconferido.</span></div>
-      <div><strong>Erro que passa</strong><span>A conta que não fecha aparece no comitê, não antes.</span></div>
+      <div><strong>Custo alto</strong><span>Valuation de banco ou consultoria custa caro e leva semanas.</span></div>
+      <div><strong>Caixa-preta</strong><span>Você recebe um número sem entender de onde ele veio.</span></div>
+      <div><strong>Negociação no escuro</strong><span>Sem uma base própria, fica difícil defender o seu preço.</span></div>
     </div>
   </div>
 </section>
@@ -436,13 +436,13 @@ footer p:last-child{max-width:820px}
 <section id="como" class="soft">
   <div class="wrap">
     <p class="eyebrow">Como funciona</p>
-    <h2>Do pedido à página pronta, em quatro passos.</h2>
-    <p class="lead">Um fluxo pensado para o seu prazo, com cada etapa rastreável.</p>
+    <h2>Do pedido ao valuation pronto, em quatro passos.</h2>
+    <p class="lead">Você acompanha cada etapa e aprova as premissas antes da entrega.</p>
     <div class="steps">
-      <div class="step"><h3>Envie o pedido</h3><p>Empresa, objetivo, método e formato: PDF ou PowerPoint.</p></div>
-      <div class="step"><h3>Reunimos os dados</h3><p>Demonstrações financeiras, releases e material de RI. Se faltar algo, pedimos a você.</p></div>
-      <div class="step"><h3>Montamos e conferimos</h3><p>Modelo a partir das suas premissas, comparado com valuations já publicados; cada conta é refeita antes da entrega.</p></div>
-      <div class="step"><h3>Receba o material</h3><p>Páginas prontas para apresentar, com cenários e premissas editáveis.</p></div>
+      <div class="step"><h3>Conte o caso</h3><p>A empresa e o objetivo: vender, comprar, captar, trazer um sócio ou planejar.</p></div>
+      <div class="step"><h3>Reunimos os dados</h3><p>Demonstrações financeiras e informações da empresa. Se faltar algo, pedimos a você.</p></div>
+      <div class="step"><h3>Montamos e conferimos</h3><p>Modelo a partir das premissas que você aprova, comparado com empresas e transações parecidas; cada conta é refeita.</p></div>
+      <div class="step"><h3>Receba o valuation</h3><p>Pronto para apresentar a sócios, investidores ou compradores, com cenários e premissas editáveis.</p></div>
     </div>
     <p class="note">Esta é a visão do produto. Nesta fase, apenas o simulador abaixo está funcionando.</p>
   </div>
@@ -452,7 +452,7 @@ footer p:last-child{max-width:820px}
   <div class="wrap">
     <p class="eyebrow">Exemplos de entrega</p>
     <h2>Você faz a pergunta. O Cotejo entrega o valuation pronto.</h2>
-    <p class="lead">Você escolhe a empresa e diz o que quer saber. A gente reúne os números, monta o modelo e devolve um relatório com cada premissa explicada. Você ganha as horas de planilha e formatação e recebe uma análise que consegue defender e questionar.</p>
+    <p class="lead">Você diz o que precisa decidir. A gente reúne os números, monta o modelo e devolve um relatório com cada premissa explicada: um material que você entende e consegue defender na mesa de negociação.</p>
 
     <div class="tabs" role="tablist" aria-label="Exemplos de valuation" id="ex-tabs"></div>
     <div class="report" id="ex-report" role="tabpanel"></div>
@@ -501,9 +501,9 @@ footer p:last-child{max-width:820px}
   <div class="wrap">
     <p class="eyebrow">Em breve <span class="soon">Lista de espera</span></p>
     <h2>Seu valuation entregue pronto, em PDF e PowerPoint.</h2>
-    <p class="lead">O próximo passo do Cotejo: o material completo, em PDF ou PowerPoint, no padrão de equity research, investment banking e private equity. Você define o caso; a gente entrega modelo e páginas prontas, com cada conta conferida e rastreável.</p>
+    <p class="lead">O próximo passo do Cotejo: o valuation completo em PDF ou PowerPoint, no padrão de bancos de investimento e research. Você define o caso e aprova as premissas; a gente entrega modelo e páginas prontas, com cada conta conferida.</p>
     <ul class="aud" aria-label="Para quem é">
-      <li>Equity Research</li><li>Investment Banking</li><li>Private Equity</li><li>M&amp;A</li><li>Estudantes e ligas de finanças</li><li>Corporate finance e RI</li>
+      <li>Empresários e executivos</li><li>Venda e compra de empresas</li><li>Captação e entrada de sócio</li><li>Profissionais de mercado</li><li>Estudantes e ligas de finanças</li>
     </ul>
     <ol class="flow">
       <li><b>Pedido</b><span>A empresa, o objetivo e o prazo.</span></li>
@@ -537,15 +537,15 @@ footer p:last-child{max-width:820px}
       <details>
         <summary>Qual problema o Cotejo resolve?</summary>
         <div class="a">
-          <p>Quem trabalha com valuation monta, confere e formata o mesmo tipo de material toda semana, sempre com prazo curto. É aí que aparecem os erros que só alguém percebe no comitê: uma conta que não fecha, um número que mudou numa página e não na outra.</p>
-          <p>O Cotejo entrega esse material pronto e rastreável: cada número sai de uma premissa sua, e as páginas batem entre si. Vale também para estudantes de graduação em cases, competições e processos seletivos.</p>
+          <p>Quem precisa saber quanto vale uma empresa, para vender, comprar, captar ou trazer um sócio, normalmente contrata um banco, uma consultoria ou um analista. Isso custa caro, leva semanas e muitas vezes entrega um número difícil de entender.</p>
+          <p>O Cotejo entrega o valuation pronto e explicado: cada número sai de uma premissa que você aprova, e você consegue defender o resultado numa negociação. Também atende profissionais de mercado e estudantes de finanças.</p>
         </div>
       </details>
 
       <details>
         <summary>O que o Cotejo entrega?</summary>
         <div class="a">
-          <p>Valuation completo em PDF ou PowerPoint: modelo, tabelas, gráficos e tese, a partir do seu pedido e das suas premissas. Você recebe páginas prontas para apresentar e consegue rastrear cada número até a premissa que o gerou.</p>
+          <p>Valuation completo em PDF ou PowerPoint: modelo, tabelas, gráficos e conclusão, a partir do seu pedido e das premissas que você aprova. Você recebe um material pronto para apresentar a sócios, investidores ou compradores, e consegue rastrear cada número até a premissa que o gerou.</p>
           <p>O projeto está em fase inicial: hoje, só o simulador desta página está funcionando. Os <a href="#exemplos" style="color:var(--accent);font-weight:600">exemplos de entrega</a> mostram o formato do relatório completo.</p>
         </div>
       </details>
