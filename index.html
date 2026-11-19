@@ -370,12 +370,13 @@ footer p:last-child{max-width:820px}
     </div>
     <div class="mock" aria-label="Exemplo ilustrativo">
       <small>EMPRESA EXEMPLO S.A. · dados fictícios</small>
-      <div class="big" id="hero-ps">—</div>
-      <small>valor estimado por ação · cenário-base</small>
+      <div class="big" id="hero-eq">—</div>
+      <small>valor da empresa para os sócios · cenário-base</small>
       <div style="height:18px"></div>
-      <div class="row"><span>Preço informado (exemplo)</span><span id="hero-px">—</span></div>
-      <div class="row"><span>vs. preço informado</span><span class="up" id="hero-up">—</span></div>
-      <div class="row"><span>Margem implícita no preço informado</span><span class="up" id="hero-mi">—</span></div>
+      <div class="row"><span>Por ação ou cota</span><span id="hero-ps">—</span></div>
+      <div class="row"><span>Preço de referência (exemplo)</span><span id="hero-px">—</span></div>
+      <div class="row"><span>vs. preço de referência</span><span class="up" id="hero-up">—</span></div>
+      <div class="row"><span>Margem implícita no preço de referência</span><span class="up" id="hero-mi">—</span></div>
       <div class="row"><span>Premissa-chave</span><span id="hero-g">—</span></div>
       <p class="cond" id="hero-cond">Os números deste exemplo são calculados no seu navegador.</p>
       <button type="button" class="btn btn-primary" id="hero-load">Refazer esta conta no simulador</button>
@@ -477,12 +478,12 @@ footer p:last-child{max-width:820px}
           <label>Taxa de desconto<small>custo de capital da empresa (WACC)</small><span class="inp"><input id="r" type="number" step="any" value="12"><em>%</em></span></label>
           <label>Crescimento perpétuo<small>depois do ano 5; menor que a taxa</small><span class="inp"><input id="gp" type="number" step="any" value="3"><em>%</em></span></label>
           </fieldset>
-          <fieldset><legend>Do valor da firma ao acionista</legend>
+          <fieldset><legend>Do valor da firma aos sócios</legend>
           <label>Dívida líquida<small>dívida bruta − caixa; negativo = caixa líquido</small><span class="inp"><input id="debt" type="number" step="any" value="300"><em>R$ mi</em></span></label>
-          <label>Número de ações<small>total em circulação</small><span class="inp"><input id="sh" type="number" step="any" value="39"><em>mi</em></span></label>
+          <label>Ações ou cotas<small>total em circulação</small><span class="inp"><input id="sh" type="number" step="any" value="39"><em>mi</em></span></label>
           </fieldset>
           <fieldset><legend>Preço e margem de segurança</legend>
-          <label>Preço atual da ação<small>opcional, para comparar</small><span class="inp"><input id="px" type="number" step="any" value="22.10"><em>R$</em></span></label>
+          <label>Preço de referência<small>por ação ou cota: oferta recebida ou preço de mercado (opcional)</small><span class="inp"><input id="px" type="number" step="any" value="22.10"><em>R$</em></span></label>
           <label>Margem de segurança<small>desconto exigido sobre o valor justo</small><span class="inp"><input id="ms" type="number" step="any" value="20" min="0" max="99"><em>%</em></span></label>
           </fieldset>
         </div>
@@ -554,7 +555,7 @@ footer p:last-child{max-width:820px}
         <summary>O que é DCF (fluxo de caixa descontado)?</summary>
         <div class="a">
           <p>É um método que estima o valor de uma empresa pelo dinheiro que ela deve gerar no futuro. Cada real futuro vale menos que um real hoje, por causa do tempo e do risco. Por isso, os fluxos de caixa projetados são "descontados" por uma taxa até a data de hoje e somados.</p>
-          <p>O resultado é o valor da empresa inteira. Descontando a dívida líquida e dividindo pelo número de ações, chega-se ao valor estimado por ação.</p>
+          <p>O resultado é o valor da empresa inteira. Descontando a dívida líquida, chega-se ao valor da empresa para os sócios; dividindo pelo número de ações ou cotas, ao valor de cada uma.</p>
         </div>
       </details>
 
@@ -566,7 +567,7 @@ footer p:last-child{max-width:820px}
             <li><b>Projeção:</b> o fluxo de caixa livre atual cresce pela taxa de crescimento informada a cada ano: <code>FC(ano t) = FC atual × (1 + crescimento)^t</code>.</li>
             <li><b>Valor presente:</b> cada ano é trazido para hoje pela taxa de desconto: <code>FC(ano t) ÷ (1 + taxa)^t</code>.</li>
             <li><b>Perpetuidade:</b> depois do ano 5, supõe-se que o fluxo cresça para sempre pelo crescimento perpétuo: <code>FC(ano 5) × (1 + g perpétuo) ÷ (taxa − g perpétuo)</code>, também trazido para hoje.</li>
-            <li><b>Valor por ação:</b> a soma dá o valor da firma (EV). Subtraindo a dívida líquida (ou somando o caixa líquido), chega-se ao valor do acionista, que é dividido pelo número de ações.</li>
+            <li><b>Valor para os sócios:</b> a soma dá o valor da firma (EV). Subtraindo a dívida líquida (ou somando o caixa líquido), chega-se ao valor da empresa para os sócios, que pode ser dividido pelo número de ações ou cotas.</li>
           </ol>
           <p>A tabela de sensibilidade refaz a mesma conta com a taxa 1 ponto acima e abaixo e o crescimento 2 pontos acima e abaixo. Quando a taxa não fica acima do crescimento perpétuo, a conta não tem solução e a célula mostra "—".</p>
         </div>
@@ -579,8 +580,8 @@ footer p:last-child{max-width:820px}
           <p class="hero-ex" hidden>No exemplo do topo da página, com valor justo de <span data-hero="ps">—</span> e margem de <span data-hero="ms">—</span>, o preço-alvo de compra é <code><span data-hero="ps">—</span> × (1 − <span data-hero="ms">—</span>) = <span data-hero="alvo">—</span></code>.</p>
           <p>A calculadora mostra dois números parecidos, mas diferentes:</p>
           <ul>
-            <li><b>vs. preço informado</b> compara com o preço: <code>valor justo ÷ preço − 1</code>.<span class="hero-ex hero-ex-px" hidden> No exemplo, <span data-hero="ps">—</span> ÷ <span data-hero="px">—</span> − 1 = <span data-hero="up">—</span>.</span></li>
-            <li><b>Margem implícita no preço informado</b> compara com o valor justo: <code>1 − preço ÷ valor justo</code>.<span class="hero-ex hero-ex-px" hidden> No exemplo, 1 − <span data-hero="px">—</span> ÷ <span data-hero="ps">—</span> = <span data-hero="mi">—</span>.</span></li>
+            <li><b>vs. preço de referência</b> compara com o preço: <code>valor justo ÷ preço − 1</code>.<span class="hero-ex hero-ex-px" hidden> No exemplo, <span data-hero="ps">—</span> ÷ <span data-hero="px">—</span> − 1 = <span data-hero="up">—</span>.</span></li>
+            <li><b>Margem implícita no preço de referência</b> compara com o valor justo: <code>1 − preço ÷ valor justo</code>.<span class="hero-ex hero-ex-px" hidden> No exemplo, 1 − <span data-hero="px">—</span> ÷ <span data-hero="ps">—</span> = <span data-hero="mi">—</span>.</span></li>
           </ul>
         </div>
       </details>
@@ -694,15 +695,15 @@ footer p:last-child{max-width:820px}
     let f=fcf, pv=0; const rows=[];
     for(let t=1;t<=5;t++){ f*=1+g; const p=f/Math.pow(1+r,t); pv+=p; rows.push([t,f,p]); }
     const tvPv=ev-pv, tvPct=tvPv/ev*100;
-    let html=`<div class="lbl">Valor estimado por ação</div>
-      <div class="val">${ps>0?brl.format(ps):'—'}</div>
+    let html=`<div class="lbl">Valor da empresa para os sócios</div>
+      <div class="val">${ps>0?mi(eq):'—'}</div>
       <div class="row"><span>Valor da firma (EV)</span><b>${mi(ev)}</b></div>
-      <div class="row"><span>Valor do acionista</span><b>${mi(eq)}</b></div>`;
-    if(ps<=0) html+='<p class="err">A dívida líquida supera o valor da firma: neste cenário, não sobra valor para o acionista.</p>';
+      <div class="row"><span>Por ação ou cota</span><b>${ps>0?brl.format(ps):'—'}</b></div>`;
+    if(ps<=0) html+='<p class="err">A dívida líquida supera o valor da firma: neste cenário, não sobra valor para os sócios.</p>';
     if(tvPct>85) html+=`<p class="err">Atenção: ${pc(tvPct)} do valor vem da perpetuidade. Com a taxa tão perto do crescimento perpétuo, o resultado fica muito sensível.</p>`;
     if(ps>0 && !isNaN(px) && px>0){
       const m=(ps/px-1)*100;
-      html+=`<div class="row"><span>vs. preço informado</span><b>${fmtUp(m)}</b></div>`;
+      html+=`<div class="row"><span>vs. preço de referência</span><b>${fmtUp(m)}</b></div>`;
     }
     // margem de segurança: preço-alvo de compra = valor justo × (1 − margem)
     if(!isNaN(ms)){
@@ -715,13 +716,13 @@ footer p:last-child{max-width:820px}
         html+=`<div class="row"><span>Preço-alvo de compra (margem ${pc(ms*100)})</span><b>${brl.format(alvo)}</b></div>`;
         if(!isNaN(px) && px>0){
           const d=(1-px/ps)*100;
-          html+=`<div class="row"><span>Margem implícita no preço informado</span><b>${fmtMargin(d)}</b></div>`;
+          html+=`<div class="row"><span>Margem implícita no preço de referência</span><b>${fmtMargin(d)}</b></div>`;
         }
       }
     }
     // sensibilidade: taxa de desconto x crescimento
     const rs=[r-0.01,r,r+0.01], gs=[g-0.02,g,g+0.02];
-    html+=`<table><tr><th>Valor/ação</th>${rs.map(x=>`<th>Taxa ${lbl(x)}</th>`).join('')}</tr>`;
+    html+=`<table><tr><th>Por ação/cota</th>${rs.map(x=>`<th>Taxa ${lbl(x)}</th>`).join('')}</tr>`;
     gs.forEach((gg,i)=>{
       html+=`<tr><th>Cresc. ${lbl(gg)}</th>`;
       rs.forEach((rr,j)=>{
@@ -763,19 +764,19 @@ footer p:last-child{max-width:820px}
     let f=fcf, pv=0; for(let t=1;t<=5;t++){ f*=1+g; pv+=f/Math.pow(1+r,t); }
     const tvShare=(ev-pv)/ev, temPx=!isNaN(px)&&px>0, msOk=!isNaN(ms)&&ms>=0&&ms<1, alvo=val*(1-(msOk?ms:0));
     let tag, cls, titulo;
-    if(val<=0){ tag='Sem valor para o acionista'; cls='neg'; titulo='A dívida líquida consome todo o valor da firma.'; }
-    else if(!temPx){ tag='Sem preço para comparar'; cls='neu'; titulo='Informe o preço da ação para comparar com o valor estimado.'; }
+    if(val<=0){ tag='Sem valor para os sócios'; cls='neg'; titulo='A dívida líquida consome todo o valor da firma.'; }
+    else if(!temPx){ tag='Sem preço de referência'; cls='neu'; titulo='Informe um preço de referência, como uma oferta recebida, para comparar com o valor estimado.'; }
     else if(px<=alvo){ tag='Abaixo do preço-alvo de compra'; cls='pos'; titulo='Pelas suas premissas, o preço já oferece a margem de segurança que você exigiu.'; }
     else if(px<=val){ tag='Entre o preço-alvo e o valor justo'; cls='neu'; titulo='O preço está abaixo do valor estimado, mas sem a margem de segurança que você exigiu.'; }
     else { tag='Acima do valor estimado'; cls='neg'; titulo='Pelas suas premissas, o preço já embute mais do que o modelo justifica.'; }
     const caixa=debt<0;
     const passos=[
       `<b>Valor da firma: ${mi(ev)}.</b> O fluxo de ${mi(fcf)} cresce ${pctTxt(g)} ao ano por 5 anos e cada ano é trazido a valor presente a ${pctTxt(r)}. Depois do ano 5, supõe-se crescimento de ${pctTxt(gp)} para sempre.`,
-      `<b>Valor do acionista: ${mi(eq)}.</b> ${caixa?'Somando o caixa líquido de '+mi(-debt)+' ao valor da firma':'Descontando a dívida líquida de '+mi(debt)+' do valor da firma'}. ${val>0?'Dividido por '+num.format(sh)+' mi de ações, dá <b>'+brl.format(val)+' por ação</b>.':'Não sobra valor por ação.'}`
+      `<b>Valor da empresa para os sócios: ${mi(eq)}.</b> ${caixa?'Somando o caixa líquido de '+mi(-debt)+' ao valor da firma':'Descontando a dívida líquida de '+mi(debt)+' do valor da firma'}. ${val>0?'Dividido por '+num.format(sh)+' mi de ações ou cotas, dá <b>'+brl.format(val)+' por ação ou cota</b>.':'Não sobra valor para os sócios.'}`
     ];
     if(val>0&&temPx){
       const up=val/px-1, mg=1-px/val;
-      passos.push(`<b>Comparação com o preço de ${brl.format(px)}:</b> ${mg>=0?'a ação negocia '+pctTxt(mg)+' abaixo do valor estimado, um potencial de '+fmtUp(up*100):'o preço está '+pctTxt(-up)+' acima do valor estimado'}.${msOk?' Com margem de segurança de '+pctTxt(ms)+', o preço-alvo de compra é '+brl.format(alvo)+'.':''}`);
+      passos.push(`<b>Comparação com o preço de referência de ${brl.format(px)}:</b> ${mg>=0?'ele está '+pctTxt(mg)+' abaixo do valor estimado, um potencial de '+fmtUp(up*100):'ele está '+pctTxt(-up)+' acima do valor estimado'}.${msOk?' Com margem de segurança de '+pctTxt(ms)+', o preço-alvo de compra é '+brl.format(alvo)+'.':''}`);
     }
     if(val>0){
       passos.push(`<b>Onde está o risco:</b> ${pctTxt(tvShare)} do valor vem da perpetuidade, ou seja, do que acontece depois do ano 5. ${tvShare>.75?'Quanto maior essa fatia, mais o resultado depende de premissas de longo prazo.':'É uma fatia comum para um DCF de 5 anos.'}`);
@@ -790,14 +791,14 @@ footer p:last-child{max-width:820px}
       add('Crescimento +2 p.p. ('+pctTxt(g+.02)+')', ps(fcf,g+.02,r));
     }
     box.innerHTML=`<div><p class="ro-h">Leitura do resultado</p><span class="ro-tag ${cls}">${tag}</span><h3>${titulo}</h3><ol class="ro-steps">${passos.map(p=>'<li>'+p+'</li>').join('')}</ol></div>
-      <div><p class="ro-h">Do valor da firma ao preço por ação</p>
+      <div><p class="ro-h">Do valor da firma ao valor dos sócios</p>
       <table class="ro-t"><tr><td>Valor presente dos anos 1 a 5</td><td>${mi(pv)}</td></tr>
       <tr><td>Valor presente da perpetuidade</td><td>${mi(ev-pv)}</td></tr>
       <tr class="tot"><td>Valor da firma (EV)</td><td>${mi(ev)}</td></tr>
       <tr><td>${caixa?'(+) Caixa líquido':'(−) Dívida líquida'}</td><td>${mi(Math.abs(debt))}</td></tr>
-      <tr class="tot"><td>Valor do acionista</td><td>${mi(eq)}</td></tr>
-      <tr><td>÷ ${num.format(sh)} mi de ações</td><td>${val>0?brl.format(val):'—'}</td></tr></table>
-      ${sens.length?`<p class="ro-h">O que mais mexe no valor por ação</p><table class="ro-t">${sens.map(s=>`<tr><td>${s[0]}</td><td>${s[1]>0?brl.format(s[1]):'—'} <span class="${s[2]<0?'d':''}">(${fmtUp(s[2]*100)})</span></td></tr>`).join('')}</table>`:''}
+      <tr class="tot"><td>Valor da empresa para os sócios</td><td>${mi(eq)}</td></tr>
+      <tr><td>÷ ${num.format(sh)} mi de ações ou cotas</td><td>${val>0?brl.format(val):'—'}</td></tr></table>
+      ${sens.length?`<p class="ro-h">O que mais mexe no valor por ação ou cota</p><table class="ro-t">${sens.map(s=>`<tr><td>${s[0]}</td><td>${s[1]>0?brl.format(s[1]):'—'} <span class="${s[2]<0?'d':''}">(${fmtUp(s[2]*100)})</span></td></tr>`).join('')}</table>`:''}
       <p class="ro-note">Leitura das premissas informadas. Não é recomendação de investimento.</p></div>`;
   }
   new MutationObserver(explain).observe($('result'),{childList:true});
@@ -867,16 +868,17 @@ footer p:last-child{max-width:820px}
 
   // exemplo do topo: números calculados a partir de heroP, com as mesmas regras de exibição do simulador
   (()=>{
-    const p=heroP, {ps,up,margin}=valuate(p), n=x=>num.format(x);
+    const p=heroP, {eq,ps,up,margin}=valuate(p), n=x=>num.format(x);
     // mesmos formatadores do run(); sem preço positivo, potencial e margem implícita não se aplicam
     const hasPx=p.px>0, upTxt=fmtUp(up), miTxt=fmtMargin(margin);
     const alvo=brl.format(ps*(1-p.ms/100));
+    $('hero-eq').textContent=ps>0?mi(eq):'—';
     $('hero-ps').textContent=ps>0?brl.format(ps):'—';
     $('hero-px').textContent=hasPx?brl.format(p.px):'—';
     $('hero-up').textContent=ps>0&&hasPx?upTxt:'—';
     $('hero-mi').textContent=ps>0&&hasPx?miTxt:'—';
     $('hero-g').textContent=`Crescimento ${n(p.g)}% a.a.`;
-    $('hero-cond').textContent=`Condição: fluxo de caixa livre R$ ${n(p.fcf)} mi · crescimento ${n(p.g)}% · taxa ${n(p.r)}% · perpetuidade ${n(p.gp)}% · ${p.debt<0?'caixa líquido':'dívida líquida'} R$ ${n(Math.abs(p.debt))} mi · ${n(p.sh)} mi de ações · preço ${brl.format(p.px)} · margem de segurança ${n(p.ms)}%`;
+    $('hero-cond').textContent=`Condição: fluxo de caixa livre R$ ${n(p.fcf)} mi · crescimento ${n(p.g)}% · taxa ${n(p.r)}% · perpetuidade ${n(p.gp)}% · ${p.debt<0?'caixa líquido':'dívida líquida'} R$ ${n(Math.abs(p.debt))} mi · ${n(p.sh)} mi de ações ou cotas · preço de referência ${brl.format(p.px)} · margem de segurança ${n(p.ms)}%`;
     // a pergunta sobre margem de segurança usa os mesmos números; sem valor por ação positivo, o exemplo fica oculto
     const faq={ps:brl.format(ps), px:brl.format(p.px), up:upTxt, ms:n(p.ms)+'%', alvo,
       mi:margin<0?`${pc(margin)}, ou seja, nenhuma margem`:isMax(margin)?'mais de 99,9%':miTxt};
@@ -889,10 +891,11 @@ footer p:last-child{max-width:820px}
     const norm=s=>s.replace(/\s+/g,' ').trim(), falhas=[];
     const rowVal=label=>{ const r=[...$('result').querySelectorAll('.row')].find(x=>norm(x.querySelector('span').textContent).startsWith(label)); return r?norm(r.querySelector('b').textContent):null; };
     for(const k in heroP) if(parseFloat($(k).value)!==heroP[k]) falhas.push(`campo ${k} do simulador ≠ heroP`);
-    if(norm($('result').querySelector('.val')?.textContent||'')!==norm($('hero-ps').textContent)) falhas.push('valor por ação do topo ≠ simulador');
+    if(norm($('result').querySelector('.val')?.textContent||'')!==norm($('hero-eq').textContent)) falhas.push('valor dos sócios do topo ≠ simulador');
+    if(ps>0 && rowVal('Por ação ou cota')!==norm($('hero-ps').textContent)) falhas.push('valor por ação ou cota do topo ≠ simulador');
     if(ps>0){
-      if(hasPx && rowVal('vs. preço informado')!==norm(upTxt)) falhas.push('potencial do topo ≠ simulador');
-      if(hasPx && rowVal('Margem implícita no preço informado')!==norm(miTxt)) falhas.push('margem implícita do topo ≠ simulador');
+      if(hasPx && rowVal('vs. preço de referência')!==norm(upTxt)) falhas.push('potencial do topo ≠ simulador');
+      if(hasPx && rowVal('Margem implícita no preço de referência')!==norm(miTxt)) falhas.push('margem implícita do topo ≠ simulador');
       if(rowVal(`Preço-alvo de compra (margem ${pc(p.ms)})`)!==norm(alvo)) falhas.push('preço-alvo da pergunta ≠ simulador');
     }
     if(falhas.length){
