@@ -350,6 +350,61 @@ footer{padding:56px 0 64px;margin-top:96px;border-top:1px solid var(--line);colo
 footer p+p{margin-top:10px}
 footer p:last-child{max-width:820px}
 
+/* diagnóstico de prontidão */
+.dg-wrap{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);margin-top:48px;border:1px solid var(--line);background:var(--card)}
+.dg-wrap.done{grid-template-columns:1fr}
+.dg-wrap.done .dg-side{display:none}
+.dg-card{padding:28px;scroll-margin-top:96px;outline:none}
+.dg-side{padding:28px;border-left:1px solid var(--line);background:var(--soft)}
+.dg-prog{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.dg-bar{height:3px;background:var(--line);margin-bottom:26px}
+.dg-bar i{display:block;height:100%;background:var(--cta-text);transition:width .3s}
+.dg-set{border:0;margin:0;padding:0;min-width:0;outline:none}
+.dg-set legend{font-size:1.2rem;font-weight:500;color:var(--head);letter-spacing:-.01em;line-height:1.3;margin-bottom:18px;padding:0}
+.dg-opt{display:flex;gap:12px;align-items:flex-start;margin:0 0 10px;padding:14px 16px;border:1px solid var(--line-strong);border-radius:var(--radius);cursor:pointer;font-size:.95rem;font-weight:400;color:var(--text);transition:border-color .2s,background .2s}
+.dg-opt:hover{border-color:var(--muted)}
+.dg-opt input{appearance:none;-webkit-appearance:none;flex:none;display:grid;place-content:center;width:18px;height:18px;margin:2px 0 0;padding:0;border:1.5px solid var(--line-strong);border-radius:50%;background:transparent;box-shadow:none}
+.dg-opt input::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cta-text);transform:scale(0);transition:transform .15s}
+.dg-opt input:checked::before{transform:scale(1)}
+.dg-opt input:checked{border-color:var(--cta-text)}
+.dg-opt input:focus-visible{outline:2px solid var(--accent);outline-offset:3px;box-shadow:none}
+.dg-opt:has(input:checked){border-color:var(--cta-text);background:var(--soft)}
+.dg-err{min-height:1.3em;color:var(--neg);font-size:.86rem;margin:12px 0 0}
+.dg-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px}
+.dg-top{display:flex;gap:28px;align-items:center;margin-bottom:30px}
+.dg-top h3{font-size:1.3rem;margin:0 0 8px;outline:none}
+.dg-sub{margin:0;font-size:.9rem;color:var(--muted)}
+.dg-gauge{width:132px;height:132px;flex:none}
+.dg-gauge circle{fill:none;stroke-width:9}
+.dg-gauge .gb{stroke:var(--line)}
+.dg-gauge .gf{stroke:currentColor}
+.dg-gauge .gn{font-size:34px;font-weight:500;fill:var(--head);font-family:var(--sans)}
+.dg-gauge .gs{font-size:11px;fill:var(--muted);font-family:var(--mono)}
+.dg-gauge.pos{color:var(--pos)}.dg-gauge.neu{color:var(--accent)}.dg-gauge.neg{color:var(--neg)}
+.dg-dims{display:grid;gap:14px;margin:0 0 30px}
+.dg-dim .l{display:flex;justify-content:space-between;gap:12px;font-size:.9rem;color:var(--text);margin-bottom:6px}
+.dg-dim .t{height:6px;background:var(--line)}
+.dg-dim .t i{display:block;height:100%}
+.dg-dim .t i.lo{background:var(--neg)}.dg-dim .t i.mid{background:var(--accent)}.dg-dim .t i.hi{background:var(--pos)}
+.dg-sim{background:var(--soft);padding:16px 18px;margin:6px 0 0;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.dg-sim p{margin:0;font-size:.9rem;color:var(--text);max-width:540px}
+.dg-lock{border:1px dashed var(--line-strong);padding:20px;margin:28px 0 20px}
+.dg-lock .ro-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dg-locked{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:10px}
+.dg-locked li{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:.92rem}
+.dg-locked svg{flex:none;width:14px;height:14px}
+.dg-redo{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.dg-side .ro-h{margin-bottom:14px}
+.dg-tier{padding:0 0 18px;margin:0 0 18px;border-bottom:1px solid var(--line)}
+.dg-tier:last-child{border:0;margin:0;padding:0}
+.dg-tier b{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--head);font-weight:500;margin-bottom:8px}
+.dg-tier p{margin:0;font-size:.88rem;color:var(--muted)}
+.dg-tier a{color:var(--cta-text);font-weight:600}
+.dg-link{margin:18px 0 0;font-size:.92rem;color:var(--muted)}
+.dg-link a{color:var(--cta-text);font-weight:600}
+@media(max-width:900px){.dg-wrap{grid-template-columns:1fr}.dg-side{border-left:0;border-top:1px solid var(--line)}}
+@media(max-width:600px){.dg-card,.dg-side{padding:20px}.dg-top{flex-direction:column;align-items:flex-start;gap:16px}.dg-nav .btn,.dg-sim .btn{padding:12px 18px}}
+
 /* proposta Em breve */
 .uses{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:40px 0 0}
 .use{background:var(--card);padding:22px;counter-increment:u}
@@ -392,6 +447,7 @@ footer p:last-child{max-width:820px}
       <li><a href="#como">Como funciona</a></li>
       <li><a href="#exemplos">Exemplos</a></li>
       <li><a href="#simulador">Simulador</a></li>
+      <li><a href="#diagnostico">Diagnóstico</a></li>
       <li><a href="#em-breve">Em breve</a></li>
       <li><a href="#duvidas">Dúvidas</a></li>
     </ul>
@@ -539,11 +595,45 @@ footer p:last-child{max-width:820px}
   </div>
 </section>
 
+<section id="diagnostico" class="soft">
+  <div class="wrap">
+    <p class="eyebrow">Diagnóstico gratuito</p>
+    <h2>Sua empresa está pronta para uma venda ou captação?</h2>
+    <p class="lead">Responda 15 perguntas em cerca de 3 minutos e veja a sua nota de prontidão, os pontos que um comprador ou investidor vai questionar e o que organizar antes de abrir o processo.</p>
+
+    <div class="dg-wrap" id="dg-wrap">
+      <div class="dg-card" id="dg" tabindex="-1"></div>
+      <aside class="dg-side" aria-label="O que você recebe">
+        <p class="ro-h">O que você recebe</p>
+        <div class="dg-tier">
+          <b>Agora, de graça</b>
+          <ul class="incl">
+            <li>Nota de 0 a 100 de prontidão</li>
+            <li>Nota por dimensão, em barras</li>
+            <li>Os 2 pontos que mais pesam</li>
+            <li>Um prêmio de risco para testar no simulador</li>
+          </ul>
+        </div>
+        <div class="dg-tier">
+          <b>Relatório de prontidão <span class="soon">Em breve</span></b>
+          <p>Efeito de cada ponto fraco no valor, em faixa, plano de 90 dias, checklist da sala de dados e as perguntas que um comprador faria. Serviço pago.</p>
+        </div>
+        <div class="dg-tier">
+          <b>Valuation completo e teaser <span class="soon">Em breve</span></b>
+          <p>O valuation em PDF e PowerPoint e o teaser anônimo para vender a empresa. Veja os exemplos em <a href="#em-breve">Em breve</a>. Serviço pago.</p>
+        </div>
+      </aside>
+    </div>
+    <p class="note">Critérios de boa prática de preparação para transações, não um modelo estatístico validado. Não é avaliação da empresa nem recomendação de investimento. As suas respostas ficam no seu navegador.</p>
+  </div>
+</section>
+
 <section id="em-breve">
   <div class="wrap">
     <p class="eyebrow">Em breve <span class="soon">Acesso antecipado</span></p>
     <h2>Leve à mesa um valuation no padrão de banco de investimento.</h2>
     <p class="lead">O Cotejo vai entregar o valuation completo da sua empresa em PDF e PowerPoint: faixa de valor, comparáveis e cada premissa explicada. Você define o caso e aprova as premissas; a gente monta, confere e entrega pronto para apresentar.</p>
+    <p class="dg-link">Quer começar sem pagar? Faça o <a href="#diagnostico">diagnóstico gratuito de prontidão</a> e veja o que organizar antes de vender ou captar.</p>
 
     <div class="uses">
       <div class="use"><b>Vender a empresa</b><span>Saiba o seu número antes da primeira proposta e não negocie no escuro.</span></div>
@@ -695,9 +785,25 @@ footer p:last-child{max-width:820px}
       </details>
 
       <details>
+        <summary>O que mede o diagnóstico de prontidão?</summary>
+        <div class="a">
+          <p>Quinze perguntas sobre cinco áreas que compradores e investidores costumam olhar antes de propor um preço: informações financeiras, dependência de clientes e do dono, receita recorrente e margem, governança e documentos, e crescimento e posicionamento.</p>
+          <p>A nota de 0 a 100 mostra o quão preparada a empresa está. Os critérios são de boa prática de preparação, não um modelo estatístico validado, e o resultado não é uma avaliação da empresa nem uma recomendação de investimento.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>O que é gratuito e o que é pago?</summary>
+        <div class="a">
+          <p><b>Gratuito, agora:</b> o simulador e o diagnóstico, com a nota, a nota por dimensão e os dois pontos que mais pesam.</p>
+          <p><b>Pago, em breve:</b> o relatório de prontidão em PDF, o valuation completo em PDF e PowerPoint e o teaser anônimo para vender a empresa. Quem entrar na lista de espera é avisado primeiro.</p>
+        </div>
+      </details>
+
+      <details>
         <summary>Meus dados são enviados para algum lugar?</summary>
         <div class="a">
-          <p>Não. Todas as contas do simulador rodam no seu navegador, e nada do que você digita sai do seu aparelho.</p>
+          <p>Não. As contas do simulador e o diagnóstico rodam no seu navegador, e nada do que você digita sai do seu aparelho. Só chega até nós o que você decidir enviar por e-mail, como o pedido do relatório.</p>
         </div>
       </details>
 
@@ -1163,6 +1269,125 @@ footer p:last-child{max-width:820px}
   track.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(at+(dx<0?1:-1));x0=null;});
   track.addEventListener('contextmenu',e=>e.preventDefault());
   go(0);
+})();
+</script>
+<script>
+// Diagnóstico de prontidão para venda ou captação. Roda no navegador.
+// Critérios de boa prática, não um modelo estatístico validado (ver docs/valuation.md).
+(function(){
+  const $=id=>document.getElementById(id);
+  const card=$('dg'), wrap=$('dg-wrap');
+  if(!card||!wrap) return;
+
+  // Configuração: cada resposta vale o índice da opção (0 a 3). Ajuste textos e faixas aqui.
+  const DIM=[
+    {nome:'Informações financeiras', por:'Compradores e investidores querem números confiáveis antes de qualquer proposta. Demonstrações frágeis atrasam a negociação e abrem espaço para pedir desconto.'},
+    {nome:'Dependência de clientes e do dono', por:'Concentração de clientes e decisões centralizadas no dono aumentam o risco que o comprador enxerga. Costumam reduzir o preço ou levar parte do pagamento para o futuro.'},
+    {nome:'Receita recorrente e margem', por:'Receita previsível e margem estável sustentam um valor maior. Receita irregular obriga o comprador a embutir mais risco no preço.'},
+    {nome:'Governança e documentos', por:'Contratos, documentos e passivos em ordem encurtam a análise do comprador. Pendências viram desconto ou travam o fechamento.'},
+    {nome:'Crescimento e posicionamento', por:'Quem compra paga pelo futuro. Um plano documentado e um diferencial claro ajudam a justificar o valor pedido.'}
+  ];
+  const Q=[
+    {d:0,t:'Como são as demonstrações financeiras da empresa?',o:['Não tenho demonstrações organizadas','Só controles internos, sem contador','Balanço e DRE anuais feitos por contador','Auditadas por uma auditoria independente']},
+    {d:0,t:'Com que frequência você acompanha o resultado mensal e o caixa?',o:['Quase nunca','Só no fim do ano','Todo trimestre','Todo mês, até o dia 15']},
+    {d:0,t:'O resultado gerencial bate com a contabilidade fiscal?',o:['Não sei dizer','Há diferenças grandes sem explicação','Há pequenas diferenças que eu sei explicar','Bate, e a conciliação está documentada']},
+    {d:1,t:'Qual a fatia do maior cliente na receita?',o:['Mais de 40%','De 25% a 40%','De 10% a 25%','Menos de 10%']},
+    {d:1,t:'Se o dono ficar três meses fora, a empresa...',o:['Para','Funciona com muitos problemas','Funciona com alguns ajustes','Funciona normalmente']},
+    {d:1,t:'Como está a equipe de gestão e de vendas?',o:['Não há gestores além do dono','Há, mas sem contrato nem metas','Há equipe com contrato','Equipe com contrato, metas e participação nos resultados']},
+    {d:2,t:'Quanto da receita é recorrente (contratos, assinaturas, recompra previsível)?',o:['Nenhuma','Até 25%','De 25% a 60%','Mais de 60%']},
+    {d:2,t:'Como a margem operacional (EBITDA) evoluiu nos últimos 3 anos?',o:['Caiu','Oscilou sem tendência','Ficou estável','Subiu']},
+    {d:2,t:'Você sabe a margem por produto, serviço ou cliente?',o:['Não','Só a margem geral','Dos principais produtos','De tudo, atualizada todo mês']},
+    {d:3,t:'Como estão os contratos com clientes, fornecedores e funcionários?',o:['Informais','Só parte formalizada','Quase todos formalizados','Todos formalizados e organizados em um só lugar']},
+    {d:3,t:'Como está a situação societária e fiscal?',o:['Há pendências relevantes','Há pendências pequenas','Regular, mas com documentos dispersos','Regular, documentada e com certidões em dia']},
+    {d:3,t:'Existem processos judiciais ou passivos trabalhistas e fiscais?',o:['Relevantes e sem provisão','Relevantes, com provisão','Poucos e pequenos','Nenhum relevante']},
+    {d:4,t:'Qual foi o crescimento médio anual da receita nos últimos 3 anos?',o:['A receita caiu','De 0% a 5%','De 5% a 15%','Acima de 15%']},
+    {d:4,t:'Existe um plano de negócios com metas para os próximos 3 a 5 anos?',o:['Não','Só na cabeça do dono','Documentado, mas sem acompanhamento','Documentado e acompanhado']},
+    {d:4,t:'A empresa tem uma vantagem difícil de copiar (marca, tecnologia, contratos, localização)?',o:['Não','Pequena','Clara','Forte e comprovada']}
+  ];
+  const FAIXAS=[
+    {min:85,tag:'Pronta',cls:'pos',tx:'A empresa está bem preparada para conversar com compradores e investidores.'},
+    {min:65,tag:'Quase pronta',cls:'pos',tx:'Poucos pontos a ajustar antes de abrir um processo.'},
+    {min:40,tag:'Em preparação',cls:'neu',tx:'Há pontos que um comprador ou investidor vai questionar.'},
+    {min:0,tag:'Preparação necessária',cls:'neg',tx:'Vale organizar o básico antes de buscar propostas.'}
+  ];
+  const PREMIO=[[85,0],[65,1],[40,2],[0,3]]; // pontos percentuais sugeridos para a taxa de desconto do simulador
+  const CRITICO=75; // dimensão abaixo disso entra em "os pontos que mais pesam"
+  const EMAIL='pxisto34@gmail.com';
+  const LOCK='<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
+
+  let idx=0, resp=[], res=null;
+
+  function calcular(){
+    const dims=DIM.map((d,i)=>{
+      const pts=Q.map((q,k)=>q.d===i?resp[k]:null).filter(v=>v!==null);
+      return {nome:d.nome, por:d.por, nota:Math.round(pts.reduce((a,b)=>a+b,0)/(3*pts.length)*100)};
+    });
+    return {dims, nota:Math.round(dims.reduce((a,d)=>a+d.nota,0)/dims.length)};
+  }
+
+  function renderQ(focar){
+    wrap.classList.remove('done');
+    const q=Q[idx], ult=idx===Q.length-1;
+    card.innerHTML=`<p class="dg-prog"><span>Pergunta ${idx+1} de ${Q.length}</span><span>${DIM[q.d].nome}</span></p>
+      <div class="dg-bar" role="progressbar" aria-label="Progresso do diagnóstico" aria-valuemin="0" aria-valuemax="${Q.length}" aria-valuenow="${idx}"><i style="width:${idx/Q.length*100}%"></i></div>
+      <fieldset class="dg-set" tabindex="-1"><legend>${q.t}</legend>${q.o.map((o,i)=>`<label class="dg-opt"><input type="radio" name="dgq" value="${i}"${resp[idx]===i?' checked':''}><span>${o}</span></label>`).join('')}</fieldset>
+      <p class="dg-err" id="dg-err" role="alert"></p>
+      <div class="dg-nav">${idx>0?'<button type="button" class="btn btn-ghost" id="dg-back">Voltar</button>':'<span></span>'}<button type="button" class="btn btn-primary" id="dg-next">${ult?'Ver resultado':'Próxima'}</button></div>`;
+    if(focar) card.querySelector('.dg-set').focus({preventScroll:true});
+  }
+
+  function mailto(r){
+    const corpo=['Nome:','Meio de contato (e-mail ou WhatsApp):','','Nota de prontidão: '+r.nota+'/100'].concat(r.dims.map(d=>d.nome+': '+d.nota)).join('\n');
+    return 'mailto:'+EMAIL+'?subject='+encodeURIComponent('Relatório de prontidão - lista de espera')+'&body='+encodeURIComponent(corpo);
+  }
+
+  function renderRes(){
+    res=calcular();
+    wrap.classList.add('done');
+    const faixa=FAIXAS.find(f=>res.nota>=f.min), prem=PREMIO.find(p=>res.nota>=p[0])[1];
+    const C=2*Math.PI*52, f=res.nota/100*C;
+    const fracas=res.dims.filter(d=>d.nota<CRITICO).sort((a,b)=>a.nota-b.nota).slice(0,2);
+    card.innerHTML=`<div class="dg-top">
+        <svg class="dg-gauge ${faixa.cls}" viewBox="0 0 120 120" role="img" aria-label="Nota ${res.nota} de 100"><circle class="gb" cx="60" cy="60" r="52"/><circle class="gf" cx="60" cy="60" r="52" stroke-dasharray="${f.toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 60 60)"/><text class="gn" x="60" y="62" text-anchor="middle">${res.nota}</text><text class="gs" x="60" y="80" text-anchor="middle">de 100</text></svg>
+        <div><span class="ro-tag ${faixa.cls}">${faixa.tag}</span><h3 id="dg-h" tabindex="-1">${faixa.tx}</h3><p class="dg-sub">Prontidão para venda ou captação, pelas suas respostas.</p></div>
+      </div>
+      <p class="ro-h">Nota por dimensão</p>
+      <div class="dg-dims">${res.dims.map(d=>`<div class="dg-dim"><div class="l"><span>${d.nome}</span><b>${d.nota}</b></div><div class="t"><i class="${d.nota<50?'lo':d.nota<75?'mid':'hi'}" style="width:${d.nota}%"></i></div></div>`).join('')}</div>
+      <p class="ro-h">Os pontos que mais pesam</p>
+      ${fracas.length?`<ol class="ro-steps">${fracas.map(d=>`<li><b>${d.nome} (${d.nota}).</b> ${d.por}</li>`).join('')}</ol>`:'<p class="dg-sub">Nenhuma dimensão ficou abaixo de '+CRITICO+'. O próximo passo é transformar essa preparação em valor, com o valuation e o material de apresentação.</p>'}
+      ${prem>0?`<div class="dg-sim"><p>Empresas menos preparadas costumam receber propostas com desconto. Para testar o efeito, some <b>${prem} p.p.</b> à taxa de desconto do simulador. É só uma sugestão, e você pode editar o valor.</p><button type="button" class="btn btn-ghost" id="dg-sim">Aplicar no simulador</button></div>`:''}
+      <div class="dg-lock">
+        <p class="ro-h">Relatório de prontidão <span class="soon">Em breve · pago</span></p>
+        <ul class="dg-locked">${['Efeito de cada ponto fraco no valor, em faixa','Plano de 90 dias para subir a nota','Checklist da sala de dados, item a item','As perguntas que um comprador faria'].map(t=>`<li>${LOCK}${t}</li>`).join('')}</ul>
+        <a class="btn btn-primary" href="${mailto(res)}">Entrar na lista do relatório completo</a>
+      </div>
+      <div class="dg-redo"><p class="dg-sub">Critérios de boa prática, não uma avaliação da empresa nem recomendação de investimento.</p><button type="button" class="btn btn-ghost" id="dg-redo">Refazer o diagnóstico</button></div>`;
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+    $('dg-h').focus({preventScroll:true});
+  }
+
+  card.addEventListener('change',e=>{
+    if(e.target.name!=='dgq') return;
+    resp[idx]=+e.target.value;
+    const er=$('dg-err'); if(er) er.textContent='';
+  });
+  card.addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    if(b.id==='dg-next'){
+      if(resp[idx]===undefined){ $('dg-err').textContent='Escolha uma opção para continuar.'; return; }
+      if(idx<Q.length-1){ idx++; renderQ(true); } else { renderRes(); }
+    }else if(b.id==='dg-back'){ idx--; renderQ(true); }
+    else if(b.id==='dg-redo'){ idx=0; resp=[]; res=null; renderQ(true); card.scrollIntoView({behavior:'smooth',block:'start'}); }
+    else if(b.id==='dg-sim'){
+      const prem=PREMIO.find(p=>res.nota>=p[0])[1], r=$('r');
+      if(String(r.value)!==b.dataset.last) b.dataset.orig=r.value;
+      const novo=+(parseFloat(b.dataset.orig)+prem).toFixed(1);
+      r.value=novo; b.dataset.last=String(novo);
+      r.dispatchEvent(new Event('input',{bubbles:true}));
+      $('simulador').scrollIntoView({behavior:'smooth'});
+    }
+  });
+  renderQ(false);
 })();
 </script>
 </body>

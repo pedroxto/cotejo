@@ -72,3 +72,14 @@ Base de conhecimento do Cotejo. O simulador do `index.html` é uma versão simpl
 - Póvoa: *Valuation: Como Precificar Ações*
 - Rosenbaum & Pearl: *Investment Banking*
 - Securato (FEA-USP): só foi confirmado o artigo de Oliveira, Guerreiro e Securato (RC&F/USP) sobre avaliação sob risco com o modelo de Ohlson, que gera um intervalo de valores em vez de um valor único. Nenhum livro-texto dele foi confirmado; verificar antes de citar.
+
+## Diagnóstico de prontidão (site)
+
+Questionário de 15 perguntas no `index.html` (seção `#diagnostico`), que roda no navegador e mede a **preparação da empresa para venda ou captação**. Não é avaliação da empresa nem recomendação de investimento, e não usa o `dcf()`.
+
+- **Pontuação:** cada pergunta tem 4 opções que valem 0 a 3 pontos. Cada uma das 5 dimensões tem 3 perguntas, e a nota da dimensão é `pontos ÷ 9 × 100`. A nota geral é a média das 5 notas de dimensão (já arredondadas), com pesos iguais.
+- **Dimensões:** informações financeiras; dependência de clientes e do dono; receita recorrente e margem; governança e documentos; crescimento e posicionamento.
+- **Faixas:** 85 ou mais, pronta; 65 a 84, quase pronta; 40 a 64, em preparação; abaixo de 40, preparação necessária. Dimensões abaixo de 75 entram em "os pontos que mais pesam".
+- **Prêmio de risco sugerido ao simulador:** 0 p.p. (nota 85 ou mais), 1 p.p. (65 a 84), 2 p.p. (40 a 64) ou 3 p.p. (abaixo de 40), somados à taxa de desconto atual. É uma **heurística** para testar o efeito de uma empresa menos preparada, editável pelo usuário. Não foi calibrada com dados de mercado.
+- **Limites:** os critérios e as faixas são de boa prática de preparação, não um modelo estatístico validado. Perguntas, pesos e faixas ficam no objeto de configuração do script (`DIM`, `Q`, `FAIXAS`, `PREMIO`, `CRITICO`).
+- **Pendente:** revisar com um profissional de M&A antes de cobrar pelo relatório completo.
