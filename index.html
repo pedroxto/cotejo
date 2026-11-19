@@ -405,6 +405,26 @@ footer p:last-child{max-width:820px}
 @media(max-width:900px){.dg-wrap{grid-template-columns:1fr}.dg-side{border-left:0;border-top:1px solid var(--line)}}
 @media(max-width:600px){.dg-card,.dg-side{padding:20px}.dg-top{flex-direction:column;align-items:flex-start;gap:16px}.dg-nav .btn,.dg-sim .btn{padding:12px 18px}}
 
+/* formulário da lista de espera (janela) */
+.lista{position:fixed;margin:auto;padding:0;width:calc(100% - 32px);max-width:460px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--card);color:var(--text)}
+.lista::backdrop{background:rgba(0,0,0,.72)}
+.lista form,.lista .l-done{position:relative;padding:28px}
+.lista h3{font-size:1.3rem;margin:0 36px 6px 0}
+.lista .l-sub{margin:0 0 22px;font-size:.9rem;color:var(--muted)}
+.lista .l-field{margin:0 0 16px}
+.lista .l-err{margin:6px 0 0;min-height:1.1em;font-size:.8rem;color:var(--neg)}
+.lista .l-err a{color:var(--cta-text);font-weight:600;text-decoration:underline}
+.lista .l-check{display:flex;gap:10px;align-items:flex-start;margin:4px 0 0;font-size:.82rem;font-weight:400;color:var(--muted)}
+.lista .l-check input{flex:none;width:16px;height:16px;margin:2px 0 0;padding:0;accent-color:var(--cta)}
+.lista .l-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:18px}
+.lista .l-x{position:absolute;top:14px;right:14px;width:34px;height:34px;border:1px solid var(--line);border-radius:var(--radius);background:transparent;color:var(--muted);font-size:1.2rem;line-height:1;cursor:pointer}
+.lista .l-x:hover{color:var(--head);border-color:var(--head)}
+.lista .l-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;overflow:hidden}
+.lista .l-done p{margin:0 0 20px;color:var(--muted);font-size:.95rem}
+.lista .l-ok{display:inline-grid;place-items:center;width:40px;height:40px;margin-bottom:16px;border:1.5px solid var(--pos);border-radius:50%;color:var(--pos)}
+.lista .l-ok svg{width:20px;height:20px}
+@media(max-width:600px){.lista form,.lista .l-done{padding:22px 20px}.lista .l-actions .btn{flex:1}}
+
 /* proposta Em breve */
 .uses{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:40px 0 0}
 .use{background:var(--card);padding:22px;counter-increment:u}
@@ -687,10 +707,10 @@ footer p:last-child{max-width:820px}
       <div>
         <h3>Entre na lista de acesso antecipado.</h3>
         <p>Mande um e-mail com o objetivo e o setor da empresa. Quem está na lista é avisado primeiro quando o serviço abrir e pode enviar o primeiro caso.</p>
-        <small class="ps-note">Sem compromisso. O e-mail já vem com os campos para preencher.</small>
+        <small class="ps-note">Sem compromisso. Você deixa só o nome e um meio de contato.</small>
       </div>
       <div class="ps-cta">
-        <a class="btn btn-primary" href="mailto:pxisto34@gmail.com?subject=Acesso%20antecipado%20-%20valuation%20Cotejo&body=Objetivo%20(vender%2C%20captar%2C%20comprar%20ou%20planejar)%3A%0ASetor%20da%20empresa%3A%0AFaturamento%20aproximado%3A%0APrazo%20desejado%3A%0A">Quero entrar na lista</a>
+        <a class="btn btn-primary" href="mailto:pxisto34@gmail.com?subject=Acesso%20antecipado%20-%20valuation%20Cotejo&body=Objetivo%20(vender%2C%20captar%2C%20comprar%20ou%20planejar)%3A%0ASetor%20da%20empresa%3A%0AFaturamento%20aproximado%3A%0APrazo%20desejado%3A%0A" data-lista="em-breve">Quero entrar na lista</a>
         <a class="btn btn-ghost" href="#deck-track">Rever as páginas</a>
       </div>
     </div>
@@ -803,7 +823,7 @@ footer p:last-child{max-width:820px}
       <details>
         <summary>Meus dados são enviados para algum lugar?</summary>
         <div class="a">
-          <p>Não. As contas do simulador e o diagnóstico rodam no seu navegador, e nada do que você digita sai do seu aparelho. Só chega até nós o que você decidir enviar por e-mail, como o pedido do relatório.</p>
+          <p>Não. As contas do simulador e o diagnóstico rodam no seu navegador, e nada do que você digita sai do seu aparelho. Só chega até nós o que você decidir enviar, por e-mail ou pelo formulário da lista de espera.</p>
         </div>
       </details>
 
@@ -1336,6 +1356,7 @@ footer p:last-child{max-width:820px}
     if(focar) card.querySelector('.dg-set').focus({preventScroll:true});
   }
 
+  function resumo(r){ return ['Nota de prontidão: '+r.nota+'/100'].concat(r.dims.map(d=>d.nome+': '+d.nota)).join('\n'); }
   function mailto(r){
     const corpo=['Nome:','Meio de contato (e-mail ou WhatsApp):','','Nota de prontidão: '+r.nota+'/100'].concat(r.dims.map(d=>d.nome+': '+d.nota)).join('\n');
     return 'mailto:'+EMAIL+'?subject='+encodeURIComponent('Relatório de prontidão - lista de espera')+'&body='+encodeURIComponent(corpo);
@@ -1359,7 +1380,7 @@ footer p:last-child{max-width:820px}
       <div class="dg-lock">
         <p class="ro-h">Relatório de prontidão <span class="soon">Em breve · pago</span></p>
         <ul class="dg-locked">${['Efeito de cada ponto fraco no valor, em faixa','Plano de 90 dias para subir a nota','Checklist da sala de dados, item a item','As perguntas que um comprador faria'].map(t=>`<li>${LOCK}${t}</li>`).join('')}</ul>
-        <a class="btn btn-primary" href="${mailto(res)}">Entrar na lista do relatório completo</a>
+        <a class="btn btn-primary" href="${mailto(res)}" data-lista="diagnostico" data-resumo="${encodeURIComponent(resumo(res))}">Entrar na lista do relatório completo</a>
       </div>
       <div class="dg-redo"><p class="dg-sub">Critérios de boa prática, não uma avaliação da empresa nem recomendação de investimento.</p><button type="button" class="btn btn-ghost" id="dg-redo">Refazer o diagnóstico</button></div>`;
     card.scrollIntoView({behavior:'smooth',block:'start'});
@@ -1388,6 +1409,107 @@ footer p:last-child{max-width:820px}
     }
   });
   renderQ(false);
+})();
+</script>
+<dialog class="lista" id="lista-dlg" aria-labelledby="lista-t">
+  <form id="lista-form" novalidate>
+    <button type="button" class="l-x" id="lista-x" aria-label="Fechar">&times;</button>
+    <h3 id="lista-t">Entrar na lista</h3>
+    <p class="l-sub" id="lista-sub"></p>
+    <div class="l-field">
+      <label for="l-nome">Nome</label>
+      <input id="l-nome" name="nome" type="text" autocomplete="name" maxlength="120">
+      <p class="l-err" id="l-nome-e"></p>
+    </div>
+    <div class="l-field">
+      <label for="l-contato">E-mail ou WhatsApp</label>
+      <input id="l-contato" name="contato" type="text" inputmode="email" autocomplete="email" maxlength="120" placeholder="nome@empresa.com.br ou (11) 91234-5678">
+      <p class="l-err" id="l-contato-e"></p>
+    </div>
+    <label class="l-check"><input type="checkbox" id="l-ok"><span>Concordo em ser contatado pelo Cotejo sobre este serviço. Uso seus dados só para isso.</span></label>
+    <p class="l-err" id="l-ok-e"></p>
+    <input class="l-hp" type="text" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p class="l-err" id="l-geral" role="alert"></p>
+    <div class="l-actions">
+      <button type="button" class="btn btn-ghost" id="lista-c">Cancelar</button>
+      <button type="submit" class="btn btn-primary" id="lista-s">Enviar</button>
+    </div>
+  </form>
+  <div class="l-done" id="lista-done" hidden>
+    <span class="l-ok" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+    <h3 id="lista-ok-t" tabindex="-1">Recebido.</h3>
+    <p id="lista-ok-p"></p>
+    <button type="button" class="btn btn-primary" id="lista-f">Fechar</button>
+  </div>
+</dialog>
+<script>
+// Formulário da lista de espera: nome e meio de contato.
+// Para ativar o envio direto ao seu e-mail, coloque a chave do Web3Forms em "key" (gratuita, em web3forms.com).
+// Enquanto "key" estiver vazio, a janela oferece o e-mail pré-preenchido como alternativa.
+window.COTEJO_FORM={endpoint:'https://api.web3forms.com/submit',key:'',email:'pxisto34@gmail.com'};
+(function(){
+  const $=id=>document.getElementById(id);
+  const dlg=$('lista-dlg');
+  if(!dlg||typeof dlg.showModal!=='function') return; // sem suporte: o link de e-mail original continua valendo
+  const form=$('lista-form'), done=$('lista-done'), enviar=$('lista-s');
+  const TEXTOS={
+    'em-breve':{t:'Entrar na lista de acesso antecipado', s:'Deixe seu nome e um meio de contato. Avisamos primeiro quando o valuation em PDF e PowerPoint abrir.', assunto:'Acesso antecipado - valuation Cotejo'},
+    'diagnostico':{t:'Entrar na lista do relatório completo', s:'Deixe seu nome e um meio de contato. Enviamos junto a nota do seu diagnóstico e avisamos quando o relatório abrir.', assunto:'Relatório de prontidão - lista de espera'}
+  };
+  const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const fone=v=>v.replace(/\D/g,'').length>=10;
+  let origem='em-breve', resumo='';
+
+  function limpar(){ ['l-nome-e','l-contato-e','l-ok-e','l-geral'].forEach(i=>{$(i).textContent='';}); }
+  function abrir(o,r){
+    origem=TEXTOS[o]?o:'em-breve'; resumo=r||'';
+    form.reset(); limpar(); done.hidden=true; form.hidden=false; enviar.disabled=false; enviar.textContent='Enviar';
+    $('lista-t').textContent=TEXTOS[origem].t; $('lista-sub').textContent=TEXTOS[origem].s;
+    dlg.showModal(); $('l-nome').focus();
+  }
+  function mailto(nome,contato){
+    const corpo='Nome: '+nome+'\nContato: '+contato+(resumo?'\n\n'+resumo:'');
+    return 'mailto:'+window.COTEJO_FORM.email+'?subject='+encodeURIComponent(TEXTOS[origem].assunto)+'&body='+encodeURIComponent(corpo);
+  }
+  function sucesso(nome){
+    form.hidden=true; done.hidden=false;
+    $('lista-ok-p').textContent='Obrigado, '+nome.split(' ')[0]+'. Avisamos você assim que o serviço abrir.';
+    $('lista-ok-t').focus();
+  }
+
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('[data-lista]'); if(!a) return;
+    e.preventDefault(); abrir(a.dataset.lista, a.dataset.resumo?decodeURIComponent(a.dataset.resumo):'');
+  });
+  ['lista-x','lista-c','lista-f'].forEach(i=>$(i).addEventListener('click',()=>dlg.close()));
+  dlg.addEventListener('click',e=>{ if(e.target===dlg) dlg.close(); }); // clique fora da janela
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault(); limpar();
+    const nome=$('l-nome').value.trim(), contato=$('l-contato').value.trim();
+    let primeiro=null;
+    const erro=(id,campo,msg)=>{ $(id).textContent=msg; if(!primeiro) primeiro=campo; };
+    if(nome.length<2) erro('l-nome-e',$('l-nome'),'Informe o seu nome.');
+    if(!(EMAIL_RE.test(contato)||fone(contato))) erro('l-contato-e',$('l-contato'),'Informe um e-mail ou um WhatsApp com DDD.');
+    if(!$('l-ok').checked) erro('l-ok-e',$('l-ok'),'Marque a caixa para continuar.');
+    if(primeiro){ primeiro.focus(); return; }
+    if(form.elements.site.value){ sucesso(nome); return; } // campo-isca preenchido: provável robô
+
+    const C=window.COTEJO_FORM, link=mailto(nome,contato);
+    if(!C.key){ $('l-geral').innerHTML='O envio direto ainda não está ativo. <a href="'+link+'">Enviar por e-mail</a>.'; return; }
+    enviar.disabled=true; enviar.textContent='Enviando…';
+    try{
+      const corpo={access_key:C.key, subject:TEXTOS[origem].assunto, from_name:'Cotejo (site)', name:nome, contato:contato, origem:origem, resumo:resumo, botcheck:''};
+      if(EMAIL_RE.test(contato)) corpo.email=contato;
+      const r=await fetch(C.endpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(corpo)});
+      const j=await r.json();
+      if(!r.ok||!j.success) throw new Error(j.message||'falha');
+      sucesso(nome);
+    }catch(err){
+      enviar.disabled=false; enviar.textContent='Enviar';
+      $('l-geral').innerHTML='Não foi possível enviar agora. Tente de novo ou <a href="'+link+'">envie por e-mail</a>.';
+    }
+  });
 })();
 </script>
 </body>
