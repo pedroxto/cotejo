@@ -823,7 +823,7 @@ footer p:last-child{max-width:820px}
       <details>
         <summary>Meus dados são enviados para algum lugar?</summary>
         <div class="a">
-          <p>Não. As contas do simulador e o diagnóstico rodam no seu navegador, e nada do que você digita sai do seu aparelho. Só chega até nós o que você decidir enviar, por e-mail ou pelo formulário da lista de espera.</p>
+          <p>Não. As contas do simulador e o diagnóstico rodam no seu navegador, e nada do que você digita sai do seu aparelho. Só chega até nós o que você decidir enviar, por e-mail ou pelo formulário da lista de espera, que usa um serviço externo (Web3Forms) para entregar a mensagem ao nosso e-mail.</p>
         </div>
       </details>
 
@@ -1445,8 +1445,8 @@ footer p:last-child{max-width:820px}
 <script>
 // Formulário da lista de espera: nome e meio de contato.
 // Para ativar o envio direto ao seu e-mail, coloque a chave do Web3Forms em "key" (gratuita, em web3forms.com).
-// Enquanto "key" estiver vazio, a janela oferece o e-mail pré-preenchido como alternativa.
-window.COTEJO_FORM={endpoint:'https://api.web3forms.com/submit',key:'',email:'pxisto34@gmail.com'};
+// Se "key" ficar vazio, a janela oferece o e-mail pré-preenchido como alternativa.
+window.COTEJO_FORM={endpoint:'https://api.web3forms.com/submit',key:'1bbab3e9-35ab-4af7-a94e-106d429b4425',email:'pxisto34@gmail.com'};
 (function(){
   const $=id=>document.getElementById(id);
   const dlg=$('lista-dlg');
