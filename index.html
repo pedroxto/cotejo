@@ -122,9 +122,13 @@ header{position:sticky;top:0;z-index:10;background:var(--hdr);backdrop-filter:bl
 @media(max-width:900px){.step,.step+.step{padding:24px 0;border-right:0;border-bottom:1px solid var(--line)}.step::before{margin-bottom:12px}}
 
 /* simulador */
+/* touro ao fundo: tamanho natural (678×452), sem esticar, com bordas que somem no fundo */
 #simulador{position:relative;overflow:hidden}
-#simulador::before{content:"";position:absolute;inset:0;background:url(assets/touro.jpg) center 45%/cover no-repeat;opacity:.12;filter:grayscale(.5) brightness(.5) contrast(1.1);pointer-events:none}
+#simulador::before{content:"";position:absolute;top:0;right:0;width:min(678px,58%);aspect-ratio:678/452;background:url(assets/touro.jpg) center/contain no-repeat;opacity:.18;filter:grayscale(.5) brightness(.6) contrast(1.1);pointer-events:none;
+  -webkit-mask-image:linear-gradient(to right,transparent,var(--bg) 35%),linear-gradient(to bottom,var(--bg) 55%,transparent);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent,var(--bg) 35%),linear-gradient(to bottom,var(--bg) 55%,transparent);mask-composite:intersect}
 #simulador>.wrap{position:relative;z-index:1}
+@media(max-width:760px){#simulador::before{width:100%;opacity:.16;-webkit-mask-image:linear-gradient(to bottom,var(--bg) 50%,transparent);mask-image:linear-gradient(to bottom,var(--bg) 50%,transparent)}}
 .calc{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0;margin-top:48px;align-items:stretch;border:1px solid var(--line)}
 .side{grid-column:1/-1;border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);column-gap:48px;align-content:start}
 .side h3:nth-of-type(1),.side .tiles{grid-column:1}
