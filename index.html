@@ -3,28 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20110%22%3E%3Cpath%20d%3D%22M8%204H92V52C92%2080%2072%2096%2050%20106C28%2096%208%2080%208%2052Z%22%20fill%3D%22%239b1020%22%2F%3E%3Cg%20transform%3D%22translate(14%2014)%20scale(.72)%22%3E%3Cpath%20d%3D%22M46%2036L10%2012L14%2022L44%2042Z%20M45%2041L6%2026L11%2035L44%2047Z%20M45%2046L8%2042L14%2049L45%2052Z%20M46%2051L14%2056L21%2061L46%2057Z%20M54%2036L90%2012L86%2022L56%2042Z%20M55%2041L94%2026L89%2035L56%2047Z%20M55%2046L92%2042L86%2049L55%2052Z%20M54%2051L86%2056L79%2061L54%2057Z%20M50%2030C56%2034%2057%2050%2054%2064L50%2074L46%2064C43%2050%2044%2034%2050%2030Z%20M46%2026C46%2018%2054%2015%2059%2019L67%2021L60%2024L62%2028C58%2029%2054%2031%2050%2032Z%20M46%2070L39%2089L50%2082L61%2089L54%2070Z%20M44%2065L35%2072L41%2073Z%20M56%2065L65%2072L59%2073Z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20110%22%3E%3Cpath%20d%3D%22M8%204H92V52C92%2080%2072%2096%2050%20106C28%2096%208%2080%208%2052Z%22%20fill%3D%22%231d3d82%22%2F%3E%3Cg%20transform%3D%22translate(14%2014)%20scale(.72)%22%3E%3Cpath%20d%3D%22M46%2036L10%2012L14%2022L44%2042Z%20M45%2041L6%2026L11%2035L44%2047Z%20M45%2046L8%2042L14%2049L45%2052Z%20M46%2051L14%2056L21%2061L46%2057Z%20M54%2036L90%2012L86%2022L56%2042Z%20M55%2041L94%2026L89%2035L56%2047Z%20M55%2046L92%2042L86%2049L55%2052Z%20M54%2051L86%2056L79%2061L54%2057Z%20M50%2030C56%2034%2057%2050%2054%2064L50%2074L46%2064C43%2050%2044%2034%2050%2030Z%20M46%2026C46%2018%2054%2015%2059%2019L67%2021L60%2024L62%2028C58%2029%2054%2031%2050%2032Z%20M46%2070L39%2089L50%2082L61%2089L54%2070Z%20M44%2065L35%2072L41%2073Z%20M56%2065L65%2072L59%2073Z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 <title>Cotejo — Valuation com premissas à mostra</title>
 <meta name="description" content="Cotejo entrega valuation pronto para profissionais de mercado e estudantes de finanças: modelo, premissas e páginas em PDF ou PowerPoint, no padrão de equity research, investment banking e private equity. Em desenvolvimento.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* Cotejo — sistema visual: grafite quase preto, verde de ação, cantos retos, números tabulares */
 :root{
   --sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --mono:"Inter Tight",system-ui,-apple-system,"Segoe UI",sans-serif; /* rótulos e etiquetas */
   --radius:4px;
   /* site só no tema escuro */
   --bg:#0b0c0e; --soft:#111316; --card:#15171a; --line:#24272c; --line-strong:#353a41;
   --text:#e4e6e9; --muted:#9a9fa7; --head:#f5f6f7;
-  --accent:#6aa0ec; --cta:#9b1020; --cta-hover:#7e0c1a; --cta-ink:#ffffff; --cta-text:#e0434f;
+  --accent:#6aa0ec; --cta:#1f4594; --cta-hover:#183776; --cta-ink:#ffffff; --cta-text:#7ea6f2;
   --panel:#141619; --panel-2:#1b1e22; --on-panel:#ffffff; --on-panel-muted:#a3a8b0; --panel-line:rgba(255,255,255,.12);
-  --pos:#00c796; --neg:#ff9b8a; --mid:rgba(0,199,150,.2);
+  --pos:#00c796; --neg:#ff9b8a; --mid:rgba(31,69,148,.45);
   --input:#111316; --hdr:rgba(11,12,14,.95);
   /* folhas de exemplo (aparência de PDF/slide impresso) */
-  --brand:#9b1020; --on-brand:#ffffff;
-  --paper:#f4f4f1; --paper-2:#e9e9e4; --ink:#15171a; --ink-muted:#62666e; --ink-line:#d6d6cf; --ink-accent:#0f7a5c;
+  --brand:#1d3d82; --on-brand:#ffffff;
+  --paper:#f4f4f1; --paper-2:#e9e9e4; --ink:#15171a; --ink-muted:#62666e; --ink-line:#d6d6cf; --ink-accent:#1d3d82;
   color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0}
