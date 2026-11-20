@@ -405,6 +405,47 @@ footer p:last-child{max-width:820px}
 @media(max-width:900px){.dg-wrap{grid-template-columns:1fr}.dg-side{border-left:0;border-top:1px solid var(--line)}}
 @media(max-width:600px){.dg-card,.dg-side{padding:20px}.dg-top{flex-direction:column;align-items:flex-start;gap:16px}.dg-nav .btn,.dg-sim .btn{padding:12px 18px}}
 
+/* mercado: taxa sugerida, comparáveis, sensibilidade e valores no gráfico */
+.bars div b{position:absolute;top:-18px;left:-4px;right:-4px;text-align:center;font-size:.68rem;font-weight:500;color:var(--head)}
+.sug{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:0 0 6px}
+.sug label{margin:0}
+.sug select{display:block;width:100%;margin-top:8px;padding:11px 12px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--input);color:var(--text);font:inherit;font-size:.9rem}
+.sug select:focus{outline:none;border-color:var(--accent)}
+.sug .btn{grid-column:1/-1;padding:11px 18px;font-size:.9rem}
+.sug-msg{grid-column:1/-1;margin:0;min-height:1.2em;font-size:.82rem;color:var(--neg)}
+.sug-out{grid-column:1/-1;margin:4px 0 0;padding:14px 16px;background:var(--soft);font-size:.86rem;color:var(--text)}
+.sug-out .tag{display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.05em;text-transform:uppercase;color:var(--cta-text);border:1px solid var(--cta);padding:1px 6px;border-radius:3px;margin-right:6px}
+.sug-out p{margin:0 0 6px}
+.sug-out details{margin-top:8px}
+.sug-out summary{cursor:pointer;color:var(--cta-text);font-weight:600}
+.wb{width:100%;border-collapse:collapse;font-size:.82rem;margin:10px 0 0}
+.wb td{border:0;border-bottom:1px solid var(--line);padding:6px 2px;text-align:left;color:var(--text)}
+.wb td+td{text-align:right;white-space:nowrap}
+.wb tr.t td{font-weight:600;color:var(--head)}
+.sug-src{margin:10px 0 0;font-size:.74rem;color:var(--faint)}
+.sug-g{margin:8px 0 0;font-size:.84rem}
+.sug-g button{background:none;border:0;padding:0;color:var(--cta-text);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline}
+.mkwrap{display:grid;grid-template-columns:1fr 1.2fr;gap:0;border:1px solid var(--line);border-top:0;background:var(--card)}
+.mk{padding:28px}
+.mk+.mk{border-left:1px solid var(--line)}
+.mk label{margin:0 0 14px}
+.cmpbar{display:grid;gap:10px;margin:14px 0 8px}
+.cmpbar .r{display:grid;grid-template-columns:130px 1fr;gap:10px;align-items:center;font-size:.8rem;color:var(--muted)}
+.cmpbar .t{position:relative;height:22px;background:var(--line)}
+.cmpbar .t i{position:absolute;left:0;top:0;bottom:0;background:var(--accent)}
+.cmpbar .t i.d{background:var(--cta)}
+.cmpbar .t b{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:.74rem;font-weight:500;color:var(--head)}
+.sens-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+.sens-tabs button{font:inherit;font-size:.78rem;font-weight:500;padding:7px 12px;border:1px solid var(--line-strong);border-radius:var(--radius);background:transparent;color:var(--muted);cursor:pointer}
+.sens-tabs button[aria-selected="true"]{background:var(--cta);border-color:var(--cta);color:var(--cta-ink)}
+.sg{width:100%;border-collapse:collapse;font-size:.8rem;text-align:center;margin:0}
+.sg th,.sg td{border:1px solid var(--line);padding:7px 3px;font-weight:400;color:var(--text)}
+.sg th{color:var(--muted);font-size:.72rem;background:var(--soft)}
+.sg td.up{background:rgba(0,199,150,.10)}.sg td.dn{background:rgba(255,155,138,.10)}
+.sg td.base{background:var(--cta);color:var(--cta-ink);font-weight:600}
+@media(max-width:900px){.mkwrap{grid-template-columns:1fr}.mk+.mk{border-left:0;border-top:1px solid var(--line)}}
+@media(max-width:600px){.mk{padding:20px}.cmpbar .r{grid-template-columns:1fr}.sg{font-size:.72rem}.sg th,.sg td{padding:6px 1px}}
+
 /* formulário da lista de espera (janela) */
 .lista{position:fixed;margin:auto;padding:0;width:calc(100% - 32px);max-width:460px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--card);color:var(--text)}
 .lista::backdrop{background:rgba(0,0,0,.72)}
@@ -592,9 +633,18 @@ footer p:last-child{max-width:820px}
           <label>Crescimento anual<small>anos 1 a 5</small><span class="inp"><input id="g" type="number" step="any" value="8"><em>% a.a.</em></span><details class="help"><summary><span class="help-t">Quanto esse caixa cresce por ano nos próximos 5 anos. Use algo perto do crescimento esperado das vendas: com 8% ao ano, R$ 100 mi viram R$ 147 mi no ano 5.</span></summary></details></label>
           </fieldset>
           <fieldset><legend>Custo de capital e perpetuidade</legend>
+          <div class="sug">
+            <label>Setor<select id="sug-setor"><option value="">Escolha o setor</option><option value="saude_apoio">Serviços de apoio à saúde</option><option value="hospitais">Hospitais e clínicas</option><option value="software">Software</option><option value="maquinas">Máquinas e equipamentos</option><option value="varejo">Varejo em geral</option><option value="alimentos">Alimentos processados</option><option value="educacao">Educação</option><option value="servicos">Serviços empresariais e ao consumidor</option><option value="construcao">Materiais de construção</option><option value="imobiliario">Incorporação imobiliária</option></select></label>
+            <label>Porte<select id="sug-porte"><option value="pequena">Pequena · até R$ 50 mi</option><option value="media" selected>Média · R$ 50 a 300 mi</option><option value="grande">Grande · acima de R$ 300 mi</option></select></label>
+            <label>Onde atua<select id="sug-local"><option value="br" selected>Brasil</option><option value="mix">Brasil e exterior</option></select></label>
+            <button type="button" class="btn btn-ghost" id="sug-btn">Sugerir taxa e crescimento</button>
+            <p class="sug-msg" id="sug-msg" role="alert"></p>
+          </div>
+
           <label>Taxa de desconto<small>custo de capital da empresa (WACC)</small><span class="inp"><input id="r" type="number" step="any" value="12"><em>%</em></span><details class="help"><summary><span class="help-t">Retorno mínimo que sócios e credores exigem para financiar a empresa, ponderado pelo peso de cada um. Quanto mais arriscado o negócio, maior a taxa: no exemplo, passar de 12% para 13% reduz o valor em 13%.</span></summary></details></label>
           <label>Crescimento perpétuo<small>depois do ano 5; menor que a taxa</small><span class="inp"><input id="gp" type="number" step="any" value="3"><em>%</em></span><details class="help"><summary><span class="help-t">Crescimento anual do caixa depois do ano 5, para sempre. Costuma ficar perto da inflação de longo prazo, ou seja, sem ganho real. Precisa ser menor que a taxa de desconto, senão a conta não fecha.</span></summary></details></label>
-          </fieldset>
+                    <div class="sug-out" id="sug-out" hidden></div>
+        </fieldset>
           <fieldset><legend>Do valor da firma aos sócios</legend>
           <label>Dívida líquida<small>dívida bruta − caixa; negativo = caixa líquido</small><span class="inp"><input id="debt" type="number" step="any" value="300"><em>R$ mi</em></span><details class="help"><summary><span class="help-t">Empréstimos e financiamentos menos o dinheiro em caixa. Ex.: R$ 500 mi de dívida e R$ 200 mi em caixa = R$ 300 mi. Se a empresa tem mais caixa que dívida, digite o número negativo.</span></summary></details></label>
           <label>Ações ou cotas<small>total em circulação</small><span class="inp"><input id="sh" type="number" step="any" value="39"><em>mi</em></span><details class="help"><summary><span class="help-t">Quantidade total de ações ou cotas, em milhões, usada para dividir o valor entre os sócios. Uma empresa com 1.000.000 de cotas: digite 1.</span></summary></details></label>
@@ -611,6 +661,19 @@ footer p:last-child{max-width:820px}
       <div class="panel side" id="stats"></div>
     </div>
     <div class="readout" id="leitura" aria-live="polite"></div>
+    <div class="mkwrap">
+      <div class="mk" id="comps" hidden>
+        <p class="ro-h">Comparáveis de mercado</p>
+        <label for="ebitda">EBITDA da empresa<small>resultado operacional antes de juros, impostos e depreciação, em 12 meses</small><span class="inp"><input id="ebitda" type="number" step="any" min="0"><em>R$ mi</em></span></label>
+        <div id="comps-out"></div>
+      </div>
+      <div class="mk" id="sens">
+        <p class="ro-h">Sensibilidade</p>
+        <div class="sens-tabs" role="tablist" aria-label="Pares de premissas" id="sens-tabs"><button type="button" role="tab" data-t="0" aria-selected="true">Taxa × crescimento</button><button type="button" role="tab" data-t="1" aria-selected="false">Taxa × perpetuidade</button><button type="button" role="tab" data-t="2" aria-selected="false">Crescimento × perpetuidade</button></div>
+        <div id="sens-out"></div>
+      </div>
+    </div>
+
     <p class="note">Exercício educacional com números de exemplo. Pequenas mudanças nas premissas alteram muito o resultado — essa é a lição principal de qualquer valuation. Um DCF simples como este funciona melhor para empresas maduras; para quem cresce acima da média por muitos anos, a comparação com empresas parecidas costuma explicar melhor o preço.</p>
   </div>
 </section>
@@ -1006,6 +1069,154 @@ footer p:last-child{max-width:820px}
       ${sens.length?`<p class="ro-h">O que mais mexe no valor por ação ou cota</p><table class="ro-t">${sens.map(s=>`<tr><td>${s[0]}</td><td>${s[1]>0?brl.format(s[1]):'—'} <span class="${s[2]<0?'d':''}">(${fmtUp(s[2]*100)})</span></td></tr>`).join('')}</table>`:''}
       <p class="ro-note">Leitura das premissas informadas. Não é recomendação de investimento.</p></div>`;
   }
+  // ===== Mercado: taxa e g sugeridos, comparáveis, sensibilidade e valores no gráfico =====
+  // Não alteram dcf() nem run(): leem os campos e o mesmo dcf() e desenham em blocos próprios.
+  // Dados com fonte e data (docs/valuation.md). Itens marcados "premissa" são do Cotejo e editáveis.
+  const MERCADO={
+    macro:{rf:4.18, erp:4.20, crp:3.24, piUS:2.2, kd:14.0, t:34, gFocus:3.9},
+    fonte:'Damodaran (NYU Stern), base de janeiro de 2026: taxa livre de risco, prêmio de mercado, risco-país do Brasil, betas e múltiplos por setor, de empresas listadas dos EUA. Banco Central do Brasil, Focus: mediana do IPCA esperado para 2030, 3,9% em 13/11/2026. Premissas do Cotejo: prêmio por porte, custo da dívida de 14% ao ano, inflação dos EUA de 2,2% e 34% de imposto.',
+    porte:{pequena:{nome:'pequena',premio:3.0},media:{nome:'média',premio:2.0},grande:{nome:'grande',premio:1.0}},
+    local:{br:{nome:'Brasil',lambda:1},mix:{nome:'Brasil e exterior',lambda:0.5}},
+    // bu: beta desalavancado corrigido por caixa; de: dívida/patrimônio (%); ev: EV/EBITDA (empresas com EBITDA positivo)
+    setores:{
+      saude_apoio:{nome:'Serviços de apoio à saúde',bu:0.74,de:35.43,ev:11.17},
+      hospitais:{nome:'Hospitais e clínicas',bu:0.56,de:59.92,ev:8.86},
+      software:{nome:'Software',bu:1.25,de:5.58,ev:24.48},
+      maquinas:{nome:'Máquinas e equipamentos',bu:0.89,de:14.69,ev:16.22},
+      varejo:{nome:'Varejo em geral',bu:0.78,de:7.94,ev:17.38},
+      alimentos:{nome:'Alimentos processados',bu:0.47,de:43.73,ev:10.01},
+      educacao:{nome:'Educação',bu:0.72,de:24.38,ev:9.26},
+      servicos:{nome:'Serviços empresariais e ao consumidor',bu:0.81,de:19.72,ev:14.26},
+      construcao:{nome:'Materiais de construção',bu:1.05,de:17.62,ev:16.82},
+      imobiliario:{nome:'Incorporação imobiliária',bu:0.56,de:101.83,ev:10.23}
+    }
+  };
+  const p1=x=>pct1.format(x)+'%';
+
+  function sugerir(setor,porte,local){
+    const M=MERCADO.macro, S=MERCADO.setores[setor], P=MERCADO.porte[porte], L=MERCADO.local[local];
+    const t=M.t/100, de=S.de/100, bl=S.bu*(1+(1-t)*de);
+    const keUS=M.rf+bl*M.erp+L.lambda*M.crp+P.premio;
+    const ke=((1+keUS/100)*(1+M.gFocus/100)/(1+M.piUS/100)-1)*100;
+    const wd=de/(1+de), we=1-wd, kdl=M.kd*(1-t), wacc=we*ke+wd*kdl;
+    const g=L.lambda*M.gFocus+(1-L.lambda)*M.piUS;
+    return {S,P,L,bl,keUS,ke,wd,we,kdl,wacc,g,m:{rf:M.rf,erp:M.erp,crp:L.lambda*M.crp}};
+  }
+
+  // g implícito: crescimento perpétuo que faz o valor por ação bater com o preço de referência (mesmo dcf())
+  function gImplicito(){
+    const v=id=>parseFloat($(id).value);
+    const fcf=v('fcf'), g=v('g')/100, r=v('r')/100, debt=v('debt')||0, sh=v('sh'), px=v('px');
+    if([fcf,g,r,sh,px].some(isNaN)||fcf<=0||sh<=0||px<=0||r<=0||g<=-1) return null;
+    const f=gp=>(dcf(fcf,g,r,gp)-debt)/sh; let lo=-0.5, hi=r-0.0005;
+    if(f(lo)>px||f(hi)<px) return null;
+    for(let i=0;i<60;i++){ const m=(lo+hi)/2; if(f(m)<px) lo=m; else hi=m; }
+    return (lo+hi)/2*100;
+  }
+
+  function aplicar(el,valor){ el.value=valor; el.dispatchEvent(new Event('input',{bubbles:true})); }
+
+  function mostrarSug(s){
+    const out=$('sug-out'), gi=gImplicito();
+    out.hidden=false;
+    out.innerHTML=`<p><span class="tag">sugerido</span>Taxa de desconto <b>${p1(+s.wacc.toFixed(1))}</b> e crescimento perpétuo <b>${p1(+s.g.toFixed(1))}</b>, para ${s.S.nome.toLowerCase()}, empresa ${s.P.nome}, atuando em ${s.L.nome}. Os campos abaixo foram preenchidos e você pode editá-los.</p>
+      <p class="sug-g" id="sug-g">${gi===null?'':`O crescimento perpétuo que faz o valor bater com o seu preço de referência é <b>${p1(+gi.toFixed(1))}</b>. <button type="button" id="sug-gi">Usar este valor</button>`}</p>
+      <details><summary>Como chegamos a ${p1(+s.wacc.toFixed(1))}</summary><table class="wb">
+        <tr><td>Taxa livre de risco (EUA)</td><td>${p1(s.m.rf)}</td></tr>
+        <tr><td>Beta do setor ${num.format(+s.bl.toFixed(2))} × prêmio de mercado ${p1(s.m.erp)}</td><td>${p1(s.bl*s.m.erp)}</td></tr>
+        <tr><td>Risco-país do Brasil${s.L.lambda<1?' (metade da receita)':''}</td><td>${p1(s.m.crp)}</td></tr>
+        <tr><td>Prêmio por porte (premissa do Cotejo)</td><td>${p1(s.P.premio)}</td></tr>
+        <tr class="t"><td>Custo do capital próprio em dólar</td><td>${p1(s.keUS)}</td></tr>
+        <tr class="t"><td>Em reais, com a inflação de longo prazo</td><td>${p1(s.ke)}</td></tr>
+        <tr><td>Custo da dívida após imposto (14% × 66%, premissa)</td><td>${p1(s.kdl)}</td></tr>
+        <tr><td>Peso do capital próprio e da dívida (setor)</td><td>${num.format(Math.round(s.we*100))}% e ${num.format(Math.round(s.wd*100))}%</td></tr>
+        <tr class="t"><td>Taxa de desconto (WACC)</td><td>${p1(s.wacc)}</td></tr></table>
+        <p class="sug-src">${MERCADO.fonte}</p></details>`;
+  }
+  function sugerirAgora(){
+    const setor=$('sug-setor').value, msg=$('sug-msg');
+    if(!setor){ msg.textContent='Escolha o setor para calcular.'; $('sug-setor').focus(); return; }
+    msg.textContent='';
+    const s=sugerir(setor,$('sug-porte').value,$('sug-local').value);
+    aplicar($('r'),+s.wacc.toFixed(1)); aplicar($('gp'),+s.g.toFixed(1));
+    mostrarSug(s); atualizarMercado();
+  }
+
+  // comparáveis: múltiplo do setor × EBITDA informado, ao lado do DCF
+  function validos(){
+    const v=id=>parseFloat($(id).value);
+    const fcf=v('fcf'), g=v('g')/100, r=v('r')/100, gp=v('gp')/100;
+    return {ok:![fcf,g,r,gp].some(isNaN)&&fcf>0&&r>0&&r-gp>1e-9&&g>-1, fcf,g,r,gp,debt:v('debt')||0,sh:v('sh')};
+  }
+  function comparaveis(){
+    const box=$('comps'), setor=$('sug-setor').value;
+    if(!setor){ box.hidden=true; return; }
+    box.hidden=false;
+    const S=MERCADO.setores[setor], out=$('comps-out'), e=parseFloat($('ebitda').value), V=validos();
+    let h=`<p class="dg-sub" style="margin:0 0 12px">Múltiplo EV/EBITDA do setor (${S.nome.toLowerCase()}): <b>${num.format(S.ev)}x</b>, de empresas listadas dos EUA com EBITDA positivo (Damodaran, janeiro de 2026).</p>`;
+    if(!V.ok||!(e>0)){ out.innerHTML=h+'<p class="dg-sub">Informe o EBITDA para comparar o valor da firma pelo múltiplo do setor com o valor do DCF.</p>'; return; }
+    const ev=dcf(V.fcf,V.g,V.r,V.gp), comp=S.ev*e, esc=Math.max(ev,comp)*1.1;
+    const impl=ev/e, dif=impl/S.ev-1;
+    h+=`<div class="cmpbar"><div class="r"><span>Comparáveis do setor</span><div class="t"><i style="width:${comp/esc*100}%"></i><b>${mi(comp)}</b></div></div>
+      <div class="r"><span>Seu DCF</span><div class="t"><i class="d" style="width:${ev/esc*100}%"></i><b>${mi(ev)}</b></div></div></div>
+      <p style="margin:0 0 8px;font-size:.9rem">O DCF dá <b>${num.format(+impl.toFixed(1))}x</b> o EBITDA, ${Math.abs(dif)<0.05?'perto do':dif>0?p1(dif*100)+' acima do':p1(-dif*100)+' abaixo do'} múltiplo do setor.</p>
+      <p class="sug-src">Valor da firma (EV), antes de descontar dívida ou somar caixa. Empresas pequenas e fechadas costumam valer menos do que empresas listadas: use como referência, não como preço.</p>`;
+    out.innerHTML=h;
+  }
+
+  // sensibilidade 5x5 com o mesmo dcf()
+  let abaSens=0;
+  function sensibilidade(){
+    const out=$('sens-out'), V=validos();
+    if(!V.ok||!(V.sh>0)){ out.innerHTML='<p class="dg-sub">Ajuste as premissas para ver a sensibilidade.</p>'; return; }
+    const R=[-.02,-.01,0,.01,.02], G=[-.04,-.02,0,.02,.04], P=[-.01,-.005,0,.005,.01];
+    const eixos=[
+      {l:'Taxa \\ Crescimento', rows:R.map(d=>({lab:V.r+d,r:V.r+d,g:V.g,gp:V.gp})), cols:G.map(d=>({lab:V.g+d,k:'g',d}))},
+      {l:'Taxa \\ Perpetuidade', rows:R.map(d=>({lab:V.r+d,r:V.r+d,g:V.g,gp:V.gp})), cols:P.map(d=>({lab:V.gp+d,k:'gp',d}))},
+      {l:'Cresc. \\ Perpetuidade', rows:G.map(d=>({lab:V.g+d,r:V.r,g:V.g+d,gp:V.gp})), cols:P.map(d=>({lab:V.gp+d,k:'gp',d}))}
+    ][abaSens];
+    const base=dcf(V.fcf,V.g,V.r,V.gp)-V.debt;
+    const lbl=x=>(x*100).toFixed(1).replace(/\.0$/,'').replace('.',',')+'%';
+    let h=`<table class="sg"><tr><th>${eixos.l}</th>${eixos.cols.map(c=>`<th>${lbl(c.lab)}</th>`).join('')}</tr>`;
+    eixos.rows.forEach((row,i)=>{
+      h+=`<tr><th>${lbl(row.lab)}</th>`;
+      eixos.cols.forEach((c,j)=>{
+        const r=row.r, g=c.k==='g'?V.g+c.d:row.g, gp=c.k==='gp'?V.gp+c.d:row.gp;
+        const val=(r>0&&r-gp>1e-9&&g>-1)?dcf(V.fcf,g,r,gp)-V.debt:NaN;
+        const eBase=i===2&&j===2;
+        const cls=!(val>0)?'':eBase?'base':val>base*1.0001?'up':val<base*0.9999?'dn':'';
+        h+=`<td${cls?` class="${cls}"`:''}>${val>0?num.format(Math.round(val)):'—'}</td>`;
+      });
+      h+='</tr>';
+    });
+    out.innerHTML=h+`</table><p class="sug-src">Valor da empresa para os sócios, em R$ mi. A célula azul é o caso atual; verde está acima e vermelho abaixo dele.</p>`;
+  }
+
+  // valores nas barras do gráfico de fluxo de caixa
+  function legendarBarras(){
+    const st=$('stats'); if(!st) return;
+    const linhas=[...st.querySelectorAll('.ptable tr')].slice(1,6);
+    st.querySelectorAll('.bars div').forEach((d,i)=>{
+      const c=linhas[i]&&linhas[i].children[1]; if(c&&!d.querySelector('b')) d.insertAdjacentHTML('afterbegin','<b>'+c.textContent.replace(/ mi$/,'')+'</b>');
+    });
+    const h=st.querySelectorAll('h3'); if(h[1]) h[1].textContent='Fluxo de caixa projetado (R$ mi)';
+  }
+
+  function atualizarMercado(){
+    comparaveis(); sensibilidade();
+    const gi=gImplicito(), el=$('sug-g');
+    if(el&&!$('sug-out').hidden) el.innerHTML=gi===null?'':`O crescimento perpétuo que faz o valor bater com o seu preço de referência é <b>${p1(+gi.toFixed(1))}</b>. <button type="button" id="sug-gi">Usar este valor</button>`;
+  }
+  $('sug-btn').addEventListener('click',sugerirAgora);
+  ['sug-setor','sug-porte','sug-local'].forEach(id=>$(id).addEventListener('change',()=>{ if(!$('sug-out').hidden||id==='sug-setor') { if($('sug-setor').value) sugerirAgora(); else { $('sug-out').hidden=true; atualizarMercado(); } } }));
+  $('sug-out').addEventListener('click',e=>{ if(e.target.id==='sug-gi'){ const gi=gImplicito(); if(gi!==null) aplicar($('gp'),+gi.toFixed(1)); } });
+  $('ebitda').addEventListener('input',comparaveis);
+  $('sens-tabs').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b) return;
+    abaSens=+b.dataset.t; [...$('sens-tabs').children].forEach(x=>x.setAttribute('aria-selected',x===b)); sensibilidade();
+  });
+  new MutationObserver(atualizarMercado).observe($('result'),{childList:true});
+  new MutationObserver(legendarBarras).observe($('stats'),{childList:true});
   new MutationObserver(explain).observe($('result'),{childList:true});
   document.querySelectorAll('.fields input').forEach(i=>i.addEventListener('input',run));
   for(const k in heroP) $(k).value=$(k).defaultValue=heroP[k];

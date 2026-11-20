@@ -83,3 +83,31 @@ Questionário de 15 perguntas no `index.html` (seção `#diagnostico`), que roda
 - **Prêmio de risco sugerido ao simulador:** 0 p.p. (nota 85 ou mais), 1 p.p. (65 a 84), 2 p.p. (40 a 64) ou 3 p.p. (abaixo de 40), somados à taxa de desconto atual. É uma **heurística** para testar o efeito de uma empresa menos preparada, editável pelo usuário. Não foi calibrada com dados de mercado.
 - **Limites:** os critérios e as faixas são de boa prática de preparação, não um modelo estatístico validado. Perguntas, pesos e faixas ficam no objeto de configuração do script (`DIM`, `Q`, `FAIXAS`, `PREMIO`, `CRITICO`).
 - **Pendente:** revisar com um profissional de M&A antes de cobrar pelo relatório completo.
+
+## Taxa e crescimento sugeridos, comparáveis e sensibilidade (site)
+
+No grupo "Custo de capital e perpetuidade" do simulador (`index.html`), o usuário escolhe **setor, porte e onde atua** e o site propõe a taxa de desconto (WACC) e o crescimento perpétuo (`g`), editáveis. A conta usa a mesma lógica da seção WACC deste documento e **não altera `dcf()` nem `run()`**.
+
+**Fórmula**
+- β alavancado = β desalavancado do setor × (1 + (1 − t) × D/E do setor)
+- Ke(USD) = Rf + β alavancado × ERP + λ × CRP + prêmio por porte
+- Ke(BRL) = (1 + Ke_USD) × (1 + π_BR) / (1 + π_EUA) − 1
+- WACC = E/(D+E) × Ke(BRL) + D/(D+E) × Kd × (1 − t), com os pesos vindos do D/E do setor
+- `g` = λ × π_BR de longo prazo + (1 − λ) × π_EUA. Para "Brasil", λ = 1; para "Brasil e exterior", λ = 0,5 (premissa).
+- **`g` implícito:** o `g` que faz o valor por ação bater com o preço de referência, por bissecção sobre o mesmo `dcf()`. É mostrado como alternativa, com botão "Usar este valor".
+
+**Dados com fonte e data** (verificados em novembro de 2026)
+- Damodaran (NYU Stern), base de janeiro de 2026, empresas listadas dos EUA: Rf 4,18%, ERP 4,20%, CRP do Brasil 3,24%; beta desalavancado corrigido por caixa, D/E e EV/EBITDA (empresas com EBITDA positivo) por setor, de `Betas.html` e `vebitda.html`. Os 10 setores do site foram lidos com os números exatos da tabela.
+- Banco Central do Brasil, Focus (API de expectativas): mediana do IPCA esperado para 2030 de 3,9% em 13/11/2026, usada como `g` e como inflação do Brasil na conversão do Ke.
+
+**Premissas do Cotejo (não vêm de fonte; editáveis pelo usuário)**
+- Prêmio por porte: 3,0 p.p. (pequena, até R$ 50 mi de receita), 2,0 p.p. (média) e 1,0 p.p. (grande, acima de R$ 300 mi).
+- Custo da dívida antes do imposto: 14% ao ano; imposto de 34%; inflação de longo prazo dos EUA de 2,2%.
+- A consulta à Selic pela API do BCB devolveu datas posteriores à data real, então **não foi usada**.
+
+**Limites**
+- Betas e múltiplos são de empresas **listadas dos EUA**. Empresas pequenas e fechadas costumam valer menos, e o texto do site avisa que o comparável é referência, não preço.
+- O comparável é um ponto (o múltiplo do setor), não uma faixa. Betas de mercados emergentes (`betaemerg.xls`) não foram lidos e podem substituir os dos EUA.
+- Atualizar os dados a cada janeiro (nova base do Damodaran) e antes de cobrar por qualquer relatório que use esses números.
+
+**Sensibilidade:** tabelas 5×5 (taxa × crescimento, taxa × perpetuidade, crescimento × perpetuidade) com o mesmo `dcf()`, mostrando o valor da empresa para os sócios. Combinações com taxa ≤ perpetuidade ou valor ≤ 0 mostram "—".
