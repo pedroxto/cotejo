@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%231d3d82%22%2F%3E%3Cpath%20transform%3D%22translate(20%2020)%20scale(.6)%22%20d%3D%22M6%208H94V28H26V50H6Z%20M6%2056H26V72H78V92H6Z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%231d3d82%22%2F%3E%3Cpath%20transform%3D%22translate(15%2015)%20scale(.7)%22%20d%3D%22M50%2080L8%2030L30%2040L50%2014L70%2040L92%2030Z%20M50%2080V40%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%2F%3E%3C%2Fsvg%3E">
 <title>Cotejo — Valuation com premissas à mostra</title>
 <meta name="description" content="Cotejo entrega o valuation da sua empresa pronto e explicado, em PDF ou PowerPoint, no padrão de banco de investimento: para vender, comprar, captar ou planejar. Em desenvolvimento.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +52,7 @@ section[id] .eyebrow::before{counter-increment:sec;content:counter(sec,decimal-l
 header{position:sticky;top:0;z-index:10;background:var(--hdr);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:40px;height:72px}
 .logo{display:flex;align-items:center;gap:12px;font-weight:600;font-size:1.02rem;color:var(--head);letter-spacing:.16em;text-transform:uppercase}
-.logo .mark{width:26px;height:26px;flex:none;--mark:var(--accent)}
+.logo .mark{width:32px;height:32px;flex:none;--mark:var(--accent)}
 .nav ul{display:flex;gap:32px;list-style:none;padding:0;font-size:.92rem;color:var(--muted);margin-right:auto}
 .nav ul a{padding:24px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
 .nav ul a:hover{color:var(--head);border-bottom-color:var(--cta)}
@@ -272,7 +272,7 @@ td.mid{background:var(--mid);font-weight:600;color:var(--on-panel)}
 .slide h3{color:var(--ink);font-size:1.15rem;font-weight:600;letter-spacing:-.01em;margin:3px 0 2px}
 .s-head p{color:var(--ink-muted);font-size:.74rem}
 .s-brand{font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:7px}
-.s-brand svg{width:13px;height:13px}
+.s-brand svg{width:16px;height:16px}
 .s-body{flex:1;display:grid;grid-template-columns:1.15fr 1fr;gap:24px;padding-top:14px;min-height:0}
 .s-body.one{grid-template-columns:1fr}
 .s-h{font-weight:600;font-size:.74rem;color:var(--ink);border-bottom:1px solid var(--ink-line);padding-bottom:4px;margin-bottom:8px;display:flex;justify-content:space-between;gap:8px}
@@ -518,7 +518,7 @@ footer p:last-child{max-width:820px}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="cotejo-marca" viewBox="0 0 100 100"><path d="M6 8H94V28H26V50H6Z M6 56H26V72H78V92H6Z" style="fill:var(--mark,var(--brand))"/></symbol></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="cotejo-marca" viewBox="0 0 100 100"><path d="M50 80L8 30L30 40L50 14L70 40L92 30Z M50 80V40" fill="none" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter" style="stroke:var(--mark,var(--brand))"/></symbol></svg>
 
 <header>
   <div class="wrap nav">
