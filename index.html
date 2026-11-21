@@ -446,6 +446,25 @@ footer p:last-child{max-width:820px}
 @media(max-width:900px){.mkwrap{grid-template-columns:1fr}.mk+.mk{border-left:0;border-top:1px solid var(--line)}}
 @media(max-width:600px){.mk{padding:20px}.cmpbar .r{grid-template-columns:1fr}.sg{font-size:.72rem}.sg th,.sg td{padding:6px 1px}}
 
+.mkwrap+.mkwrap{border-top:1px solid var(--line)}
+.tn{display:grid;gap:16px}
+.tn .tl{display:flex;justify-content:space-between;gap:8px;margin:0 0 6px;font-size:.82rem}
+.tn .tl b{font-weight:500;color:var(--head)}
+.tn .tl span{color:var(--muted)}
+.tn .tt{position:relative;height:20px;margin:0 48px;background:var(--soft)}
+.tn .tt i{position:absolute;top:0;bottom:0}
+.tn .tt i.up{background:var(--pos);opacity:.85}
+.tn .tt i.dn{background:var(--neg);opacity:.85}
+.tn .tt em{position:absolute;top:50%;transform:translateY(-50%);padding:0 5px;font-style:normal;font-size:.72rem;color:var(--text);white-space:nowrap}
+.tn .tt u{position:absolute;top:-4px;bottom:-4px;border-left:2px solid var(--head)}
+.tn-base{margin:14px 0 0;font-size:.82rem;color:var(--muted);text-align:center}
+.cv{display:block;width:100%;height:auto}
+.cv text{fill:var(--muted);font-size:14px;font-family:var(--mono)}
+.cv .gd{stroke:var(--line);stroke-width:1}
+.cv .ln{fill:none;stroke:var(--accent);stroke-width:2.5}
+.cv .bs{fill:var(--cta)}
+.cv .bt{fill:var(--head);font-weight:600}
+
 /* formulário da lista de espera (janela) */
 .lista{position:fixed;margin:auto;padding:0;width:calc(100% - 32px);max-width:460px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--card);color:var(--text)}
 .lista::backdrop{background:rgba(0,0,0,.72)}
@@ -637,6 +656,7 @@ footer p:last-child{max-width:820px}
             <label>Setor<select id="sug-setor"><option value="">Escolha o setor</option><option value="saude_apoio">Serviços de apoio à saúde</option><option value="hospitais">Hospitais e clínicas</option><option value="software">Software</option><option value="maquinas">Máquinas e equipamentos</option><option value="varejo">Varejo em geral</option><option value="alimentos">Alimentos processados</option><option value="educacao">Educação</option><option value="servicos">Serviços empresariais e ao consumidor</option><option value="construcao">Materiais de construção</option><option value="imobiliario">Incorporação imobiliária</option></select></label>
             <label>Porte<select id="sug-porte"><option value="pequena">Pequena · até R$ 50 mi</option><option value="media" selected>Média · R$ 50 a 300 mi</option><option value="grande">Grande · acima de R$ 300 mi</option></select></label>
             <label>Onde atua<select id="sug-local"><option value="br" selected>Brasil</option><option value="mix">Brasil e exterior</option></select></label>
+            <label>Base dos betas<select id="sug-base"><option value="emerg" selected>Mercados emergentes</option><option value="eua">Empresas dos EUA</option></select></label>
             <button type="button" class="btn btn-ghost" id="sug-btn">Sugerir taxa e crescimento</button>
             <p class="sug-msg" id="sug-msg" role="alert"></p>
           </div>
@@ -671,6 +691,18 @@ footer p:last-child{max-width:820px}
         <p class="ro-h">Sensibilidade</p>
         <div class="sens-tabs" role="tablist" aria-label="Pares de premissas" id="sens-tabs"><button type="button" role="tab" data-t="0" aria-selected="true">Taxa × crescimento</button><button type="button" role="tab" data-t="1" aria-selected="false">Taxa × perpetuidade</button><button type="button" role="tab" data-t="2" aria-selected="false">Crescimento × perpetuidade</button></div>
         <div id="sens-out"></div>
+      </div>
+    </div>
+    <div class="mkwrap">
+      <div class="mk">
+        <p class="ro-h">O que mais mexe no valor</p>
+        <div id="torn-out"></div>
+        <p class="sug-src">Valor da empresa para os sócios, em R$ mi, mudando uma premissa de cada vez. A linha branca é o caso atual; verde é acima e vermelho, abaixo.</p>
+      </div>
+      <div class="mk">
+        <p class="ro-h">Valor × taxa de desconto</p>
+        <div id="curva-out"></div>
+        <p class="sug-src">Valor da empresa para os sócios, em R$ mi, para taxas de 3 pontos abaixo a 3 pontos acima da atual. O ponto é o caso atual.</p>
       </div>
     </div>
 
@@ -1074,33 +1106,33 @@ footer p:last-child{max-width:820px}
   // Dados com fonte e data (docs/valuation.md). Itens marcados "premissa" são do Cotejo e editáveis.
   const MERCADO={
     macro:{rf:4.18, erp:4.20, crp:3.24, piUS:2.2, kd:14.0, t:34, gFocus:3.9},
-    fonte:'Damodaran (NYU Stern), base de janeiro de 2026: taxa livre de risco, prêmio de mercado, risco-país do Brasil, betas e múltiplos por setor, de empresas listadas dos EUA. Banco Central do Brasil, Focus: mediana do IPCA esperado para 2030, 3,9% em 13/11/2026. Premissas do Cotejo: prêmio por porte, custo da dívida de 14% ao ano, inflação dos EUA de 2,2% e 34% de imposto.',
+    fonte:'Damodaran (NYU Stern), bases de janeiro de 2026 (mercados emergentes: atualizada em 5/1/2026): taxa livre de risco, prêmio de mercado, risco-país do Brasil, betas e múltiplos por setor, de mercados emergentes e de empresas listadas dos EUA. Banco Central do Brasil, Focus: mediana do IPCA esperado para 2030, 3,9% em 13/11/2026. Premissas do Cotejo: prêmio por porte, custo da dívida de 14% ao ano, inflação dos EUA de 2,2% e 34% de imposto.',
     porte:{pequena:{nome:'pequena',premio:3.0},media:{nome:'média',premio:2.0},grande:{nome:'grande',premio:1.0}},
     local:{br:{nome:'Brasil',lambda:1},mix:{nome:'Brasil e exterior',lambda:0.5}},
     // bu: beta desalavancado corrigido por caixa; de: dívida/patrimônio (%); ev: EV/EBITDA (empresas com EBITDA positivo)
     setores:{
-      saude_apoio:{nome:'Serviços de apoio à saúde',bu:0.74,de:35.43,ev:11.17},
-      hospitais:{nome:'Hospitais e clínicas',bu:0.56,de:59.92,ev:8.86},
-      software:{nome:'Software',bu:1.25,de:5.58,ev:24.48},
-      maquinas:{nome:'Máquinas e equipamentos',bu:0.89,de:14.69,ev:16.22},
-      varejo:{nome:'Varejo em geral',bu:0.78,de:7.94,ev:17.38},
-      alimentos:{nome:'Alimentos processados',bu:0.47,de:43.73,ev:10.01},
-      educacao:{nome:'Educação',bu:0.72,de:24.38,ev:9.26},
-      servicos:{nome:'Serviços empresariais e ao consumidor',bu:0.81,de:19.72,ev:14.26},
-      construcao:{nome:'Materiais de construção',bu:1.05,de:17.62,ev:16.82},
-      imobiliario:{nome:'Incorporação imobiliária',bu:0.56,de:101.83,ev:10.23}
+      saude_apoio:{nome:'Serviços de apoio à saúde',emerg:{bu:0.78,de:61.63,ev:11.11},eua:{bu:0.74,de:35.43,ev:11.17}},
+      hospitais:{nome:'Hospitais e clínicas',emerg:{bu:0.65,de:20.80,ev:18.96},eua:{bu:0.56,de:59.92,ev:8.86}},
+      software:{nome:'Software',emerg:{bu:1.64,de:5.27,ev:40.57},eua:{bu:1.25,de:5.58,ev:24.48}},
+      maquinas:{nome:'Máquinas e equipamentos',emerg:{bu:1.50,de:12.20,ev:24.98},eua:{bu:0.89,de:14.69,ev:16.22}},
+      varejo:{nome:'Varejo em geral',emerg:{bu:0.89,de:36.65,ev:14.86},eua:{bu:0.78,de:7.94,ev:17.38}},
+      alimentos:{nome:'Alimentos processados',emerg:{bu:0.61,de:38.00,ev:11.05},eua:{bu:0.47,de:43.73,ev:10.01}},
+      educacao:{nome:'Educação',emerg:{bu:0.77,de:33.95,ev:8.37},eua:{bu:0.72,de:24.38,ev:9.26}},
+      servicos:{nome:'Serviços empresariais e ao consumidor',emerg:{bu:1.11,de:15.29,ev:17.73},eua:{bu:0.81,de:19.72,ev:14.26}},
+      construcao:{nome:'Materiais de construção',emerg:{bu:0.91,de:32.65,ev:11.98},eua:{bu:1.05,de:17.62,ev:16.82}},
+      imobiliario:{nome:'Incorporação imobiliária',emerg:{bu:0.45,de:196.74,ev:14.16},eua:{bu:0.56,de:101.83,ev:10.23}}
     }
   };
   const p1=x=>pct1.format(x)+'%';
 
-  function sugerir(setor,porte,local){
-    const M=MERCADO.macro, S=MERCADO.setores[setor], P=MERCADO.porte[porte], L=MERCADO.local[local];
+  function sugerir(setor,porte,local,base){
+    const M=MERCADO.macro, N=MERCADO.setores[setor], S=Object.assign({nome:N.nome},N[base]), P=MERCADO.porte[porte], L=MERCADO.local[local];
     const t=M.t/100, de=S.de/100, bl=S.bu*(1+(1-t)*de);
     const keUS=M.rf+bl*M.erp+L.lambda*M.crp+P.premio;
     const ke=((1+keUS/100)*(1+M.gFocus/100)/(1+M.piUS/100)-1)*100;
     const wd=de/(1+de), we=1-wd, kdl=M.kd*(1-t), wacc=we*ke+wd*kdl;
     const g=L.lambda*M.gFocus+(1-L.lambda)*M.piUS;
-    return {S,P,L,bl,keUS,ke,wd,we,kdl,wacc,g,m:{rf:M.rf,erp:M.erp,crp:L.lambda*M.crp}};
+    return {S,P,L,bl,keUS,ke,wd,we,kdl,wacc,g,base,m:{rf:M.rf,erp:M.erp,crp:L.lambda*M.crp}};
   }
 
   // g implícito: crescimento perpétuo que faz o valor por ação bater com o preço de referência (mesmo dcf())
@@ -1119,7 +1151,7 @@ footer p:last-child{max-width:820px}
   function mostrarSug(s){
     const out=$('sug-out'), gi=gImplicito();
     out.hidden=false;
-    out.innerHTML=`<p><span class="tag">sugerido</span>Taxa de desconto <b>${p1(+s.wacc.toFixed(1))}</b> e crescimento perpétuo <b>${p1(+s.g.toFixed(1))}</b>, para ${s.S.nome.toLowerCase()}, empresa ${s.P.nome}, atuando em ${s.L.nome}. Os campos abaixo foram preenchidos e você pode editá-los.</p>
+    out.innerHTML=`<p><span class="tag">sugerido</span>Taxa de desconto <b>${p1(+s.wacc.toFixed(1))}</b> e crescimento perpétuo <b>${p1(+s.g.toFixed(1))}</b>, para ${s.S.nome.toLowerCase()}, empresa ${s.P.nome}, atuando em ${s.L.nome}, com betas de ${s.base==='emerg'?'mercados emergentes':'empresas dos EUA'}. Os campos abaixo foram preenchidos e você pode editá-los.</p>
       <p class="sug-g" id="sug-g">${gi===null?'':`O crescimento perpétuo que faz o valor bater com o seu preço de referência é <b>${p1(+gi.toFixed(1))}</b>. <button type="button" id="sug-gi">Usar este valor</button>`}</p>
       <details><summary>Como chegamos a ${p1(+s.wacc.toFixed(1))}</summary><table class="wb">
         <tr><td>Taxa livre de risco (EUA)</td><td>${p1(s.m.rf)}</td></tr>
@@ -1137,7 +1169,7 @@ footer p:last-child{max-width:820px}
     const setor=$('sug-setor').value, msg=$('sug-msg');
     if(!setor){ msg.textContent='Escolha o setor para calcular.'; $('sug-setor').focus(); return; }
     msg.textContent='';
-    const s=sugerir(setor,$('sug-porte').value,$('sug-local').value);
+    const s=sugerir(setor,$('sug-porte').value,$('sug-local').value,$('sug-base').value);
     aplicar($('r'),+s.wacc.toFixed(1)); aplicar($('gp'),+s.g.toFixed(1));
     mostrarSug(s); atualizarMercado();
   }
@@ -1152,15 +1184,16 @@ footer p:last-child{max-width:820px}
     const box=$('comps'), setor=$('sug-setor').value;
     if(!setor){ box.hidden=true; return; }
     box.hidden=false;
-    const S=MERCADO.setores[setor], out=$('comps-out'), e=parseFloat($('ebitda').value), V=validos();
-    let h=`<p class="dg-sub" style="margin:0 0 12px">Múltiplo EV/EBITDA do setor (${S.nome.toLowerCase()}): <b>${num.format(S.ev)}x</b>, de empresas listadas dos EUA com EBITDA positivo (Damodaran, janeiro de 2026).</p>`;
-    if(!V.ok||!(e>0)){ out.innerHTML=h+'<p class="dg-sub">Informe o EBITDA para comparar o valor da firma pelo múltiplo do setor com o valor do DCF.</p>'; return; }
-    const ev=dcf(V.fcf,V.g,V.r,V.gp), comp=S.ev*e, esc=Math.max(ev,comp)*1.1;
-    const impl=ev/e, dif=impl/S.ev-1;
-    h+=`<div class="cmpbar"><div class="r"><span>Comparáveis do setor</span><div class="t"><i style="width:${comp/esc*100}%"></i><b>${mi(comp)}</b></div></div>
-      <div class="r"><span>Seu DCF</span><div class="t"><i class="d" style="width:${ev/esc*100}%"></i><b>${mi(ev)}</b></div></div></div>
-      <p style="margin:0 0 8px;font-size:.9rem">O DCF dá <b>${num.format(+impl.toFixed(1))}x</b> o EBITDA, ${Math.abs(dif)<0.05?'perto do':dif>0?p1(dif*100)+' acima do':p1(-dif*100)+' abaixo do'} múltiplo do setor.</p>
-      <p class="sug-src">Valor da firma (EV), antes de descontar dívida ou somar caixa. Empresas pequenas e fechadas costumam valer menos do que empresas listadas: use como referência, não como preço.</p>`;
+    const N=MERCADO.setores[setor], ee=N.emerg.ev, eu=N.eua.ev, out=$('comps-out'), e=parseFloat($('ebitda').value), V=validos();
+    const f=x=>num.format(x)+'x';
+    let h=`<p class="dg-sub" style="margin:0 0 12px">Múltiplos EV/EBITDA do setor (${N.nome.toLowerCase()}): <b>${f(ee)}</b> em mercados emergentes e <b>${f(eu)}</b> em empresas dos EUA, só com EBITDA positivo (Damodaran, janeiro de 2026).</p>`;
+    if(!V.ok||!(e>0)){ out.innerHTML=h+'<p class="dg-sub">Informe o EBITDA para comparar o valor da firma pelos múltiplos do setor com o valor do DCF.</p>'; return; }
+    const ev=dcf(V.fcf,V.g,V.r,V.gp), ce=ee*e, cu=eu*e, esc=Math.max(ev,ce,cu)*1.1, impl=ev/e, mn=Math.min(ee,eu), mx=Math.max(ee,eu);
+    const pos=impl<mn*0.95?'abaixo dos dois':impl>mx*1.05?'acima dos dois':'dentro da faixa dos dois';
+    const barra=(rot,v,cls)=>`<div class="r"><span>${rot}</span><div class="t"><i${cls?` class="${cls}"`:''} style="width:${v/esc*100}%"></i><b>${mi(v)}</b></div></div>`;
+    h+=`<div class="cmpbar">${barra('Emergentes ('+f(ee)+')',ce)}${barra('EUA ('+f(eu)+')',cu)}${barra('Seu DCF',ev,'d')}</div>
+      <p style="margin:0 0 8px;font-size:.9rem">O DCF dá <b>${num.format(+impl.toFixed(1))}x</b> o EBITDA, ${pos} múltiplos do setor.</p>
+      <p class="sug-src">Valor da firma (EV), antes de descontar dívida ou somar caixa. Os múltiplos de mercados emergentes são puxados por empresas da China e da Índia e podem estar bem acima do que se paga no Brasil. Empresas pequenas e fechadas costumam valer menos do que empresas listadas: use como referência, não como preço.</p>`;
     out.innerHTML=h;
   }
 
@@ -1202,13 +1235,48 @@ footer p:last-child{max-width:820px}
     const h=st.querySelectorAll('h3'); if(h[1]) h[1].textContent='Fluxo de caixa projetado (R$ mi)';
   }
 
+  // gráfico de tornado: quanto cada premissa mexe no valor, uma de cada vez (mesmo dcf())
+  function tornado(){
+    const out=$('torn-out'), V=validos();
+    if(!V.ok||!(V.sh>0)){ out.innerHTML='<p class="dg-sub">Ajuste as premissas para ver o gráfico.</p>'; return; }
+    const val=(f,g,r,gp)=>(r>0&&r-gp>1e-9&&g>-1)?dcf(f,g,r,gp)-V.debt:NaN;
+    const base=val(V.fcf,V.g,V.r,V.gp);
+    const itens=[
+      {n:'Taxa de desconto',d:'±1 p.p.',v:[val(V.fcf,V.g,V.r-.01,V.gp),val(V.fcf,V.g,V.r+.01,V.gp)]},
+      {n:'Crescimento anual',d:'±2 p.p.',v:[val(V.fcf,V.g-.02,V.r,V.gp),val(V.fcf,V.g+.02,V.r,V.gp)]},
+      {n:'Crescimento perpétuo',d:'±0,5 p.p.',v:[val(V.fcf,V.g,V.r,V.gp-.005),val(V.fcf,V.g,V.r,V.gp+.005)]},
+      {n:'Fluxo de caixa atual',d:'±10%',v:[val(V.fcf*.9,V.g,V.r,V.gp),val(V.fcf*1.1,V.g,V.r,V.gp)]}
+    ].map(i=>({n:i.n,d:i.d,v:i.v.filter(x=>isFinite(x))})).filter(i=>i.v.length);
+    if(!itens.length||!isFinite(base)){ out.innerHTML='<p class="dg-sub">Não há pontos válidos para esta combinação de premissas.</p>'; return; }
+    itens.forEach(i=>{ i.amp=Math.max(...i.v.map(x=>Math.abs(x-base))); }); itens.sort((a,b)=>b.amp-a.amp);
+    const todos=[base].concat(...itens.map(i=>i.v)), lo=Math.min(...todos), hi=Math.max(...todos), pad=(hi-lo)*.04||1, a=lo-pad, b=hi+pad;
+    const P=x=>(x-a)/(b-a)*100, fm=x=>num.format(Math.round(x));
+    out.innerHTML=`<div class="tn">${itens.map(i=>`<div><div class="tl"><b>${i.n}</b><span>${i.d}</span></div><div class="tt">${i.v.map(x=>{const dn=x<base,l=P(Math.min(x,base)),w=Math.abs(P(x)-P(base));return `<i class="${dn?'dn':'up'}" style="left:${l}%;width:${w}%"></i><em style="${dn?`right:${100-l}%`:`left:${l+w}%`}">${fm(x)}</em>`;}).join('')}<u style="left:${P(base)}%"></u></div></div>`).join('')}</div><p class="tn-base">Caso atual: <b>${fm(base)}</b></p>`;
+  }
+
+  // curva do valor da empresa conforme a taxa de desconto (mesmo dcf())
+  function curva(){
+    const out=$('curva-out'), V=validos();
+    if(!V.ok||!(V.sh>0)){ out.innerHTML='<p class="dg-sub">Ajuste as premissas para ver o gráfico.</p>'; return; }
+    const pts=[]; for(let d=-3;d<=3.0001;d+=.25){ const r=V.r+d/100; if(r>0&&r-V.gp>1e-9){ const v=dcf(V.fcf,V.g,r,V.gp)-V.debt; if(v>0) pts.push([r*100,v]); } }
+    const base=dcf(V.fcf,V.g,V.r,V.gp)-V.debt;
+    if(pts.length<2||!(base>0)){ out.innerHTML='<p class="dg-sub">Não há pontos válidos para esta combinação de premissas.</p>'; return; }
+    const W=440,H=240,L=58,R=16,T=20,B=40, x0=pts[0][0], x1=pts[pts.length-1][0], ymax=Math.max(...pts.map(p=>p[1]))*1.08;
+    const X=x=>L+(x-x0)/(x1-x0)*(W-L-R), Y=y=>H-B-(y/ymax)*(H-T-B);
+    const linha=pts.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(' ');
+    const grade=[0,.5,1].map(fr=>{const y=ymax*fr;return `<line class="gd" x1="${L}" x2="${W-R}" y1="${Y(y).toFixed(1)}" y2="${Y(y).toFixed(1)}"/><text x="${L-6}" y="${(Y(y)+5).toFixed(1)}" text-anchor="end">${num.format(Math.round(y))}</text>`;}).join('');
+    const eixoX=[x0,V.r*100,x1].map((x,i)=>`<text x="${X(x).toFixed(1)}" y="${H-B+20}" text-anchor="${i===0?'start':i===2?'end':'middle'}">${pct1.format(x)}%</text>`).join('');
+    const bx=X(V.r*100), by=Y(base);
+    out.innerHTML=`<svg class="cv" viewBox="0 0 ${W} ${H}" role="img" aria-label="Valor da empresa para os sócios conforme a taxa de desconto, de ${num.format(Math.round(pts[0][1]))} a ${num.format(Math.round(pts[pts.length-1][1]))} milhões">${grade}<path class="ln" d="${linha}"/><line class="gd" x1="${bx.toFixed(1)}" x2="${bx.toFixed(1)}" y1="${T}" y2="${H-B}" stroke-dasharray="3 3"/><circle class="bs" cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="5"/><text class="bt" x="${Math.min(Math.max(bx,L+36),W-R-36).toFixed(1)}" y="${Math.max(by-12,T+10).toFixed(1)}" text-anchor="middle">${num.format(Math.round(base))}</text>${eixoX}</svg>`;
+  }
+
   function atualizarMercado(){
-    comparaveis(); sensibilidade();
+    comparaveis(); sensibilidade(); tornado(); curva();
     const gi=gImplicito(), el=$('sug-g');
     if(el&&!$('sug-out').hidden) el.innerHTML=gi===null?'':`O crescimento perpétuo que faz o valor bater com o seu preço de referência é <b>${p1(+gi.toFixed(1))}</b>. <button type="button" id="sug-gi">Usar este valor</button>`;
   }
   $('sug-btn').addEventListener('click',sugerirAgora);
-  ['sug-setor','sug-porte','sug-local'].forEach(id=>$(id).addEventListener('change',()=>{ if(!$('sug-out').hidden||id==='sug-setor') { if($('sug-setor').value) sugerirAgora(); else { $('sug-out').hidden=true; atualizarMercado(); } } }));
+  ['sug-setor','sug-porte','sug-local','sug-base'].forEach(id=>$(id).addEventListener('change',()=>{ if(!$('sug-out').hidden||id==='sug-setor') { if($('sug-setor').value) sugerirAgora(); else { $('sug-out').hidden=true; atualizarMercado(); } } }));
   $('sug-out').addEventListener('click',e=>{ if(e.target.id==='sug-gi'){ const gi=gImplicito(); if(gi!==null) aplicar($('gp'),+gi.toFixed(1)); } });
   $('ebitda').addEventListener('input',comparaveis);
   $('sens-tabs').addEventListener('click',e=>{

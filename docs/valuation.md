@@ -97,7 +97,7 @@ No grupo "Custo de capital e perpetuidade" do simulador (`index.html`), o usuár
 - **`g` implícito:** o `g` que faz o valor por ação bater com o preço de referência, por bissecção sobre o mesmo `dcf()`. É mostrado como alternativa, com botão "Usar este valor".
 
 **Dados com fonte e data** (verificados em novembro de 2026)
-- Damodaran (NYU Stern), base de janeiro de 2026, empresas listadas dos EUA: Rf 4,18%, ERP 4,20%, CRP do Brasil 3,24%; beta desalavancado corrigido por caixa, D/E e EV/EBITDA (empresas com EBITDA positivo) por setor, de `Betas.html` e `vebitda.html`. Os 10 setores do site foram lidos com os números exatos da tabela.
+- Damodaran (NYU Stern), janeiro de 2026: Rf 4,18%, ERP 4,20% e CRP do Brasil 3,24%. Por setor, beta desalavancado corrigido por caixa, D/E e EV/EBITDA (empresas com EBITDA positivo) em duas bases: **mercados emergentes** (planilhas `betaemerg.xls` e `vebitdaemerg.xls`, atualizadas em 5/1/2026 e lidas em 21/11/2026, com imposto marginal de 24,71% no desalavancamento) e **empresas listadas dos EUA** (`Betas.html` e `vebitda.html`). Os 10 setores do site foram lidos com os números exatos; no código, betas e D/E entram com duas casas decimais.
 - Banco Central do Brasil, Focus (API de expectativas): mediana do IPCA esperado para 2030 de 3,9% em 13/11/2026, usada como `g` e como inflação do Brasil na conversão do Ke.
 
 **Premissas do Cotejo (não vêm de fonte; editáveis pelo usuário)**
@@ -106,8 +106,12 @@ No grupo "Custo de capital e perpetuidade" do simulador (`index.html`), o usuár
 - A consulta à Selic pela API do BCB devolveu datas posteriores à data real, então **não foi usada**.
 
 **Limites**
-- Betas e múltiplos são de empresas **listadas dos EUA**. Empresas pequenas e fechadas costumam valer menos, e o texto do site avisa que o comparável é referência, não preço.
-- O comparável é um ponto (o múltiplo do setor), não uma faixa. Betas de mercados emergentes (`betaemerg.xls`) não foram lidos e podem substituir os dos EUA.
+- Por padrão o WACC usa os betas de **mercados emergentes**, e o usuário pode trocar para os dos EUA. A base de emergentes mistura muitos países, principalmente China e Índia, e não é uma base só brasileira. O beta é relavancado com o imposto de 34% do Brasil.
+- Os múltiplos de emergentes são **bem mais altos** que os dos EUA em vários setores (hospitais, 18,96x contra 8,86x; máquinas, 24,98x contra 16,22x; software, 40,57x contra 24,48x). Por isso o comparável mostra **os dois** lado a lado, com aviso, e nenhum deles deve ser tratado como preço.
+- Empresas pequenas e fechadas costumam valer menos do que empresas listadas, e o texto do site avisa que o comparável é referência.
+- O comparável usa um ponto por base (o múltiplo do setor), não uma faixa.
 - Atualizar os dados a cada janeiro (nova base do Damodaran) e antes de cobrar por qualquer relatório que use esses números.
 
 **Sensibilidade:** tabelas 5×5 (taxa × crescimento, taxa × perpetuidade, crescimento × perpetuidade) com o mesmo `dcf()`, mostrando o valor da empresa para os sócios. Combinações com taxa ≤ perpetuidade ou valor ≤ 0 mostram "—".
+
+**Gráficos de sensibilidade** (mesmo `dcf()`): o **tornado** mostra o valor para os sócios mudando uma premissa de cada vez (taxa ±1 p.p., crescimento ±2 p.p., perpetuidade ±0,5 p.p., fluxo de caixa atual ±10%), ordenado pela amplitude; a **curva** mostra o valor para taxas de 3 pontos abaixo a 3 pontos acima da atual.
