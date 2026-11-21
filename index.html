@@ -957,7 +957,16 @@ footer p:last-child{max-width:820px}
 (function(){
   const $ = id => document.getElementById(id);
   const brl = new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2});
-  const mi  = v => 'R$ ' + new Intl.NumberFormat('pt-BR',{maximumFractionDigits:0}).format(v) + ' mi';
+  // valores em milhões de reais, por extenso e com 1 casa decimal: Mil (< 1 milhão), Milhões, Bilhões, Trilhões; acima de 999 trilhões segue em trilhões (ex.: 1.100,0 trilhões)
+  const nf1 = new Intl.NumberFormat('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+  const mi  = v => {
+    const a = Math.abs(v);
+    const un = (x,s,p) => nf1.format(x) + ' ' + (nf1.format(Math.abs(x))==='1,0' ? s : p);
+    if(a < 0.99995) return 'R$ ' + nf1.format(v*1000) + ' mil';
+    if(a < 999.95) return 'R$ ' + un(v,'milhão','milhões');
+    if(a < 999950) return 'R$ ' + un(v/1000,'bilhão','bilhões');
+    return 'R$ ' + un(v/1000000,'trilhão','trilhões');
+  };
 
   function dcf(fcf,g,r,gp){
     let pv=0, f=fcf;
