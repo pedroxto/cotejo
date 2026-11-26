@@ -72,6 +72,9 @@ header{position:sticky;top:0;z-index:10;background:var(--hdr);backdrop-filter:bl
 .hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
 .hero .btn-ghost{color:var(--on-panel);border-color:var(--panel-line)}
 .hero .btn-ghost:hover{border-color:var(--on-panel)}
+.hero-alt{margin-top:16px;font-size:.92rem;color:var(--on-panel-muted)}
+.hero-alt a{color:var(--on-panel);text-decoration:underline;text-underline-offset:3px}
+.hero-alt a:hover{color:var(--cta-text)}
 .mock{background:var(--panel-2);color:var(--on-panel);border:1px solid var(--panel-line);border-radius:var(--radius);padding:28px}
 .mock small{display:block;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--on-panel-muted)}
 .mock .big{font-size:3rem;font-weight:400;letter-spacing:-.03em;margin:10px 0 2px;color:var(--on-panel)}
@@ -92,7 +95,11 @@ header{position:sticky;top:0;z-index:10;background:var(--hdr);backdrop-filter:bl
 .pillars li{padding:4px 22px;border-right:1px solid var(--line)}
 .pillars b{display:block;color:var(--head);font-weight:500;font-size:1.05rem;margin-bottom:6px}
 .pillars span{font-size:.86rem;color:var(--muted);display:block}
+@media(min-width:901px){#contato .pillars{grid-template-columns:repeat(2,1fr);row-gap:32px}}
+.pitch-cta{margin-top:24px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.pitch-cta small{font-size:.82rem;color:var(--muted)}
 @media(max-width:900px){.pitch-box{grid-template-columns:1fr;padding:48px 0}.pillars{grid-template-columns:1fr 1fr;border-left:0;row-gap:24px}.pillars li{border-right:0;border-left:2px solid var(--cta);padding:2px 16px}}
+@media(max-width:600px){.pillars{grid-template-columns:1fr}}
 
 /* cards */
 .soft{background:var(--soft)}
@@ -340,7 +347,7 @@ td.mid{background:var(--mid);font-weight:600;color:var(--on-panel)}
 @media(max-width:600px){.faq summary{padding:18px 40px 18px 0;font-size:.98rem}.faq .a{font-size:.95rem}}
 
 /* chamada final e rodapé */
-#lista{padding:96px 0 0}
+#lista{padding:8px 0 24px}
 .cta-final{background:var(--panel);color:var(--on-panel);padding:72px 56px;display:grid;grid-template-columns:1fr auto;gap:24px 48px;align-items:center;border-radius:var(--radius)}
 .cta-final h2{color:var(--on-panel);font-weight:400;margin:0}
 .cta-final p{color:var(--on-panel-muted);grid-column:1;margin:0}
@@ -567,19 +574,19 @@ section.soft{background:linear-gradient(to bottom,var(--bg),var(--card) 50%,var(
       <li><a href="#em-breve">Em breve</a></li>
       <li><a href="#duvidas">Dúvidas</a></li>
     </ul>
-    <a href="#simulador" class="btn btn-primary nav-cta">Testar o simulador</a>  </div>
+    <a href="#contato" class="btn btn-primary nav-cta" data-lista="topo">Falar com a gente</a>  </div>
 </header>
 
 <main>
 <section class="hero">
   <div class="wrap grid">
     <div>
-      <h1>Saiba quanto vale a sua empresa, com <em>cada premissa à mostra</em>.</h1>
-      <p class="lead">Para empresários, sócios e executivos que precisam de um valuation para vender, comprar, captar ou planejar. Você conta o caso; o Cotejo entrega o valuation pronto, no padrão de banco de investimento, com cada número explicado em linguagem de negócio.</p>
+      <h1>Quanto vale a sua empresa, e se é hora de <em>vender, comprar ou manter</em>.</h1>
+      <p class="lead">O Cotejo entrega o valor da empresa e da ação, a tese com o que fazer em cada caminho e o material pronto para apresentar a sócios e compradores. Cada número explicado em linguagem de negócio.</p>
       <div class="cta">
-        <a href="#simulador" class="btn btn-primary">Testar o simulador</a>
-        <a href="#em-breve" class="btn btn-ghost">Ver páginas de exemplo</a>
+        <a href="#contato" class="btn btn-primary" data-lista="topo">Quero o valuation da minha empresa</a>
       </div>
+      <p class="hero-alt">Prefere ver antes? <a href="#simulador">Teste o simulador gratuito</a>.</p>
     </div>
     <div class="mock" aria-label="Exemplo ilustrativo">
       <small>EMPRESA EXEMPLO S.A. · dados fictícios</small>
@@ -597,20 +604,34 @@ section.soft{background:linear-gradient(to bottom,var(--bg),var(--card) 50%,var(
   </div>
 </section>
 
-<section class="pitch">
+<section class="pitch" id="contato">
   <div class="wrap">
     <div class="pitch-box">
       <div>
-        <p class="eyebrow">Por que o Cotejo</p>
-        <h2>Valuation no padrão de banco de investimento, sem o custo de um banco.</h2>
-        <p>Para chegar preparado à negociação, à captação ou à conversa com o seu assessor: um material claro, que você entende e consegue defender.</p>
+        <p class="eyebrow">O que você recebe</p>
+        <h2>Quatro respostas para levar à reunião de sócios.</h2>
+        <p>Valuation no padrão de banco de investimento, sem o custo de um banco. Você aprova cada premissa e consegue defender cada número.</p>
+        <div class="pitch-cta">
+          <a href="mailto:pxisto34@gmail.com?subject=Valuation%20da%20minha%20empresa%20-%20Cotejo" class="btn btn-primary" data-lista="topo">Quero o valuation da minha empresa</a>
+          <small>Deixe nome e contato. Respondemos para entender o seu caso, sem compromisso.</small>
+        </div>
       </div>
       <ul class="pillars">
-        <li><b>Claro</b><span>Cada número explicado em linguagem de negócio.</span></li>
-        <li><b>Rastreável</b><span>Toda conta sai de uma premissa que você aprova.</span></li>
-        <li><b>Conferido</b><span>As contas são refeitas antes da entrega.</span></li>
-        <li><b>Pronto para apresentar</b><span>PDF ou PowerPoint, para sócios, investidores ou compradores.</span></li>
+        <li><b>Valor da empresa e da ação</b><span>Faixa de valor em três cenários e o valor de cada ação ou cota.</span></li>
+        <li><b>Tese: vender, comprar ou manter</b><span>Qual caminho os números sustentam, e por quê.</span></li>
+        <li><b>O que fazer em cada caminho</b><span>Os passos e o que ajustar antes de vender, comprar ou seguir.</span></li>
+        <li><b>Material pronto para apresentar</b><span>PDF e PowerPoint para sócios e compradores, com dados, passos e contas explicados.</span></li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section id="lista">
+  <div class="wrap">
+    <div class="cta-final">
+      <h2>Seja um dos primeiros casos do Cotejo.</h2>
+      <p>Estamos abrindo os primeiros valuations. Deixe nome e contato: quem chega agora entra antes na fila e conversa direto com o fundador sobre o seu caso.</p>
+      <a href="mailto:pxisto34@gmail.com?subject=Acesso%20antecipado%20-%20valuation%20Cotejo" class="btn" data-lista="em-breve">Quero entrar nos primeiros casos</a>
     </div>
   </div>
 </section>
@@ -851,23 +872,47 @@ section.soft{background:linear-gradient(to bottom,var(--bg),var(--card) 50%,var(
 <section id="duvidas" class="soft">
   <div class="wrap">
     <p class="eyebrow">Perguntas frequentes</p>
-    <h2>Dúvidas comuns sobre valuation e o Cotejo.</h2>
-    <p class="lead">Respostas curtas para o que mais perguntam. Toque em uma pergunta para abrir.</p>
+    <h2>O que é o Cotejo, quem fez e para quem é.</h2>
+    <p class="lead">Primeiro o essencial sobre o serviço. Depois, as dúvidas sobre valuation e o simulador.</p>
 
     <div class="faq">
-      <details>
-        <summary>Qual problema o Cotejo resolve?</summary>
+      <details open>
+        <summary>O que é o Cotejo?</summary>
         <div class="a">
-          <p>Quem precisa saber quanto vale uma empresa, para vender, comprar, captar ou trazer um sócio, normalmente contrata um banco, uma consultoria ou um analista. Isso custa caro, leva semanas e muitas vezes entrega um número difícil de entender.</p>
-          <p>O Cotejo entrega o valuation pronto e explicado: cada número sai de uma premissa que você aprova, e você consegue defender o resultado numa negociação. Também atende profissionais de mercado e estudantes de finanças.</p>
+          <p>Um serviço de valuation para quem decide sobre a própria empresa. Você conta o caso e aprova as premissas; o Cotejo entrega quatro coisas: o valor da empresa e da ação, a tese (vender, comprar ou manter), o que fazer em cada caminho e o material pronto para apresentar a sócios e compradores.</p>
+          <p>O projeto está em fase inicial: hoje, o simulador e o diagnóstico desta página funcionam; o valuation completo está em acesso antecipado.</p>
         </div>
       </details>
 
       <details>
-        <summary>O que o Cotejo entrega?</summary>
+        <summary>Qual problema o Cotejo resolve?</summary>
         <div class="a">
-          <p>Valuation completo em PDF ou PowerPoint: modelo, tabelas, gráficos e conclusão, a partir do seu pedido e das premissas que você aprova. Você recebe um material pronto para apresentar a sócios, investidores ou compradores, e consegue rastrear cada número até a premissa que o gerou.</p>
-          <p>O projeto está em fase inicial: hoje, só o simulador desta página está funcionando. Os <a href="#exemplos" style="color:var(--accent);font-weight:600">exemplos de entrega</a> mostram o formato do relatório completo.</p>
+          <p>Quem precisa decidir se vende, compra ou mantém uma empresa costuma contratar um banco ou uma consultoria. Isso custa caro, leva semanas e muitas vezes entrega um número que nem quem pagou consegue explicar aos sócios.</p>
+          <p>O Cotejo entrega o número e o porquê dele: cada conta sai de uma premissa que você aprova, e o material já vem pronto para defender numa reunião ou negociação.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Para quem é o Cotejo?</summary>
+        <div class="a">
+          <p>Principalmente para CFOs, sócios e donos de empresas médias, na faixa de dezenas a centenas de milhões de reais de faturamento por ano, que precisam de uma resposta defensável para levar ao conselho, aos sócios ou a um possível comprador, sem montar uma equipe de M&amp;A.</p>
+          <p>Também atende profissionais de mercado e estudantes de finanças que querem modelo e páginas no padrão de banco.</p>
+        </div>
+      </details>
+
+      <details id="fundador">
+        <summary>Quem fundou o Cotejo?</summary>
+        <div class="a">
+          <p><b>Pedro Henrique Xisto</b>, 19 anos, estudante de Engenharia de Produção no Ibmec com bolsa integral por mérito acadêmico.</p>
+          <p>Cresceu em Itaquera, numa família com o básico em casa e sem formação acadêmica. Passou dois anos nas turmas ITA/IME do Farias Brito e do Ari de Sá, entre as preparações mais exigentes do país, e foi ali que aprendeu a encarar problema difícil com método e disciplina.</p>
+          <p>Criou o Cotejo para juntar o que mais gosta, finanças e empreendedorismo, e resolver um problema concreto: dar a quem decide sobre uma empresa um valuation claro, que se entende e se defende.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>O que vem no material?</summary>
+        <div class="a">
+          <p>Valuation completo em PDF e PowerPoint: resumo executivo de uma página, valor em três cenários, valor por ação ou cota, a tese com os passos de cada caminho e todas as premissas documentadas, com a fonte de cada número. Os <a href="#exemplos" style="color:var(--accent);font-weight:600">exemplos de entrega</a> mostram o formato.</p>
         </div>
       </details>
 
@@ -961,22 +1006,13 @@ section.soft{background:linear-gradient(to bottom,var(--bg),var(--card) 50%,var(
       <details>
         <summary>O resultado é uma recomendação de investimento?</summary>
         <div class="a">
-          <p>Não. O conteúdo é educacional e ilustrativo. O valor calculado depende inteiramente das premissas, e pequenas mudanças alteram muito o resultado. Use como ponto de partida para entender e questionar uma tese, não como ordem de compra ou venda.</p>
+          <p>Não. O conteúdo desta página é educacional e ilustrativo, e a tese do material mostra o que os números sustentam com as premissas que você aprovou: a decisão continua sendo sua e dos seus sócios. O valor calculado depende inteiramente das premissas, e pequenas mudanças alteram muito o resultado. Use como ponto de partida para entender e questionar uma tese, não como ordem de compra ou venda.</p>
         </div>
       </details>
     </div>
   </div>
 </section>
 
-<section id="lista">
-  <div class="wrap">
-    <div class="cta-final">
-      <h2>Quer saber mais ou participar do início?</h2>
-      <p>O Cotejo está nos primeiros passos. Mande um e-mail e conversamos.</p>
-      <a href="mailto:pxisto34@gmail.com" class="btn">Falar com a gente</a>
-    </div>
-  </div>
-</section>
 </main>
 
 <footer>
@@ -1795,6 +1831,7 @@ window.COTEJO_FORM={endpoint:'https://api.web3forms.com/submit',key:'1bbab3e9-35
   if(!dlg||typeof dlg.showModal!=='function') return; // sem suporte: o link de e-mail original continua valendo
   const form=$('lista-form'), done=$('lista-done'), enviar=$('lista-s');
   const TEXTOS={
+    'topo':{t:'Quero o valuation da minha empresa', s:'Deixe seu nome e um meio de contato. Respondemos para entender o objetivo (vender, comprar ou manter), o setor e o prazo.', assunto:'Valuation da minha empresa - Cotejo'},
     'em-breve':{t:'Entrar na lista de acesso antecipado', s:'Deixe seu nome e um meio de contato. Avisamos primeiro quando o valuation em PDF e PowerPoint abrir.', assunto:'Acesso antecipado - valuation Cotejo'},
     'diagnostico':{t:'Entrar na lista do relatório completo', s:'Deixe seu nome e um meio de contato. Enviamos junto a nota do seu diagnóstico e avisamos quando o relatório abrir.', assunto:'Relatório de prontidão - lista de espera'}
   };

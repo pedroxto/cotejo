@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(docs/valuation.md)",
+      "Write(docs/valuation.md)"
+    ]
+  }
+}
